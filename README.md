@@ -72,7 +72,7 @@ WHISPER_COMPUTE_TYPE=int8
 
 ```sh
 # Клонирование репозитория
-git clone https://github.com/YOUR_USERNAME/speech-coach.git
+git clone https://github.com/xXxDanya2007xXx/speech-coach.git
 cd speech-coach
 
 # Создание виртуального окружения
