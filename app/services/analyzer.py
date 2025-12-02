@@ -388,7 +388,7 @@ class SpeechAnalyzer:
             if is_boundary:
                 # фраза заканчивается на этом сегменте
                 phrase_end_idx = idx
-                segs = segments[phrase_start_idx : phrase_end_idx + 1]
+                segs = segments[phrase_start_idx: phrase_end_idx + 1]
                 if segs:
                     dur, wcount = self._phrase_metrics(segs)
                     if wcount > 0 and dur > 0:
@@ -399,7 +399,7 @@ class SpeechAnalyzer:
 
             if is_last_seg and phrase_start_idx <= idx:
                 # закрываем последнюю фразу (если не закрыли выше)
-                segs = segments[phrase_start_idx : idx + 1]
+                segs = segments[phrase_start_idx: idx + 1]
                 if segs:
                     dur, wcount = self._phrase_metrics(segs)
                     if wcount > 0 and dur > 0:
@@ -552,7 +552,8 @@ class SpeechAnalyzer:
         )
 
         # --- 2. Слова-паразиты ---
-        fillers_per_100 = (filler_total / words_total * 100) if words_total else 0.0
+        fillers_per_100 = (filler_total / words_total *
+                           100) if words_total else 0.0
 
         if filler_total == 0:
             filler_observation = (
