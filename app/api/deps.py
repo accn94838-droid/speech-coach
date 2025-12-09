@@ -1,8 +1,8 @@
 import logging
 from functools import lru_cache
-from typing import Optional
+from typing import Optional  # Убедитесь, что Optional импортирован
 
-from app.services.audio_extractor import FfmpegAudioExtractor
+from app.services.audio_extractor_advanced import AdvancedFfmpegAudioExtractor
 from app.services.transcriber import LocalWhisperTranscriber
 from app.services.analyzer import SpeechAnalyzer
 from app.services.gigachat import GigaChatClient
@@ -13,20 +13,17 @@ logger = logging.getLogger(__name__)
 
 
 @lru_cache(maxsize=1)
-def get_audio_extractor() -> FfmpegAudioExtractor:
-    """Создает и кеширует экстрактор аудио через FFmpeg"""
-    return FfmpegAudioExtractor()
+def get_audio_extractor() -> AdvancedFfmpegAudioExtractor:
+    return AdvancedFfmpegAudioExtractor()
 
 
 @lru_cache(maxsize=1)
 def get_transcriber() -> LocalWhisperTranscriber:
-    """Создает и кеширует трансбайбер Whisper"""
     return LocalWhisperTranscriber()
 
 
 @lru_cache(maxsize=1)
 def get_analyzer() -> SpeechAnalyzer:
-    """Создает и кеширует анализатор речи"""
     return SpeechAnalyzer()
 
 
@@ -42,11 +39,13 @@ def get_gigachat_client() -> Optional[GigaChatClient]:
         return None
 
     try:
-        client = GigaChatClient()
-        logger.info("GigaChat client initialized successfully")
+        # Создаем клиент с отключенной SSL проверкой для тестирования
+        client = GigaChatClient(verify_ssl=False)
+        logger.info(
+            "GigaChat client created successfully (authentication will happen on demand)")
         return client
     except Exception as e:
-        logger.error(f"Failed to initialize GigaChat client: {e}")
+        logger.error(f"Failed to create GigaChat client: {e}")
         return None
 
 
@@ -56,7 +55,6 @@ def get_speech_pipeline() -> SpeechAnalysisPipeline:
     Создаёт и кеширует единственный экземпляр пайплайна на процесс.
     Включает GigaChat клиент, если настроен и включен.
     """
-    extractor = get_audio_extractor()
     transcriber = get_transcriber()
     analyzer = get_analyzer()
     gigachat_client = get_gigachat_client()
@@ -64,8 +62,22 @@ def get_speech_pipeline() -> SpeechAnalysisPipeline:
     logger.info(f"Initializing speech pipeline (GigaChat: {
                 'enabled' if gigachat_client else 'disabled'})")
 
+    if gigachat_client:
+        logger.info(f"GigaChat client created: {
+                    gigachat_client.__class__.__name__}")
+        # Пробуем предварительную аутентификацию
+        try:
+            import asyncio
+            # Запускаем в отдельной таске, чтобы не блокировать
+            asyncio.create_task(gigachat_client.authenticate())
+            logger.info("GigaChat pre-authentication started")
+        except Exception as e:
+            logger.warning(f"GigaChat pre-authentication failed: {e}")
+    else:
+        logger.info(
+            "GigaChat client is None, GigaChat analysis will not be available")
+
     return SpeechAnalysisPipeline(
-        audio_extractor=extractor,
         transcriber=transcriber,
         analyzer=analyzer,
         gigachat_client=gigachat_client,

@@ -1,82 +1,88 @@
 #!/usr/bin/env python3
 """
-Создаёт минимальный тестовый видеофайл для демонстрации.
-Требует установленного ffmpeg.
+Создает тестовое видео для проверки работы приложения.
 """
 
 import subprocess
-import os
+import tempfile
 from pathlib import Path
+import wave
+import sys
 
 
-def create_test_video(output_path: str = "test_video.mp4", duration: int = 5):
-    """
-    Создаёт тестовый видеофайл с чёрным экраном и синусоидальным тоном.
+def create_test_video(duration_sec: int = 10, output_path: Path = Path("test_video.mp4")):
+    """Создает тестовое видео с тишиной"""
 
-    Args:
-        output_path: Путь для сохранения видео
-        duration: Длительность в секундах
-    """
-    print(f"Создаю тестовое видео: {output_path} ({duration} секунд)")
-
-    # Проверяем наличие ffmpeg
-    try:
-        subprocess.run(["ffmpeg", "-version"],
-                       stdout=subprocess.DEVNULL,
-                       stderr=subprocess.DEVNULL,
-                       check=True)
-    except (subprocess.CalledProcessError, FileNotFoundError):
-        print("❌ FFmpeg не найден. Установите ffmpeg для создания тестового видео.")
-        print("   Ubuntu/Debian: sudo apt install ffmpeg")
-        print("   macOS: brew install ffmpeg")
-        print("   Windows: скачайте с ffmpeg.org")
-        return False
-
-    # Создаём тестовое видео с чёрным экраном и тоном 440 Гц
-    cmd = [
-        "ffmpeg",
-        "-y",  # Перезаписать без подтверждения
-        "-f", "lavfi",
-        "-i", f"color=c=black:s=640x480:d={duration}",
-        "-f", "lavfi",
-        "-i", f"sine=frequency=440:duration={duration}",
-        "-c:v", "libx264",
-        "-c:a", "aac",
-        "-shortest",
-        output_path
-    ]
+    temp_dir = tempfile.mkdtemp()
 
     try:
-        print("⏳ Генерирую видео...")
-        result = subprocess.run(cmd,
-                                capture_output=True,
-                                text=True,
-                                check=True)
+        # 1. Создаем аудио файл с тишиной
+        audio_path = Path(temp_dir) / "audio.wav"
 
-        if Path(output_path).exists():
-            file_size = Path(output_path).stat().st_size / (1024 * 1024)
-            print(f"✅ Тестовое видео создано: {output_path}")
-            print(f"   Размер: {file_size:.2f} MB")
-            print(f"   Длительность: {duration} секунд")
+        with wave.open(str(audio_path), 'wb') as wav:
+            wav.setnchannels(1)  # Моно
+            wav.setsampwidth(2)  # 16-bit
+            wav.setframerate(16000)  # 16kHz
+            # Тишина
+            wav.writeframes(b'\x00' * 16000 * 2 * duration_sec)
+
+        print(f"Created audio file: {audio_path}")
+
+        # 2. Создаем видео из цветного фона и аудио
+        cmd = [
+            'ffmpeg', '-y',
+            '-f', 'lavfi',
+            '-i', f'color=c=blue:s=640x480:d={duration_sec}',
+            '-i', str(audio_path),
+            '-c:v', 'libx264',
+            '-preset', 'fast',
+            '-c:a', 'aac',
+            '-shortest',
+            '-pix_fmt', 'yuv420p',
+            str(output_path)
+        ]
+
+        print(f"Creating video with command: {' '.join(cmd)}")
+        result = subprocess.run(cmd, capture_output=True, text=True)
+
+        if result.returncode == 0:
+            print(f"✅ Test video created: {output_path}")
+            print(f"File size: {
+                  output_path.stat().st_size / 1024 / 1024:.2f} MB")
             return True
         else:
-            print("❌ Не удалось создать видео")
+            print(f"❌ FFmpeg error: {result.stderr}")
             return False
 
-    except subprocess.CalledProcessError as e:
-        print(f"❌ Ошибка при создании видео: {e}")
-        print(f"stderr: {e.stderr}")
+    except Exception as e:
+        print(f"❌ Error creating test video: {e}")
         return False
+    finally:
+        # Очистка временных файлов
+        import shutil
+        shutil.rmtree(temp_dir, ignore_errors=True)
+
+
+def create_video_with_voice():
+    """Создает видео с тестовой речью (требует текст в речь)"""
+    print("Этот метод требует TTS систему. Используйте простой метод выше.")
+    return False
 
 
 if __name__ == "__main__":
-    import sys
-
     if len(sys.argv) > 1:
-        output_path = sys.argv[1]
-        duration = int(sys.argv[2]) if len(sys.argv) > 2 else 5
+        output_path = Path(sys.argv[1])
     else:
-        output_path = "test_video.mp4"
-        duration = 5
+        output_path = Path("test_video.mp4")
 
-    create_test_video(output_path, duration)
+    success = create_test_video(output_path=output_path)
+
+    if success:
+        print(f"\n🎬 Тестовое видео готово: {output_path}")
+        print("Используйте его для тестирования API:")
+        print(f"curl -X POST http://127.0.0.1:8000/api/v1/analyze \\")
+        print(f"  -F \"file=@{output_path}\" \\")
+        print(f"  -H \"accept: application/json\"")
+    else:
+        print("\n❌ Не удалось создать тестовое видео")
+        print("Убедитесь, что ffmpeg установлен и доступен в PATH")

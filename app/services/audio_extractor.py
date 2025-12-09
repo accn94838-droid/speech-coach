@@ -1,7 +1,7 @@
 import subprocess
 import logging
 from pathlib import Path
-from typing import Protocol, Optional
+from typing import Protocol
 
 from app.core.config import settings
 
@@ -30,30 +30,44 @@ class FfmpegAudioExtractor:
             "-ar", "16000",  # Частота дискретизации
             "-ac", "1",  # Моно
             "-hide_banner",  # Скрыть баннер ffmpeg
-            "-loglevel", "error",  # Только ошибки
+            "-loglevel", "quiet",  # ТИХИЙ режим - никакого вывода!
+            "-nostats",  # Без статистики
             str(audio_path),
         ]
 
-        logger.debug(f"Running ffmpeg command: {' '.join(cmd)}")
+        logger.debug(f"Running ffmpeg: {' '.join(cmd)}")
 
         try:
-            # Используем subprocess.run с правильными параметрами
+            # Используем subprocess.run с DEVNULL для подавления вывода
             result = subprocess.run(
                 cmd,
                 check=True,
-                capture_output=True,  # Захватываем вывод
-                text=True,
-                timeout=60  # Таймаут 60 секунд
+                stdout=subprocess.DEVNULL,  # Подавляем stdout
+                stderr=subprocess.DEVNULL,  # Подавляем stderr
+                timeout=300  # Таймаут 5 минут
             )
-
-            if result.stderr:
-                logger.warning(f"FFmpeg warnings: {result.stderr}")
 
             logger.info(f"Audio extracted successfully: {audio_path}")
 
-        except subprocess.CalledProcessError as e:
-            logger.error(f"FFmpeg failed with code {e.returncode}: {e.stderr}")
-            raise RuntimeError(f"Failed to extract audio: {e.stderr}")
+            # Проверяем, что файл создан и не пустой
+            if audio_path.exists():
+                file_size = audio_path.stat().st_size
+                if file_size > 0:
+                    logger.debug(f"Audio file size: {file_size} bytes")
+                else:
+                    raise RuntimeError("Extracted audio file is empty")
+            else:
+                raise RuntimeError("Audio file was not created")
+
         except subprocess.TimeoutExpired:
-            logger.error("FFmpeg timeout (60 seconds)")
-            raise RuntimeError("Audio extraction timeout")
+            logger.error("FFmpeg timeout (5 minutes)")
+            raise RuntimeError(
+                "Audio extraction timeout - video might be too long or corrupted")
+        except subprocess.CalledProcessError as e:
+            logger.error(f"FFmpeg failed with code {e.returncode}")
+            raise RuntimeError(
+                f"Failed to extract audio (code: {e.returncode})")
+        except FileNotFoundError:
+            logger.error(f"FFmpeg not found at: {self.ffmpeg_path}")
+            raise RuntimeError(
+                f"FFmpeg not found. Please install ffmpeg and add to PATH")

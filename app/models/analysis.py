@@ -1,7 +1,6 @@
 from typing import List, Dict, Any, Literal, Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
-# Импортируем новую модель
 from app.models.gigachat import GigaChatAnalysis
 
 
@@ -57,4 +56,7 @@ class AnalysisResult(BaseModel):
     transcript: str
 
     # Расширенный анализ (опционально)
-    gigachat_analysis: Optional[GigaChatAnalysis] = None
+    gigachat_analysis: Optional[GigaChatAnalysis] = Field(
+        default=None,
+        description="Расширенный AI-анализ через GigaChat"
+    )

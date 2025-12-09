@@ -1,9 +1,12 @@
 import logging
+from typing import Optional
 from fastapi import APIRouter, UploadFile, File, Depends, HTTPException, status
 
-from app.api.deps import get_speech_pipeline
+# Добавлен get_gigachat_client
+from app.api.deps import get_speech_pipeline, get_gigachat_client
 from app.models.analysis import AnalysisResult
 from app.services.pipeline import SpeechAnalysisPipeline
+from app.services.gigachat import GigaChatClient
 from app.core.exceptions import (
     SpeechCoachException,
     FileValidationError,
@@ -21,10 +24,10 @@ logger = logging.getLogger(__name__)
     summary="Анализ видеофайла с речью",
     description="""
     Загрузите видеофайл для анализа публичной речи.
-    
+
     Поддерживаемые форматы: MP4, MOV, AVI, MKV, WEBM, FLV, WMV, M4V
     Максимальный размер файла: 100 MB
-    
+
     Возвращает:
     - Базовые метрики речи (темп, паузы, слова-паразиты)
     - Транскрипт текста

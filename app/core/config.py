@@ -19,16 +19,20 @@ class Settings(BaseSettings):
         default="int8", alias="WHISPER_COMPUTE_TYPE"
     )
 
-    # Настройки GigaChat API
+    # Настройки GigaChat API (согласно документации)
     gigachat_enabled: bool = Field(
         default=False, alias="GIGACHAT_ENABLED"
     )
     gigachat_api_key: Optional[SecretStr] = Field(
         default=None, alias="GIGACHAT_API_KEY"
     )
-    gigachat_base_url: str = Field(
+    gigachat_auth_url: str = Field(
+        default="https://ngw.devices.sberbank.ru:9443/api/v2/oauth",
+        alias="GIGACHAT_AUTH_URL"
+    )
+    gigachat_api_url: str = Field(
         default="https://gigachat.devices.sberbank.ru/api/v1",
-        alias="GIGACHAT_BASE_URL"
+        alias="GIGACHAT_API_URL"
     )
     gigachat_model: str = Field(
         default="GigaChat", alias="GIGACHAT_MODEL"
@@ -38,6 +42,10 @@ class Settings(BaseSettings):
     )
     gigachat_max_tokens: int = Field(
         default=2000, alias="GIGACHAT_MAX_TOKENS"
+    )
+    gigachat_scope: str = Field(
+        default="GIGACHAT_API_PERS",
+        alias="GIGACHAT_SCOPE"
     )
 
     # Настройки валидации файлов
