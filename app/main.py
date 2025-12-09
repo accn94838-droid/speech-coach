@@ -9,12 +9,11 @@ from app.api.routes.analysis import router as analysis_router
 from app.core.lifespan import lifespan
 from app.core.config import settings
 from app.core.exceptions import SpeechCoachException
+from app.core.logging_config import setup_logging
 
-# Настройка логирования
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
+# Настраиваем логирование
+setup_logging(log_level="INFO")
+
 logger = logging.getLogger(__name__)
 
 app = FastAPI(
@@ -31,6 +30,7 @@ app = FastAPI(
 # Глобальный обработчик кастомных исключений
 @app.exception_handler(SpeechCoachException)
 async def speech_coach_exception_handler(request: Request, exc: SpeechCoachException):
+    logger.warning(f"SpeechCoachException: {exc.detail}")
     return JSONResponse(
         status_code=exc.status_code,
         content={
@@ -85,6 +85,7 @@ app.include_router(analysis_router)
 @app.get("/")
 async def root():
     """Корневой эндпоинт с информацией о API"""
+    logger.info("Root endpoint accessed")
     return {
         "name": "Speech Coach API",
         "version": "1.0.0",
