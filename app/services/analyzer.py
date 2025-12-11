@@ -1,5 +1,6 @@
 from typing import List, Dict, Tuple, Any, Literal, Optional
 from app.core.config import settings
+import logging
 from app.services import vad
 import re
 import wave
@@ -414,6 +415,16 @@ class SpeechAnalyzer:
                     })
             last_end = end
 
+        # Debug: log raw pauses count and some examples
+        try:
+            logger = logging.getLogger(__name__)
+            logger.debug("_calculate_speaking_stats: speaking_time_sec=%s, raw_pauses_count=%d", speaking_time_sec, len(pauses_raw))
+            if pauses_raw:
+                # Log first 5 pauses for brevity
+                logger.debug("_calculate_speaking_stats: raw_pauses_sample=%s", pauses_raw[:5])
+        except Exception:
+            pass
+
         return speaking_time_sec, pauses_raw
 
     def _filter_pauses(
@@ -496,11 +507,15 @@ class SpeechAnalyzer:
             wav_read_failed = True
 
         num_samples = len(frames) // 2 if frames else 0
+        logger = logging.getLogger(__name__)
+        logger.debug("_filter_noisy_pauses: wav_read_failed=%s, framerate=%s, num_samples=%s", wav_read_failed, framerate, num_samples)
         # Try early VAD detection — if we failed to read WAV, use VAD results to filter pauses immediately.
         try:
             early_vad_segments = vad.detect_speech_regions(audio_path, settings.use_pyannote_vad, settings.use_webrtc_vad, webrtc_mode=settings.webrtc_vad_mode, pyannote_model=settings.pyannote_model)
         except Exception:
             early_vad_segments = []
+
+        logger.debug("_filter_noisy_pauses: early_vad_segments_count=%s sample=%s", len(early_vad_segments), early_vad_segments[:3])
 
         if wav_read_failed and early_vad_segments:
             def has_vad_activity_early(start_s: float, end_s: float) -> bool:
@@ -517,6 +532,7 @@ class SpeechAnalyzer:
                     continue
                 if not has_vad_activity_early(start_s, end_s):
                     filtered.append(pause)
+            logger.debug("_filter_noisy_pauses: filtered_by_early_vad_count=%s", len(filtered))
             return filtered
 
         samples = struct.unpack("<{}h".format(num_samples), frames)
@@ -569,6 +585,7 @@ class SpeechAnalyzer:
                         return True
                 return False
 
+            logger.debug("_filter_noisy_pauses: fallback vad_segments_count=%s sample=%s", len(vad_segments), vad_segments[:3])
             if vad_segments:
                 filtered = []
                 for pause in pauses:
@@ -578,6 +595,7 @@ class SpeechAnalyzer:
                         continue
                     if not has_vad_activity_local(start_s, end_s):
                         filtered.append(pause)
+                logger.debug("_filter_noisy_pauses: filtered_by_vad_only_count=%s", len(filtered))
                 return filtered
 
             return pauses
@@ -586,12 +604,14 @@ class SpeechAnalyzer:
         speech_rms_values.sort()
         median_speech_rms = speech_rms_values[len(speech_rms_values) // 2]
         silence_threshold = median_speech_rms * SILENCE_FACTOR
+        logger.debug("_filter_noisy_pauses: median_speech_rms=%s, silence_threshold=%s", median_speech_rms, silence_threshold)
 
         # Пытаемся использовать VAD (pyannote / webrtcvad) для исключения ложных пауз
         try:
             vad_segments = vad.detect_speech_regions(audio_path, settings.use_pyannote_vad, settings.use_webrtc_vad, webrtc_mode=settings.webrtc_vad_mode, pyannote_model=settings.pyannote_model)
         except Exception as e:
             vad_segments = []
+        logger.debug("_filter_noisy_pauses: vad_segments_count=%s sample=%s", len(vad_segments), vad_segments[:3])
 
         def has_vad_activity(start_s: float, end_s: float) -> bool:
             for vstart, vend in vad_segments:
@@ -636,6 +656,22 @@ class SpeechAnalyzer:
 
             if r < silence_threshold:
                 filtered.append(pause)
+
+        # Debug: log filtering summary
+        logger.debug("_filter_noisy_pauses: raw_count=%s, filtered_count=%s", len(pauses), len(filtered))
+        if filtered:
+            logger.debug("_filter_noisy_pauses: filtered_sample=%s", filtered[:5])
+
+        # For the first few pauses, log detailed decision info
+        for i, pause in enumerate(pauses[:5]):
+            start_s = pause["start"]
+            end_s = pause["end"]
+            start_idx = max(0, int(start_s * framerate))
+            end_idx = min(num_samples, int(end_s * framerate))
+            r = segment_rms(start_idx, end_idx) if end_idx > start_idx else 0.0
+            vad_active = bool(vad_segments and has_vad_activity(start_s, end_s))
+            kept = pause in filtered
+            logger.debug("_filter_noisy_pauses: pause_idx=%s start=%s end=%s dur=%s rms=%s vad_active=%s kept=%s", i, start_s, end_s, pause.get("duration"), r, vad_active, kept)
 
         return filtered
 
