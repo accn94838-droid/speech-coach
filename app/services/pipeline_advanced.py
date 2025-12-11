@@ -14,6 +14,7 @@ from app.services.analyzer_advanced import AdvancedSpeechAnalyzer
 from app.services.gigachat import GigaChatClient
 from app.services.pipeline import SpeechAnalysisPipeline as BasePipeline
 from app.models.timed_models import TimedAnalysisResult
+from app.core.config import settings
 
 logger = logging.getLogger(__name__)
 
