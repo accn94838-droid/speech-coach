@@ -177,7 +177,7 @@ class AdvancedSpeechAnalyzer:
             context_after = self._get_context(transcript.word_timings, i, 0, 2)
 
             # Проверка на слово-паразит - используем search вместо match
-            word_text = word.word.lower().strip(",.!?;:()\"'")
+            word_text = word.word.lower().strip().strip(",.!?;:()\"'")
             is_filler = any(
                 pattern.search(word_text)
                 for _, pattern in self.filler_patterns
@@ -562,7 +562,7 @@ class AdvancedSpeechAnalyzer:
 
     def _identify_filler_type(self, word: str) -> str:
         """Идентифицирует тип слова-паразита"""
-        word_lower = word.lower().strip(",.!?;:()\"'")
+        word_lower = word.lower().strip().strip(",.!?;:()\"'")
 
         for filler_name, pattern in self.filler_patterns:
             # Используем search вместо match для лучшего совпадения

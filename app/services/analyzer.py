@@ -224,9 +224,8 @@ class SpeechAnalyzer:
     def _find_fillers_with_exact_timings(self, transcript: Transcript) -> List[TimedFillerWord]:
         """Находит слова-паразиты с точными таймингами"""
         fillers = []
-
         for word_timing in transcript.word_timings:
-            word_text = word_timing.word.lower().strip(",.!?;:()\"'")
+            word_text = word_timing.word.lower().strip().strip(",.!?;:()\"'")
 
             for filler_name, pattern in COMPILED_FILLERS:
                 # Используем search вместо match, так как match проверяет начало строки
