@@ -209,19 +209,41 @@ class GigaChatClient:
                 "messages": [
                     {
                         "role": "system",
-                        "content": """Ты эксперт по публичным выступлениям. 
-                        Анализируй речь по предоставленным метрикам. 
-                        Верни ответ ТОЛЬКО в формате JSON без дополнительного текста.
-                        
-                        Формат JSON:
-                        {
-                          "overall_assessment": "текст",
-                          "strengths": ["пункт1", "пункт2"],
-                          "areas_for_improvement": ["пункт1", "пункт2"],
-                          "detailed_recommendations": ["пункт1", "пункт2"],
-                          "key_insights": ["пункт1", "пункт2"],
-                          "confidence_score": число от 0 до 1
-                        }"""
+                        "content": """Ты опытный тренер по ораторскому искусству и публичным выступлениям. Твоя задача - дать глубокий и профессиональный анализ речи на основе предоставленных метрик и транскрипта. 
+
+Ты должен проанализировать:
+1. Структуру и логичность выступления
+2. Эмоциональную окраску и убедительность
+3. Взаимодействие с аудиторией (по паузам, темпу речи)
+4. Использование профессиональной лексики
+5. Темп речи и ритмичность
+6. Наличие слов-паразитов и их влияние на восприятие
+7. Длину фраз и ясность выражения мыслей
+8. Общее впечатление от выступления
+
+Формат ответа: строго JSON без дополнительного текста. Все поля обязательны к заполнению, даже если данных недостаточно - дай лучшую оценку на основе доступной информации.
+
+Формат JSON:
+{
+  "overall_assessment": "Общая оценка выступления: сильные и слабые стороны, уровень подготовки, общее впечатление",
+  "strengths": [
+    "Первая сильная сторона с конкретным примером из выступления",
+    "Вторая сильная сторона с конкретным примером из выступления"
+  ],
+  "areas_for_improvement": [
+    "Первая зона роста с конкретным указанием проблемы",
+    "Вторая зона роста с конкретным указанием проблемы"
+  ],
+  "detailed_recommendations": [
+    "Конкретная рекомендация по улучшению с объяснением",
+    "Конкретная рекомендация по улучшению с объяснением"
+  ],
+  "key_insights": [
+    "Ключевой инсайт о стиле речи",
+    "Ключевой инсайт о взаимодействии с аудиторией"
+  ],
+  "confidence_score": "Число от 0 до 1, отражающее уверенность в анализе на основе полноты данных"
+}"""
                     },
                     {
                         "role": "user",
@@ -229,7 +251,7 @@ class GigaChatClient:
                     }
                 ],
                 "temperature": 0.7,
-                "max_tokens": min(self.max_tokens, 1500),  # Ограничиваем длину
+                "max_tokens": min(self.max_tokens, 2000),  # Увеличиваем для более подробного анализа
                 "response_format": {"type": "json_object"}
             }
 
@@ -256,24 +278,33 @@ class GigaChatClient:
             content = result["choices"][0]["message"]["content"]
             logger.info(f"GigaChat response received: {len(content)} characters")
 
-            # Очищаем и парсим JSON
-            cleaned_content = self._clean_json_response(content)
-
-            try:
-                parsed_content = json.loads(cleaned_content)
-
+            # Пробуем распарсить JSON с несколькими попытками
+            parsed_content = self._parse_json_with_retries(content)
+            
+            if parsed_content is not None:
                 # Валидируем обязательные поля
                 required_fields = ["overall_assessment", "strengths", "areas_for_improvement",
                                    "detailed_recommendations", "key_insights", "confidence_score"]
 
                 for field in required_fields:
-                    if field not in parsed_content:
-                        parsed_content[field] = "" if field != "confidence_score" else 0.5
+                    if field not in parsed_content or parsed_content[field] is None:
+                        if field == "confidence_score":
+                            parsed_content[field] = 0.5
+                        else:
+                            parsed_content[field] = ""
+                
+                # Убедимся, что overall_assessment не пустой, если другие поля заполнены
+                if not parsed_content["overall_assessment"].strip() and (
+                    parsed_content["strengths"] or 
+                    parsed_content["areas_for_improvement"] or 
+                    parsed_content["detailed_recommendations"] or 
+                    parsed_content["key_insights"]
+                ):
+                    parsed_content["overall_assessment"] = "Анализ выступления показал следующие результаты"
 
                 return GigaChatAnalysis(**parsed_content)
-
-            except (json.JSONDecodeError, ValidationError) as e:
-                logger.warning(f"Failed to parse GigaChat response: {e}")
+            else:
+                logger.warning("Failed to parse GigaChat response after retries")
                 logger.debug(f"Raw content: {content[:500]}...")
 
                 # Создаем базовый ответ
@@ -534,18 +565,75 @@ class GigaChatClient:
                 "messages": [
                     {
                         "role": "system",
-                        "content": """Ты эксперт по публичным выступлениям, ораторскому искусству и анализу речи. 
-                        Твоя задача - анализировать выступление с учетом ТОЧНЫХ ВРЕМЕННЫХ МЕТОК.
-                        
-                        Требования к анализу:
-                        1. Привязывай все рекомендации к конкретным секундам выступления
-                        2. Выявляй временные паттерны и закономерности
-                        3. Определяй критические моменты (поворотные точки, кульминации)
-                        4. Анализируй стиль речи и его уместность
-                        5. Оценивай предполагаемую вовлеченность аудитории по времени
-                        6. Составь временную шкалу улучшений с упражнениями
-                        
-                        Отвечай ТОЛЬКО в указанном JSON формате."""
+                        "content": """Ты опытный тренер по ораторскому искусству и публичным выступлениям. Твоя задача - дать глубокий и профессиональный анализ речи на основе предоставленных метрик, транскрипта и точных временных меток.
+
+Ты должен проанализировать:
+1. Структуру и логичность выступления
+2. Эмоциональную окраску и убедительность
+3. Взаимодействие с аудиторией (по паузам, темпу речи)
+4. Использование профессиональной лексики
+5. Темп речи и ритмичность
+6. Наличие слов-паразитов и их влияние на восприятие
+7. Длину фраз и ясность выражения мыслей
+8. Общее впечатление от выступления
+9. Привязывай все рекомендации к конкретным секундам выступления
+10. Выявляй временные паттерны и закономерности
+11. Определяй критические моменты (поворотные точки, кульминации)
+12. Анализируй стиль речи и его уместность
+13. Оценивай предполагаемую вовлеченность аудитории по времени
+14. Составь временную шкалу улучшений с упражнениями
+
+Формат ответа: строго JSON без дополнительного текста. Все поля обязательны к заполнению, даже если данных недостаточно - дай лучшую оценку на основе доступной информации.
+
+Формат JSON:
+{
+  "overall_assessment": "Общая оценка выступления: сильные и слабые стороны, уровень подготовки, общее впечатление",
+  "strengths": [
+    "Первая сильная сторона с конкретным примером из выступления",
+    "Вторая сильная сторона с конкретным примером из выступления"
+  ],
+  "areas_for_improvement": [
+    "Первая зона роста с конкретным указанием проблемы",
+    "Вторая зона роста с конкретным указанием проблемы"
+  ],
+  "detailed_recommendations": [
+    "Конкретная рекомендация по улучшению с объяснением",
+    "Конкретная рекомендация по улучшению с объяснением"
+  ],
+  "key_insights": [
+    "Ключевой инсайт о стиле речи",
+    "Ключевой инсайт о взаимодействии с аудиторией"
+  ],
+  "confidence_score": "Число от 0 до 1, отражающее уверенность в анализе на основе полноты данных",
+  "time_based_analysis": [
+    {
+      "time_range": "Временной диапазон в секундах",
+      "observation": "Что происходит в этот момент",
+      "recommendation": "Рекомендации для этого временного диапазона"
+    }
+  ],
+  "temporal_patterns": [
+    {
+      "pattern": "Обнаруженный паттерн",
+      "time_instances": [секунды],
+      "description": "Описание паттерна"
+    }
+  ],
+  "improvement_timeline": [
+    {
+      "time_marker": "Время в секундах",
+      "improvement_area": "Область для улучшения",
+      "exercise": "Упражнение для улучшения"
+    }
+  ],
+  "critical_moments": [
+    {
+      "time": "Время в секундах",
+      "type": "Тип критического момента",
+      "description": "Описание критического момента"
+    }
+  ]
+}"""
                     },
                     {
                         "role": "user",
@@ -587,19 +675,17 @@ class GigaChatClient:
                         processing_time:.1f} seconds")
 
             try:
-                # Попробуем более терпимый парсинг: сначала очистить текст,
-                # затем попытаться распарсить JSON. Это позволит обработать
-                # ситуации с лишними запятыми, поясняющими фразами вокруг JSON и т.п.
-                cleaned = self._clean_json_response(content)
-                parsed_content = json.loads(cleaned)
-                parsed_content["processing_time_sec"] = processing_time
-                return parsed_content
-
-            except (json.JSONDecodeError, ValidationError) as e:
-                logger.warning(f"Failed to parse GigaChat response as JSON: {e}")
-                logger.debug(f"Raw content (first 2000 chars): {content[:2000]}")
-                processing_time = time.time() - start_time
-                return self._create_error_response(f"JSON parse error", processing_time)
+                # Пробуем распарсить JSON с несколькими попытками
+                parsed_content = self._parse_json_with_retries(content)
+                
+                if parsed_content is not None:
+                    parsed_content["processing_time_sec"] = processing_time
+                    return parsed_content
+                else:
+                    logger.warning("Failed to parse GigaChat detailed response after retries")
+                    logger.debug(f"Raw content: {content[:2000]}...")
+                    processing_time = time.time() - start_time
+                    return self._create_error_response("JSON parse error after retries", processing_time)
 
         except httpx.RequestError as e:
             logger.error(f"GigaChat API request failed: {e}")
@@ -723,6 +809,62 @@ class GigaChatClient:
             return s
         except Exception:
             return content
+
+    def _parse_json_with_retries(self, content: str, max_retries: int = 3):
+        """
+        Парсит JSON с несколькими попытками очистки и парсинга.
+        
+        Args:
+            content: Строка, содержащая JSON или частично корректный JSON
+            max_retries: Максимальное количество попыток парсинга
+            
+        Returns:
+            Словарь с распарсенными данными или None, если не удалось распарсить
+        """
+        import copy
+        
+        # Первая попытка: пробуем распарсить напрямую
+        try:
+            return json.loads(content)
+        except json.JSONDecodeError:
+            pass
+
+        # Очищаем контент и пробуем снова
+        cleaned_content = self._clean_json_response(content)
+        
+        # Попытка с очищенным контентом
+        try:
+            return json.loads(cleaned_content)
+        except json.JSONDecodeError:
+            pass
+
+        # Попытки с разными стратегиями очистки
+        strategies = [
+            # Стратегия 1: удалить строки комментариев
+            lambda s: re.sub(r'\s*//.*$', '', s, flags=re.MULTILINE),
+            # Стратегия 2: заменить одинарные кавычки на двойные в ключах и строковых значениях
+            lambda s: re.sub(r"'([^']*)':", r'"\1":', s),  # ключи
+            lambda s: re.sub(r":\s*'([^']*)'", r': "\1"', s),  # значения
+            # Стратегия 3: комбинация предыдущих
+            lambda s: re.sub(r'\s*//.*$', '', re.sub(r"'([^']*)':", r'"\1":', s), flags=re.MULTILINE),
+        ]
+        
+        for attempt in range(max_retries):
+            for strategy in strategies:
+                try:
+                    processed_content = strategy(cleaned_content)
+                    # Попробуем снова очистить после применения стратегии
+                    processed_content = self._clean_json_response(processed_content)
+                    return json.loads(processed_content)
+                except (json.JSONDecodeError, TypeError):
+                    continue
+                    
+        # Если все попытки не удались, логируем необработанный ответ для отладки
+        logger.warning(f"GigaChat returned malformed JSON that could not be parsed after {max_retries} attempts.")
+        logger.debug(f"Original content: {content}")
+        logger.debug(f"Cleaned content: {cleaned_content}")
+        
+        return None
 
     def _create_error_response(self, error_message: str, processing_time: float) -> Dict[str, Any]:
         """Создает ответ об ошибке"""

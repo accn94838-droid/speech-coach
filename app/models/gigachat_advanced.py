@@ -2,7 +2,7 @@
 Расширенные модели для анализа GigaChat с поддержкой таймингов.
 """
 from pydantic import BaseModel, Field
-from typing import List, Dict, Optional, Any
+from typing import List, Dict, Optional, Any, Literal
 from datetime import datetime
 
 
