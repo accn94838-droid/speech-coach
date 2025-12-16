@@ -61,7 +61,7 @@ class AdvancedSpeechAnalyzer:
             "very_fast": 250
         }
 
-    def analyze_with_timings(self, transcript: Transcript) -> TimedAnalysisResult:
+    async def analyze_with_timings(self, transcript: Transcript) -> TimedAnalysisResult:
         """
         Выполняет детализированный анализ речи с полными таймингами.
         """
@@ -70,7 +70,7 @@ class AdvancedSpeechAnalyzer:
             return self._create_empty_timed_result(transcript)
 
         # Базовый анализ
-        enhanced_result = self.base_analyzer.analyze(
+        enhanced_result = await self.base_analyzer.analyze(
             transcript, include_timings=True)
 
         # Собираем все слова с расширенной информацией
@@ -1237,9 +1237,26 @@ class AdvancedSpeechAnalyzer:
             speaking_ratio=0,
             words_total=0,
             words_per_minute=0,
-            filler_words={},
-            pauses={},
-            phrases={},
+            filler_words={
+                "total": 0,
+                "per_100_words": 0.0,
+                "items": {},
+                "distribution": {}
+            },
+            pauses={
+                "total": 0,
+                "avg_sec": 0,
+                "max_sec": 0,
+                "problematic_count": 0,
+                "distribution": {}
+            },
+            phrases={
+                "total": 0,
+                "avg_words": 0,
+                "avg_duration_sec": 0,
+                "complexity_score": 0,
+                "rhythm_score": 0
+            },
             advice=[],
             transcript=transcript.text,
             timeline=SpeechTimeline(),

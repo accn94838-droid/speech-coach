@@ -40,8 +40,8 @@ class AdvancedSpeechAnalysisPipeline(BasePipeline):
             # 2. Транскрипция с таймингами
             transcript = await self._transcribe_audio(temp_audio_path)
 
-            # 3. Продвинутый анализ с таймингами (CPU-bound - run in thread)
-            result = await asyncio.to_thread(self.advanced_analyzer.analyze_with_timings, transcript)
+            # 3. Продвинутый анализ с таймингами
+            result = await self.advanced_analyzer.analyze_with_timings(transcript)
 
             # 4. GigaChat анализ (если включен)
             if self.gigachat_client:
