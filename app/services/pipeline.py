@@ -52,9 +52,8 @@ class SpeechAnalysisPipeline:
         # Инициализация кеша
         self.cache = None
         if enable_cache:
-            cache_dir = Path("cache/analysis")
-            self.cache = AnalysisCache(cache_dir, ttl_seconds=settings.cache_ttl if hasattr(
-                settings, 'cache_ttl') else 3600)
+            cache_dir = Path(settings.cache_dir) / "analysis"
+            self.cache = AnalysisCache(cache_dir, ttl_seconds=settings.cache_ttl)
 
         # Инициализация сборщика метрик
         self.metrics_collector = None

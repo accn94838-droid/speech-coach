@@ -1,5 +1,6 @@
 import logging
 from functools import lru_cache
+from pathlib import Path
 from typing import Optional
 
 from app.services.audio_extractor_advanced import AdvancedFfmpegAudioExtractor
@@ -21,7 +22,10 @@ def get_audio_extractor() -> AdvancedFfmpegAudioExtractor:
 @lru_cache(maxsize=1)
 def get_transcriber() -> LocalWhisperTranscriber:
     """Создает трансскрайбер (загружает модель при первом вызове)"""
-    return LocalWhisperTranscriber()
+    return LocalWhisperTranscriber(
+        cache_dir=Path(settings.cache_dir),
+        cache_ttl=settings.cache_ttl
+    )
 
 
 @lru_cache(maxsize=1)
