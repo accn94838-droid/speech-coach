@@ -241,6 +241,14 @@ class SpeechAnalysisPipeline:
                 file_size = audio_path.stat().st_size
                 if file_size == 0:
                     raise AnalysisError("Извлеченный аудиофайл пуст")
+                
+                # Добавляем проверку на минимальный размер аудиофайла для предотвращения анализа пустых аудио
+                if file_size < 1024:  # Меньше 1KB - скорее всего пустое аудио
+                    # Проверим, есть ли действительно звук в аудио
+                    is_valid_audio, error_msg = await self._validate_audio_content(audio_path)
+                    if not is_valid_audio:
+                        raise AnalysisError(f"Аудиофайл не содержит речи или слишком короткий: {error_msg}")
+                
                 logger.info(f"Аудио извлечено: {file_size:,} байт")
             else:
                 raise AnalysisError("Аудиофайл не был создан")
@@ -252,6 +260,44 @@ class SpeechAnalysisPipeline:
         except Exception as e:
             logger.error(f"Ошибка извлечения аудио: {e}")
             raise AnalysisError(f"Не удалось извлечь аудио: {str(e)}")
+    
+    async def _validate_audio_content(self, audio_path: Path) -> tuple[bool, str]:
+        """Проверяет содержимое аудиофайла на наличие речи"""
+        try:
+            import wave
+            import numpy as np
+            
+            # Открываем wav файл и проверяем его содержимое
+            with wave.open(str(audio_path), 'r') as wf:
+                frames = wf.getnframes()
+                sample_rate = wf.getframerate()
+                duration = frames / float(sample_rate)
+                
+                if duration < 0.1:  # Меньше 100 мс - слишком короткое аудио
+                    return False, "Аудио слишком короткое для анализа"
+                
+                # Читаем аудиоданные
+                raw_audio = wf.readframes(frames)
+                
+                # Конвертируем в numpy array для анализа
+                if wf.getsampwidth() == 2:  # 16-bit
+                    audio_array = np.frombuffer(raw_audio, dtype=np.int16)
+                elif wf.getsampwidth() == 4:  # 32-bit
+                    audio_array = np.frombuffer(raw_audio, dtype=np.int32)
+                else:
+                    return False, "Неподдерживаемый формат аудио"
+                
+                # Проверяем уровень громкости (RMS)
+                rms = np.sqrt(np.mean(audio_array.astype(np.float32) ** 2))
+                
+                # Если средняя громкость очень низкая, это может быть тишина
+                if rms < 50:  # Порог для определения "тишины"
+                    return False, "Аудио содержит в основном тишину"
+                
+                return True, "Аудио содержит звук"
+        except Exception as e:
+            logger.warning(f"Ошибка проверки содержимого аудио: {e}")
+            return False, f"Ошибка проверки аудио: {str(e)}"
 
     async def _transcribe_audio(self, audio_path: Path):
         """Транскрибирует аудио (с таймингами слов)"""

@@ -133,11 +133,15 @@ def cache_analysis(ttl_hours: int = 1):
                 sha.update(chunk)
             await file.seek(0)
             key = sha.hexdigest()
+            
+            # Добавляем флаг использования GigaChat в ключ кеша
+            gigachat_enabled = getattr(self, 'gigachat_client', None) is not None
+            key_with_gigachat = f"{key}_gigachat_{gigachat_enabled}"
 
             # Проверяем кеш по ключу
             # Offload file IO to thread to avoid blocking event loop
             import asyncio
-            cached_result = await asyncio.to_thread(self.cache.get_by_key, key)
+            cached_result = await asyncio.to_thread(self.cache.get_by_key, key_with_gigachat)
             if cached_result is not None:
                 logger.info(f"Используется кешированный результат для {file.filename}")
                 return cached_result
@@ -148,7 +152,7 @@ def cache_analysis(ttl_hours: int = 1):
             # Сохраняем в кеш
             try:
                 import asyncio
-                await asyncio.to_thread(self.cache.set_by_key, key, result)
+                await asyncio.to_thread(self.cache.set_by_key, key_with_gigachat, result)
             except Exception as e:
                 logger.warning(f"Не удалось сохранить в кеш: {e}")
 

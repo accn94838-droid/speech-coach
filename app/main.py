@@ -17,7 +17,7 @@ from app.core.exceptions import (
 )
 
 # Настраиваем логирование
-setup_logging(log_level="INFO")
+setup_logging(log_level="INFO", log_file="logs/app.log")
 
 logger = logging.getLogger(__name__)
 
