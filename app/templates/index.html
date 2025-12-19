@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Speech Coach - анализ вашего выступления с помощью AI">
     <title>Speech Coach - Анализ вашего выступления с AI</title>
+    <link rel="icon" href="/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -222,11 +223,28 @@
                 </a>
             </div>
 
-            <!-- Demo Concept -->
+            <!-- Professional sample / placeholder -->
             <div class="card-dark p-8 rounded-lg max-w-3xl mx-auto">
-                <div style="color: var(--text-secondary);" class="py-16">
-                    <i class="fas fa-chart-bar text-5xl mb-4" style="color: var(--accent);"></i>
-                    <p class="text-lg">Результаты анализа с интерактивными графиками и рекомендациями</p>
+                <div class="grid md:grid-cols-2 gap-6 items-center">
+                    <div>
+                        <h4 class="text-xl font-semibold mb-3">Образец отчёта — профессиональная структура</h4>
+                        <p style="color: var(--text-secondary);" class="mb-4">Загрузите своё выступление, чтобы получить персонализированный отчёт. Пока что — краткое описание того, что вы получите:</p>
+                        <ul class="text-sm" style="color: var(--text-secondary); list-style: none; padding: 0;">
+                            <li>• Структура выступления с временными метками</li>
+                            <li>• Ключевые наблюдения: паузы, слова-паразиты, темп</li>
+                            <li>• Практические рекомендации и контрольные точки</li>
+                        </ul>
+                        <div class="mt-6">
+                            <a href="/upload" class="btn-primary"><i class="fas fa-upload"></i> Загрузить и получить отчёт</a>
+                            <a href="/results" class="btn-secondary ml-4">Просмотреть пример отчёта</a>
+                        </div>
+                    </div>
+                    <div class="hidden sm:block">
+                        <div class="card-dark p-6 rounded-lg" style="height: 180px; display:flex;flex-direction:column;justify-content:center;">
+                            <div style="height:6px;background:linear-gradient(90deg,#58a6ff,#79c0ff); border-radius:3px;margin-bottom:12px"></div>
+                            <div style="color:var(--text-secondary);">Интерактивные графики и временные метки отображаются в отчёте после выполнения анализа.</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -248,9 +266,7 @@
                         <i class="fas fa-hourglass-end"></i>
                     </div>
                     <h4 class="text-lg font-semibold mb-2">Анализ пауз</h4>
-                    <p style="color: var(--text-secondary);" class="text-sm">
-                        Определяет структурные паузы, заполняющие паузы и длительные молчания для оптимизации ритма.
-                    </p>
+                    <p style="color: var(--text-secondary);" class="text-sm">Определяет структурные и длительные паузы, заполняющие паузы и подсказки к улучшению ритма выступления.</p>
                 </div>
 
                 <div class="feature-card">
@@ -258,9 +274,7 @@
                         <i class="fas fa-language"></i>
                     </div>
                     <h4 class="text-lg font-semibold mb-2">Слова-паразиты</h4>
-                    <p style="color: var(--text-secondary);" class="text-sm">
-                        Выявляет "типа", "как бы", "как говорится" с контекстным анализом для исключения ложных срабатываний.
-                    </p>
+                    <p style="color: var(--text-secondary);" class="text-sm">Выявляет повторяющиеся междометия и слова-паразиты с контекстной фильтрацией для минимизации ложных срабатываний.</p>
                 </div>
 
                 <div class="feature-card">
@@ -268,29 +282,7 @@
                         <i class="fas fa-tachometer-alt"></i>
                     </div>
                     <h4 class="text-lg font-semibold mb-2">Темп речи</h4>
-                    <p style="color: var(--text-secondary);" class="text-sm">
-                        Анализирует слова в минуту, выявляет ускорения и замедления для оптимального восприятия.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-wave-square"></i>
-                    </div>
-                    <h4 class="text-lg font-semibold mb-2">Интонация</h4>
-                    <p style="color: var(--text-secondary);" class="text-sm">
-                        Выделяет акценты и выделенные фрагменты для анализа выразительности вашей речи.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-question-circle"></i>
-                    </div>
-                    <h4 class="text-lg font-semibold mb-2">Риторические вопросы</h4>
-                    <p style="color: var(--text-secondary);" class="text-sm">
-                        Определяет вопросы и выявляет риторические вопросы для анализа стилистики выступления.
-                    </p>
+                    <p style="color: var(--text-secondary);" class="text-sm">Измеряет слова в минуту, обнаруживает значительные ускорения и замедления и даёт рекомендации по темпу.</p>
                 </div>
 
                 <div class="feature-card">
@@ -298,9 +290,15 @@
                         <i class="fas fa-brain"></i>
                     </div>
                     <h4 class="text-lg font-semibold mb-2">AI-рекомендации</h4>
-                    <p style="color: var(--text-secondary);" class="text-sm">
-                        Получайте персонализированные советы от GigaChat и обсуждайте результаты в интерактивном чате.
-                    </p>
+                    <p style="color: var(--text-secondary);" class="text-sm">Персонализированные советы и чек-листы, основанные на анализе, обсуждаемые с AI-коучем.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: linear-gradient(135deg, #3b3f46 0%, #52565d 100%); color: #9aa4b2;">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h4 class="text-lg font-semibold mb-2">Доп. метрики (экспериментально)</h4>
+                    <p style="color: var(--text-secondary);" class="text-sm">Метрики вроде автоматического распознавания интонации и риторических вопросов помечены как экспериментальные и не используются в официальных выводах отчёта.</p>
                 </div>
             </div>
         </div>
@@ -419,8 +417,8 @@
                 <div>
                     <h4 class="font-semibold mb-3 text-sm">Ресурсы</h4>
                     <ul class="space-y-2 text-sm" style="color: var(--text-secondary);">
-                        <li><a href="#" class="hover:text-white transition">Документация</a></li>
-                        <li><a href="#" class="hover:text-white transition">FAQ</a></li>
+                        <li><a href="/documentation" class="hover:text-white transition">Документация</a></li>
+                        <li><a href="/faq" class="hover:text-white transition">FAQ</a></li>
                     </ul>
                 </div>
                 <div>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Документация Speech Coach">
+    <title>Документация — Speech Coach</title>
+    <link rel="icon" href="/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background: #0d1117; color: #e6edf3; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
+        a { color: #58a6ff }
+        .container { max-width: 900px; margin: 3rem auto; padding: 0 1rem; }
+        .card { background: #161b22; border: 1px solid #30363d; padding: 1.25rem; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <nav style="padding:1rem 0; max-width:900px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;">
+        <a href="/" style="display:flex;gap:0.5rem;align-items:center;text-decoration:none;color:inherit;"><div style="width:32px;height:32px;border-radius:6px;border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;color:#58a6ff"><i class="fas fa-microphone"></i></div><strong>Speech Coach</strong></a>
+        <div><a class="btn" href="/upload" style="color:#0d1117;background:#58a6ff;padding:0.5rem 0.75rem;border-radius:6px;text-decoration:none;">Загрузить файл</a></div>
+    </nav>
+
+    <main class="container">
+        <h1 style="font-size:1.75rem;margin-bottom:0.5rem">Документация</h1>
+        <p style="color:#9aa4b2;margin-bottom:1rem">Краткая и практическая документация по установке, использованию и разработке проекта.</p>
+
+        <div class="card">
+            <h2 style="margin-top:0">Быстрый старт</h2>
+            <p style="color:#9aa4b2">Следуйте шагам из <a href="/">Quickstart</a> или используйте команды ниже на машине разработчика:</p>
+            <pre style="background:#0b0f14;padding:0.75rem;border-radius:6px;color:#cbd5e1;overflow:auto">pip install -r requirements.txt
+uvicorn app.main:app --reload</pre>
+        </div>
+
+        <div style="height:1rem"></div>
+
+        <div class="card">
+            <h2>Содержание</h2>
+            <ul style="color:#9aa4b2;">
+                <li><a href="/docs">Quickstart и установка</a></li>
+                <li><a href="/docs">API — см. интерактивную документацию /docs при запущенном сервере</a></li>
+                <li><a href="/docs">Разработка — тесты, lint, требования</a></li>
+                <li><a href="/docs">Безопасность и приватность данных</a></li>
+            </ul>
+        </div>
+
+        <div style="height:1rem"></div>
+
+        <div class="card">
+            <h2>Где найти полную документацию</h2>
+            <p style="color:#9aa4b2">В репозитории присутствует развернутый набор документов: QUICKSTART, PROJECT_STRUCTURE, DEVELOPMENT и др. Для удобства сайта мы оформили краткую страницу — для полного чтения откройте папку <strong>docs/</strong> в репозитории.</p>
+        </div>
+
+        <div style="height:2rem"></div>
+
+        <div style="color:#9aa4b2;font-size:0.9rem">Если нужно, могу перенести отдельные разделы из `docs/` прямо в этот сайт и оформить развернутую навигацию.</div>
+    </main>
+
+    <footer style="max-width:900px;margin:2rem auto;color:#9aa4b2;text-align:center">
+        <div style="padding:1rem 0">© 2025 Speech Coach</div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FAQ — Speech Coach">
+    <title>FAQ — Speech Coach</title>
+    <link rel="icon" href="/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background: #0d1117; color: #e6edf3; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
+        .container { max-width: 900px; margin: 3rem auto; padding: 0 1rem; }
+        .card { background: #161b22; border: 1px solid #30363d; padding: 1rem; border-radius: 8px; }
+        a { color: #58a6ff }
+    </style>
+</head>
+<body>
+    <nav style="padding:1rem 0; max-width:900px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;">
+        <a href="/" style="display:flex;gap:0.5rem;align-items:center;text-decoration:none;color:inherit;"><div style="width:32px;height:32px;border-radius:6px;border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;color:#58a6ff"><i class="fas fa-microphone"></i></div><strong>Speech Coach</strong></a>
+        <div><a class="btn" href="/upload" style="color:#0d1117;background:#58a6ff;padding:0.5rem 0.75rem;border-radius:6px;text-decoration:none;">Загрузить файл</a></div>
+    </nav>
+
+    <main class="container">
+        <h1 style="font-size:1.75rem;margin-bottom:0.5rem">Часто задаваемые вопросы (FAQ)</h1>
+        <p style="color:#9aa4b2;margin-bottom:1rem">Короткие ответы на частые вопросы.</p>
+
+        <div class="card">
+            <h3>Как быстро получить отчёт?</h3>
+            <p style="color:#9aa4b2">Загрузите видео/аудио на странице «Загрузить файл». Анализ обычно занимает меньше минуты для коротких записей. Результат появится на странице отчёта.</p>
+        </div>
+
+        <div style="height:1rem"></div>
+
+        <div class="card">
+            <h3>Какие форматы поддерживаются?</h3>
+            <p style="color:#9aa4b2">MP4, MOV, MP3, WAV и другие популярные форматы; для уверенной работы нужен хороший звук.</p>
+        </div>
+
+        <div style="height:1rem"></div>
+
+        <div class="card">
+            <h3>Какая приватность данных?</h3>
+            <p style="color:#9aa4b2">Данные анализируются локально на сервере или в рамках вашей инсталляции сервиса. Сервис не публикует пользовательские записи.</p>
+        </div>
+
+        <div style="height:1rem"></div>
+
+        <div class="card">
+            <h3>Почему некоторые метрики помечены как экспериментальные?</h3>
+            <p style="color:#9aa4b2">Метрики, основанные на сложном семантическом распознавании (интонация, риторические вопросы), имеют ограничения в точности; они помечены как экспериментальные и не используются в официальных выводах отчёта.</p>
+        </div>
+
+        <div style="height:2rem"></div>
+        <div style="color:#9aa4b2">Если у вас есть дополнительные вопросы, откройте issue в репозитории или напишите нам.</div>
+    </main>
+
+    <footer style="max-width:900px;margin:2rem auto;color:#9aa4b2;text-align:center">
+        <div style="padding:1rem 0">© 2025 Speech Coach</div>
+    </footer>
+</body>
+</html>

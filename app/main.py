@@ -4,7 +4,7 @@ from contextvars import ContextVar
 from pathlib import Path
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse, FileResponse
+from fastapi.responses import JSONResponse, FileResponse, Response
 from fastapi.exceptions import RequestValidationError
 from fastapi.staticfiles import StaticFiles
 
@@ -198,3 +198,37 @@ async def results_page():
     if html_file.exists():
         return FileResponse(html_file, media_type="text/html")
     return JSONResponse({"error": "Results page not found"}, status_code=404)
+
+
+@app.get("/favicon.ico")
+async def favicon():
+        """Serve a minimal SVG favicon at /favicon.ico (keeps browser requests happy)."""
+        svg = """
+        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'>
+            <rect width='100%' height='100%' fill='#0d1117'/>
+            <g fill='none' stroke='#58a6ff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3'>
+                <path d='M32 14v18'/>
+                <path d='M22 28a10 10 0 0 0 20 0'/>
+                <path d='M20 36v4a12 12 0 0 0 24 0v-4'/>
+            </g>
+        </svg>
+        """
+        return Response(content=svg, media_type="image/svg+xml")
+
+
+    @app.get("/documentation")
+    async def documentation_page():
+        """Страница документации сайта"""
+        html_file = template_dir / "docs.html"
+        if html_file.exists():
+            return FileResponse(html_file, media_type="text/html")
+        return JSONResponse({"error": "Documentation page not found"}, status_code=404)
+
+
+    @app.get("/faq")
+    async def faq_page():
+        """FAQ page"""
+        html_file = template_dir / "faq.html"
+        if html_file.exists():
+            return FileResponse(html_file, media_type="text/html")
+        return JSONResponse({"error": "FAQ page not found"}, status_code=404)
