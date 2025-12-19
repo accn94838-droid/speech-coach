@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quickstart — Speech Coach</title>
+  <link rel="icon" href="/favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>body{background:#0d1117;color:#e6edf3;font-family:Inter,system-ui,Segoe UI,Roboto,Arial} .container{max-width:900px;margin:3rem auto;padding:1rem}</style>
+</head>
+<body>
+  <div class="container">
+    <a href="/documentation" style="color:#58a6ff">← Назад</a>
+    <h1 style="margin-top:0.5rem">Quick Start</h1>
+    <p style="color:#9aa4b2">Краткая инструкция по установке и запуску сервиса.</p>
+
+    <section style="margin-top:1rem;background:#161b22;border:1px solid #30363d;padding:1rem;border-radius:8px">
+      <h3>Требования</h3>
+      <ul style="color:#9aa4b2">
+        <li>Python 3.8+</li>
+        <li>FFmpeg</li>
+        <li>Git</li>
+      </ul>
+
+      <h3>Установка</h3>
+      <pre style="background:#0b0f14;padding:0.75rem;border-radius:6px;color:#cbd5e1;overflow:auto">git clone <repo>
+cd speech-coach
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env
+mkdir -p logs cache
+uvicorn app.main:app --reload</pre>
+
+      <h3>Запуск</h3>
+      <p style="color:#9aa4b2">После запуска сервис доступен на <a href="http://localhost:8000">http://localhost:8000</a>. OpenAPI: <code>/docs</code>.</p>
+    </section>
+  </div>
+</body>
+</html>

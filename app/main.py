@@ -216,19 +216,30 @@ async def favicon():
         return Response(content=svg, media_type="image/svg+xml")
 
 
-    @app.get("/documentation")
-    async def documentation_page():
-        """Страница документации сайта"""
-        html_file = template_dir / "docs.html"
-        if html_file.exists():
-            return FileResponse(html_file, media_type="text/html")
-        return JSONResponse({"error": "Documentation page not found"}, status_code=404)
+@app.get("/documentation")
+async def documentation_page():
+    """Страница документации сайта"""
+    html_file = template_dir / "docs.html"
+    if html_file.exists():
+        return FileResponse(html_file, media_type="text/html")
+    return JSONResponse({"error": "Documentation page not found"}, status_code=404)
 
 
-    @app.get("/faq")
-    async def faq_page():
-        """FAQ page"""
-        html_file = template_dir / "faq.html"
-        if html_file.exists():
-            return FileResponse(html_file, media_type="text/html")
-        return JSONResponse({"error": "FAQ page not found"}, status_code=404)
+@app.get("/faq")
+async def faq_page():
+    """FAQ page"""
+    html_file = template_dir / "faq.html"
+    if html_file.exists():
+        return FileResponse(html_file, media_type="text/html")
+    return JSONResponse({"error": "FAQ page not found"}, status_code=404)
+
+
+@app.get("/documentation/{page}")
+async def documentation_subpage(page: str):
+    """Serve documentation subpages like quickstart, development, structure."""
+    # sanitize page name to avoid path traversal
+    safe_name = page.replace("..", "").replace("/", "")
+    html_file = template_dir / f"docs_{safe_name}.html"
+    if html_file.exists():
+        return FileResponse(html_file, media_type="text/html")
+    return JSONResponse({"error": "Documentation subpage not found"}, status_code=404)

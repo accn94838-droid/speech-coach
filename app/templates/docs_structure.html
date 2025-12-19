@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Project Structure — Speech Coach</title>
+  <link rel="icon" href="/favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>body{background:#0d1117;color:#e6edf3;font-family:Inter,system-ui,Segoe UI,Roboto,Arial} .container{max-width:900px;margin:3rem auto;padding:1rem}</style>
+</head>
+<body>
+  <div class="container">
+    <a href="/documentation" style="color:#58a6ff">← Назад</a>
+    <h1 style="margin-top:0.5rem">Структура проекта</h1>
+    <div style="margin-top:1rem;background:#161b22;border:1px solid #30363d;padding:1rem;border-radius:8px;color:#9aa4b2">
+      <pre style="color:#cbd5e1;overflow:auto">/app
+  /api      # маршруты
+  /core     # конфигурация и утилиты
+  /models   # pydantic модели
+  /services # бизнес-логика
+  /templates# html шаблоны
+  main.py   # точка входа</pre>
+      <p>Ключевые компоненты: `analyzer`, `transcriber`, `pipeline`, `gigachat`.</p>
+    </div>
+  </div>
+</body>
+</html>
