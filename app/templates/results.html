@@ -102,6 +102,7 @@
         .btn-primary:hover {
             background-color: var(--accent-hover);
             border-color: var(--accent-hover);
+            color: var(--bg-primary);
         }
 
         a {
@@ -983,9 +984,9 @@
             messageEl.innerHTML = `
                 <div class="inline-block max-w-xs px-4 py-2 rounded-lg ${
                     role === 'user' 
-                    ? 'bg-purple-600 text-white' 
-                    : 'bg-gray-200 text-gray-900'
-                }">
+                    ? 'text-white' 
+                    : 'text-white'
+                }" style="background-color: ${role === 'user' ? 'var(--accent)' : 'var(--bg-secondary)'}; border: 1px solid ${role === 'user' ? 'var(--accent-hover)' : 'var(--border-color)'};">
                     ${text}
                 </div>
             `;

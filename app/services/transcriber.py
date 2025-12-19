@@ -46,7 +46,10 @@ class LocalWhisperTranscriber:
         self.cache_dir.mkdir(parents=True, exist_ok=True)
 
         if not _FASTER_WHISPER_AVAILABLE:
-            logger.warning("faster_whisper module not installed. Falling back to offline dummy transcriber.")
+            logger.warning(
+                "⚠️  faster_whisper module not installed. To enable transcription features, run: "
+                "pip install faster-whisper ctranslate2 onnxruntime"
+            )
             self.model = None
             self._model_available = False
         else:
