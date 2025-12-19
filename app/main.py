@@ -1,10 +1,12 @@
 import logging
 import uuid
 from contextvars import ContextVar
+from pathlib import Path
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
 from fastapi.exceptions import RequestValidationError
+from fastapi.staticfiles import StaticFiles
 
 from app.api.routes.health import router as health_router
 from app.api.routes.analysis import router as analysis_router
@@ -165,13 +167,34 @@ app.include_router(health_router)
 app.include_router(analysis_router)
 app.include_router(chat_router)
 
+# Обслуживание HTML-страниц
+template_dir = Path(__file__).parent / "templates"
 
 @app.get("/")
 async def root():
-    """Корневой эндпоинт"""
+    """Главная страница"""
+    html_file = template_dir / "index.html"
+    if html_file.exists():
+        return FileResponse(html_file, media_type="text/html")
     return {
         "name": "Speech Coach API",
         "version": "1.0.0",
         "status": "running",
         "docs": "/docs"
     }
+
+@app.get("/upload")
+async def upload_page():
+    """Страница загрузки файлов"""
+    html_file = template_dir / "upload.html"
+    if html_file.exists():
+        return FileResponse(html_file, media_type="text/html")
+    return JSONResponse({"error": "Upload page not found"}, status_code=404)
+
+@app.get("/results")
+async def results_page():
+    """Страница результатов анализа"""
+    html_file = template_dir / "results.html"
+    if html_file.exists():
+        return FileResponse(html_file, media_type="text/html")
+    return JSONResponse({"error": "Results page not found"}, status_code=404)
