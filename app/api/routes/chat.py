@@ -13,7 +13,7 @@ from app.core.config import settings
 from pathlib import Path
 from app.api.deps import get_gigachat_client
 
-router = APIRouter(prefix="/api", tags=["chat"])
+router = APIRouter(prefix="", tags=["chat"])
 logger = logging.getLogger(__name__)
 
 
