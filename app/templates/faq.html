@@ -9,70 +9,451 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { background: #0d1117; color: #e6edf3; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-        a { color: #58a6ff; text-decoration: none; }
-        a:hover { color: #79c0ff; text-decoration: underline; }
-        .nav-bg { background-color: #161b22; border-bottom: 1px solid #30363d; }
-        .card-dark { background-color: #161b22; border: 1px solid #30363d; }
-        .faq-item { background: #161b22; border: 1px solid #30363d; padding: 1.5rem; border-radius: 8px; margin: 1rem 0; }
-        .faq-item h3 { color: #58a6ff; margin: 0 0 0.5rem 0; }
-        .faq-item p { color: #8b949e; margin: 0; }
-        .btn-primary { background:#58a6ff; color:#0d1117; padding:0.5rem 1rem; border-radius:6px; display:inline-flex; align-items:center; gap:0.5rem; font-weight:600; }
-        .btn-primary:hover { background:#79c0ff; }
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --border-color: #30363d;
+            --text-primary: #e6edf3;
+            --text-secondary: #8b949e;
+            --accent: #58a6ff;
+            --accent-hover: #79c0ff;
+        }
+
+        * {
+            color-scheme: dark;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+        }
+
+        .nav-bg {
+            background-color: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--bg-primary);
+            border: 1px solid var(--accent);
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            border-color: var(--accent-hover);
+        }
+
+        .faq-section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text-primary);
+        }
+
+        .section-icon {
+            font-size: 1.75rem;
+            color: var(--accent);
+        }
+
+        .faq-item {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: var(--accent);
+            background: rgba(88, 166, 255, 0.05);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(88, 166, 255, 0.1);
+        }
+
+        .faq-question {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .faq-icon {
+            color: var(--accent);
+            font-size: 1.25rem;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .faq-answer {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .faq-answer code {
+            background: var(--bg-secondary);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            color: var(--accent);
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+        }
+
+        .faq-answer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .faq-answer a:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: var(--accent-hover);
+        }
     </style>
 </head>
 <body>
     <!-- Navigation -->
     <nav class="nav-bg sticky top-0 z-40">
-        <div style="max-width:900px; margin:0 auto; padding:1rem 1.5rem; display:flex; justify-content:space-between; align-items:center;">
-            <a href="/" style="display:flex; gap:0.75rem; align-items:center; text-decoration:none; color:inherit;">
-                <div style="width:32px; height:32px; border-radius:6px; border:1px solid rgba(255,255,255,0.12); display:flex; align-items:center; justify-content:center; color:#58a6ff;">
+        <div style="max-width: 1000px; margin: 0 auto; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+            <a href="/" style="display: flex; gap: 0.75rem; align-items: center; text-decoration: none; color: inherit;">
+                <div style="width: 32px; height: 32px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; color: var(--accent);">
                     <i class="fas fa-microphone"></i>
                 </div>
                 <strong>Speech Coach</strong>
             </a>
-            <a href="/upload" class="btn-primary text-sm">
-                <i class="fas fa-upload"></i> Загрузить
-            </a>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <a href="/documentation" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">
+                    <i class="fas fa-book"></i>
+                </a>
+                <a href="/upload" class="btn-primary text-sm">
+                    <i class="fas fa-upload"></i> Загрузить
+                </a>
+            </div>
         </div>
     </nav>
 
-    <main style="max-width:900px; margin:0 auto; padding:2rem 1rem;">
-        <h1 style="font-size:1.75rem; margin-bottom:1rem;">Часто задаваемые вопросы</h1>
-        <p style="color:#8b949e; margin-bottom:2rem;">Ответы на распространённые вопросы</p>
-
-        <div class="faq-item">
-            <h3>⏱️ Как быстро получить отчёт?</h3>
-            <p>Загрузите видео или аудиофайл на странице «Загрузить файл». Анализ обычно занимает менее одной минуты. Результат появится на странице отчёта с метриками и рекомендациями.</p>
+    <main style="max-width: 1000px; margin: 0 auto; padding: 3rem 1rem;">
+        <!-- Header -->
+        <div style="margin-bottom: 3rem;">
+            <h1 style="font-size: 3rem; font-weight: bold; margin-bottom: 1rem;">Часто задаваемые вопросы</h1>
+            <p style="color: var(--text-secondary); font-size: 1.125rem; line-height: 1.6; max-width: 600px;">
+                Ответы на популярные вопросы о функциях, использовании и особенностях Speech Coach.
+                Если вы не нашли ответ, свяжитесь с нами.
+            </p>
         </div>
 
-        <div class="faq-item">
-            <h3>📁 Какие форматы поддерживаются?</h3>
-            <p>Поддерживаются MP4, MOV, MP3, WAV и другие популярные аудио/видео форматы. Для надёжной работы убедитесь, что в файле есть чистый звук речи.</p>
+        <!-- Getting Started -->
+        <div class="faq-section">
+            <div class="section-title">
+                <i class="fas fa-play-circle section-icon"></i>
+                Начало работы
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <i class="fas fa-question-circle faq-icon"></i>
+                    <span>Как начать использовать Speech Coach?</span>
+                </div>
+                <div class="faq-answer">
+                    Перейдите на страницу загрузки, выберите видео или аудиофайл с вашим выступлением и нажмите кнопку загрузить. 
+                    Система проанализирует файл за несколько секунд и покажет вам результаты с детальной метрикой.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <i class="fas fa-clock faq-icon"></i>
+                    <span>Сколько времени занимает анализ?</span>
+                </div>
+                <div class="faq-answer">
+                    Большинство анализов заканчиваются менее чем за 1 минуту. Время зависит от длины файла и сложности обработки. 
+                    Дождитесь завершения, и вы получите полный отчет с метриками и рекомендациями.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <i class="fas fa-lock faq-icon"></i>
+                    <span>Нужно ли создавать учетную запись?</span>
+                </div>
+                <div class="faq-answer">
+                    Нет, Speech Coach доступен без регистрации. Просто загрузите файл и получите результаты. 
+                    Данные обрабатываются безопасно и не сохраняются на серверах без вашего согласия.
+                </div>
+            </div>
         </div>
 
-        <div class="faq-item">
-            <h3>🔒 Какая приватность данных?</h3>
-            <p>Данные анализируются на сервере и не публикуются. Ваша конфиденциальность защищена. Результаты хранятся локально или в вашей инсталляции сервиса.</p>
+        <!-- File and Formats -->
+        <div class="faq-section">
+            <div class="section-title">
+                <i class="fas fa-file-audio section-icon"></i>
+                Форматы файлов и поддержка
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <i class="fas fa-file-video faq-icon"></i>
+                    <span>Какие форматы видео и аудио поддерживаются?</span>
+                </div>
+                <div class="faq-answer">
+                    Поддерживаются все популярные форматы:
+                    <ul style="margin-top: 0.5rem; margin-left: 1.5rem; color: var(--text-secondary);">
+                        <li><strong style="color: var(--text-primary);">Видео:</strong> MP4, MOV, AVI, WebM, MKV, FLV</li>
+                        <li><strong style="color: var(--text-primary);">Аудио:</strong> MP3, WAV, AAC, OGG, FLAC, M4A</li>
+                    </ul>
+                    Для лучших результатов убедитесь, что звук чистый и разборчивый.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <i class="fas fa-hdd faq-icon"></i>
+                    <span>Есть ли ограничение на размер файла?</span>
+                </div>
+                <div class="faq-answer">
+                    Рекомендуемый размер файла до 500 МБ. Файлы большего размера могут быть обработаны, но это займет больше времени. 
+                    Если у вас есть очень большой файл, попробуйте сначала обрезать его в аудиоредакторе.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <i class="fas fa-microphone-slash faq-icon"></i>
+                    <span>Что делать, если анализ не работает?</span>
+                </div>
+                <div class="faq-answer">
+                    Убедитесь, что:
+                    <ul style="margin-top: 0.5rem; margin-left: 1.5rem; color: var(--text-secondary);">
+                        <li>Файл имеет правильный формат (MP4, MP3, WAV и т.д.)</li>
+                        <li>В файле есть разборчивая речь на русском или английском</li>
+                        <li>Размер файла не превышает лимит</li>
+                        <li>Интернет соединение стабильно</li>
+                    </ul>
+                    Если проблемы сохраняются, попробуйте другой файл.
+                </div>
+            </div>
         </div>
 
-        <div class="faq-item">
-            <h3>🔬 Почему некоторые метрики экспериментальные?</h3>
-            <p>Метрики, основанные на сложном семантическом анализе (интонация, риторические вопросы и др.), помечены как экспериментальные из-за ограничений в точности распознавания. Они не используются в официальных рекомендациях.</p>
+        <!-- Features and Metrics -->
+        <div class="faq-section">
+            <div class="section-title">
+                <i class="fas fa-chart-bar section-icon"></i>
+                Метрики и возможности
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <i class="fas fa-chart-line faq-icon"></i>
+                    <span>Какие метрики анализирует Speech Coach?</span>
+                </div>
+                <div class="faq-answer">
+                    Система анализирует более 50 параметров речи:
+                    <ul style="margin-top: 0.5rem; margin-left: 1.5rem; color: var(--text-secondary);">
+                        <li>Слова-паразиты и фильеры</li>
+                        <li>Паузы и ритм речи</li>
+                        <li>Темп и скорость произнесения</li>
+                        <li>Интонацию и выразительность</li>
+                        <li>Проблемные моменты и зоны</li>
+                        <li>Языковые статистики</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <i class="fas fa-flask faq-icon"></i>
+                    <span>Что такое "экспериментальные" метрики?</span>
+                </div>
+                <div class="faq-answer">
+                    Некоторые метрики, такие как анализ эмоционального тона или визуальный анализ жестов, находятся в стадии тестирования. 
+                    Они имеют ограниченную точность и могут быть неточны. Эти метрики отмечены специально и не влияют на основные рекомендации.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <i class="fas fa-robot faq-icon"></i>
+                    <span>Как работает AI-коуч в чате?</span>
+                </div>
+                <div class="faq-answer">
+                    После анализа вы можете обсудить результаты с интеллектуальным AI-коучем на основе GigaChat. 
+                    Задавайте вопросы об анализе, просите совета, и коуч даст вам персонализированные рекомендации по улучшению вашей речи.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <i class="fas fa-hourglass faq-icon"></i>
+                    <span>Почему некоторые метрики отмечены как "в разработке"?</span>
+                </div>
+                <div class="faq-answer">
+                    Speech Coach постоянно развивается и добавляет новые функции. Некоторые метрики еще не полностью готовы 
+                    и будут добавлены в ближайших обновлениях. Следите за новостями о релизах для более полной функциональности.
+                </div>
+            </div>
         </div>
 
-        <div class="faq-item">
-            <h3>💬 Как использовать AI-чат?</h3>
-            <p>После получения результатов анализа вы можете обсудить их в интерактивном чате. Задавайте вопросы об анализе, и AI-коуч даст вам персонализированные советы по улучшению речи.</p>
+        <!-- Security and Privacy -->
+        <div class="faq-section">
+            <div class="section-title">
+                <i class="fas fa-shield-alt section-icon"></i>
+                Безопасность и приватность
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <i class="fas fa-lock faq-icon"></i>
+                    <span>Как вы защищаете мои данные?</span>
+                </div>
+                <div class="faq-answer">
+                    Мы серьезно относимся к защите ваших данных. Все файлы передаются по защищенному HTTPS соединению. 
+                    Данные анализируются безопасно и не передаются третьим сторонам. Мы соответствуем международным стандартам 
+                    обработки личных данных.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <i class="fas fa-eye-slash faq-icon"></i>
+                    <span>Сохраняются ли мои файлы?</span>
+                </div>
+                <div class="faq-answer">
+                    Файлы временно хранятся только для обработки. После анализа они удаляются с сервера. 
+                    Если вы удалите результаты из своего аккаунта (или используете сервис без регистрации), 
+                    все связанные данные будут удалены.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <i class="fas fa-share-alt faq-icon"></i>
+                    <span>Используются ли мои данные для обучения моделей?</span>
+                </div>
+                <div class="faq-answer">
+                    Нет, мы не используем ваши файлы или результаты анализа для обучения или улучшения наших моделей 
+                    без вашего явного согласия. Ваши данные — это ваша собственность.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <i class="fas fa-legal faq-icon"></i>
+                    <span>Как вы соответствуете GDPR и другим регуляциям?</span>
+                </div>
+                <div class="faq-answer">
+                    Speech Coach разработан в соответствии с GDPR, CCPA и другими законами о защите данных. 
+                    Вы можете запросить удаление своих данных в любой момент. Подробнее см. в нашей <a href="/documentation/privacy">Политике приватности</a>.
+                </div>
+            </div>
         </div>
 
-        <div class="faq-item">
-            <h3>🐛 Что делать если анализ не работает?</h3>
-            <p>Проверьте, что файл имеет правильный формат и содержит чистую речь. Если проблемы сохраняются, попробуйте другой файл или обратитесь в техническую поддержку.</p>
+        <!-- Technical and Account -->
+        <div class="faq-section">
+            <div class="section-title">
+                <i class="fas fa-cogs section-icon"></i>
+                Техническая поддержка
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <i class="fas fa-gears faq-icon"></i>
+                    <span>На каких браузерах работает Speech Coach?</span>
+                </div>
+                <div class="faq-answer">
+                    Speech Coach работает на всех современных браузерах:
+                    <ul style="margin-top: 0.5rem; margin-left: 1.5rem; color: var(--text-secondary);">
+                        <li>Chrome/Chromium (версия 88+)</li>
+                        <li>Firefox (версия 85+)</li>
+                        <li>Safari (версия 14+)</li>
+                        <li>Edge (версия 88+)</li>
+                    </ul>
+                    Для лучшего опыта используйте последнюю версию браузера.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <i class="fas fa-sliders-h faq-icon"></i>
+                    <span>Можно ли настроить параметры анализа?</span>
+                </div>
+                <div class="faq-answer">
+                    В текущей версии параметры анализа установлены автоматически для лучших результатов. 
+                    Однако вы можете обсудить специфические настройки с AI-коучем в чате, 
+                    и он поможет адаптировать анализ под ваши нужды.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <i class="fas fa-envelope faq-icon"></i>
+                    <span>Как связаться с поддержкой?</span>
+                </div>
+                <div class="faq-answer">
+                    Вы можете связаться с нами несколькими способами:
+                    <ul style="margin-top: 0.5rem; margin-left: 1.5rem; color: var(--text-secondary);">
+                        <li>Email: support@speechcoach.ru</li>
+                        <li>GitHub Issues: <a href="https://github.com" target="_blank">github.com/speechcoach</a></li>
+                        <li>Контактная форма на <a href="/">главной странице</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <i class="fas fa-bug faq-icon"></i>
+                    <span>Как сообщить об ошибке или предложить функцию?</span>
+                </div>
+                <div class="faq-answer">
+                    Мы будем рады услышать вашу обратную связь! Вы можете:
+                    <ul style="margin-top: 0.5rem; margin-left: 1.5rem; color: var(--text-secondary);">
+                        <li>Создать issue на GitHub</li>
+                        <li>Написать нам по почте с описанием проблемы</li>
+                        <li>Поделиться идеей в форме обратной связи</li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
-        <div style="text-align:center; padding-top:1rem; color:#8b949e; font-size:0.875rem;">
-            <p>&copy; 2025 Speech Coach</p>
+        <!-- Footer -->
+        <div style="margin-top: 5rem; padding-top: 3rem; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-secondary);">
+            <p style="margin-bottom: 1rem;">
+                <strong>Не нашли ответ?</strong> Посетите <a href="/documentation">Документацию</a> или создайте issue на <a href="https://github.com" target="_blank">GitHub</a>
+            </p>
+            <p style="margin: 0;">&copy; 2025 Speech Coach. Все права защищены.</p>
         </div>
     </main>
 </body>

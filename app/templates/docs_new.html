@@ -9,15 +9,127 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { background: #0d1117; color: #e6edf3; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-        a { color: #58a6ff; text-decoration: none; }
-        a:hover { color: #79c0ff; text-decoration: underline; }
-        .nav-bg { background-color: #161b22; border-bottom: 1px solid #30363d; }
-        .card-dark { background-color: #21262d; border: 1px solid #30363d; }
-        .doc-link { display: block; padding: 1rem 1.25rem; background: #161b22; border-left: 3px solid #30363d; margin: 0.5rem 0; border-radius: 8px; transition: all 0.2s ease; }
-        .doc-link:hover { background: rgba(88, 166, 255, 0.1); border-left-color: #58a6ff; color: #79c0ff; }
-        .btn-primary { background-color: #58a6ff; color: #0d1117; border: 1px solid #58a6ff; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600; transition: all 0.2s ease; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; }
-        .btn-primary:hover { background-color: #79c0ff; border-color: #79c0ff; }
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --border-color: #30363d;
+            --text-primary: #e6edf3;
+            --text-secondary: #8b949e;
+            --accent: #58a6ff;
+            --accent-hover: #79c0ff;
+            --success: #3fb950;
+            --warning: #d29922;
+        }
+
+        * {
+            color-scheme: dark;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+        }
+
+        .nav-bg {
+            background-color: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-dark {
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .card-dark:hover {
+            border-color: var(--accent);
+            background-color: rgba(88, 166, 255, 0.05);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(88, 166, 255, 0.1);
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--bg-primary);
+            border: 1px solid var(--accent);
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            border-color: var(--accent-hover);
+            color: var(--bg-primary);
+        }
+
+        .doc-link {
+            display: flex;
+            flex-direction: column;
+            padding: 2rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .doc-link:hover {
+            background: rgba(88, 166, 255, 0.08);
+            border-color: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(88, 166, 255, 0.15);
+        }
+
+        .doc-icon {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .doc-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .doc-description {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: bold;
+            margin-top: 3rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -25,56 +137,171 @@
     <nav class="nav-bg sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                <a href="/" style="display: flex; gap: 0.75rem; align-items: center;">
-                    <div style="width: 32px; height: 32px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; color: #58a6ff;">
+                <a href="/" style="display: flex; gap: 0.75rem; align-items: center; text-decoration: none;">
+                    <div style="width: 32px; height: 32px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; color: var(--accent);">
                         <i class="fas fa-microphone"></i>
                     </div>
-                    <strong>Speech Coach</strong>
+                    <strong style="color: var(--text-primary);">Speech Coach</strong>
                 </a>
-                <a href="/upload" class="btn-primary text-sm">
-                    <i class="fas fa-upload"></i> Загрузить
-                </a>
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <a href="/" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">
+                        <i class="fas fa-home"></i>
+                    </a>
+                    <a href="/upload" class="btn-primary text-sm">
+                        <i class="fas fa-upload"></i> Загрузить
+                    </a>
+                </div>
             </div>
         </div>
     </nav>
 
-    <main style="max-width: 900px; margin: 0 auto; padding: 2rem 1rem;">
-        <h1 style="font-size: 2rem; margin-bottom: 1rem;">Документация</h1>
-        <p style="color: #8b949e; margin-bottom: 2rem;">Справочная информация по использованию, установке и разработке</p>
+    <main style="max-width: 1000px; margin: 0 auto; padding: 3rem 1rem;">
+        <!-- Header -->
+        <div style="margin-bottom: 4rem;">
+            <h1 style="font-size: 3rem; font-weight: bold; margin-bottom: 1rem;">Документация</h1>
+            <p style="color: var(--text-secondary); font-size: 1.125rem; line-height: 1.6; max-width: 600px;">
+                Полное руководство по установке, использованию и разработке Speech Coach. 
+                Найдите ответы на все вопросы о том, как начать работу.
+            </p>
+        </div>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+        <!-- Quick Start Section -->
+        <div class="section-title" style="margin-top: 0;">
+            <i class="fas fa-rocket" style="color: var(--accent); margin-right: 0.75rem;"></i>
+            Начало работы
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 4rem;">
             <a href="/documentation/quickstart" class="doc-link">
-                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
-                    <i class="fas fa-rocket" style="font-size: 1.25rem; color: #58a6ff;"></i>
-                    <strong>Быстрый старт</strong>
-                </div>
-                <p style="font-size: 0.875rem; color: #8b949e; margin: 0;">Установка и первый запуск</p>
+                <div class="doc-icon"><i class="fas fa-play-circle"></i></div>
+                <div class="doc-title">Быстрый старт</div>
+                <div class="doc-description">Пошаговое руководство по установке и запуску приложения. Начните использовать Speech Coach за несколько минут.</div>
             </a>
 
+            <a href="/documentation/installation" class="doc-link">
+                <div class="doc-icon"><i class="fas fa-download"></i></div>
+                <div class="doc-title">Полная установка</div>
+                <div class="doc-description">Детальные инструкции установки для разных операционных систем. Все требования и зависимости.</div>
+            </a>
+
+            <a href="/documentation/faq" class="doc-link">
+                <div class="doc-icon"><i class="fas fa-question-circle"></i></div>
+                <div class="doc-title">Часто задаваемые вопросы</div>
+                <div class="doc-description">Ответы на популярные вопросы о функциях, использовании и устранении проблем.</div>
+            </a>
+        </div>
+
+        <!-- API Section -->
+        <div class="section-title">
+            <i class="fas fa-plug" style="color: var(--accent); margin-right: 0.75rem;"></i>
+            API и интеграция
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 4rem;">
+            <a href="/documentation/api" class="doc-link">
+                <div class="doc-icon"><i class="fas fa-code"></i></div>
+                <div class="doc-title">REST API</div>
+                <div class="doc-description">Полная документация API с примерами запросов. Интегрируйте Speech Coach в ваше приложение.</div>
+            </a>
+
+            <a href="/documentation/api" class="doc-link">
+                <div class="doc-icon"><i class="fas fa-exchange-alt"></i></div>
+                <div class="doc-title">WebSocket</div>
+                <div class="doc-description">Работа с WebSocket для потоковой обработки и получения результатов в реальном времени.</div>
+            </a>
+
+            <a href="/documentation/api" class="doc-link">
+                <div class="doc-icon"><i class="fas fa-key"></i></div>
+                <div class="doc-title">Аутентификация</div>
+                <div class="doc-description">Информация об авторизации, ключах доступа и управлении правами доступа.</div>
+            </a>
+        </div>
+
+        <!-- Development Section -->
+        <div class="section-title">
+            <i class="fas fa-code" style="color: var(--accent); margin-right: 0.75rem;"></i>
+            Разработка
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 4rem;">
             <a href="/documentation/development" class="doc-link">
-                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
-                    <i class="fas fa-code" style="font-size: 1.25rem; color: #58a6ff;"></i>
-                    <strong>Разработка</strong>
-                </div>
-                <p style="font-size: 0.875rem; color: #8b949e; margin: 0;">Тесты, линтинг, требования</p>
+                <div class="doc-icon"><i class="fas fa-hammer"></i></div>
+                <div class="doc-title">Развертывание</div>
+                <div class="doc-description">Настройка окружения, тесты, линтинг и инструменты разработки для контрибьюторов.</div>
             </a>
 
             <a href="/documentation/structure" class="doc-link">
-                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
-                    <i class="fas fa-sitemap" style="font-size: 1.25rem; color: #58a6ff;"></i>
-                    <strong>Структура</strong>
-                </div>
-                <p style="font-size: 0.875rem; color: #8b949e; margin: 0;">Архитектура проекта</p>
+                <div class="doc-icon"><i class="fas fa-sitemap"></i></div>
+                <div class="doc-title">Архитектура проекта</div>
+                <div class="doc-description">Описание структуры кода, модулей и компонентов приложения. Как все работает вместе.</div>
+            </a>
+
+            <a href="/documentation/architecture" class="doc-link">
+                <div class="doc-icon"><i class="fas fa-cube"></i></div>
+                <div class="doc-title">Техническая архитектура</div>
+                <div class="doc-description">Взаимодействие компонентов, базы данных, микросервисы и облачные решения.</div>
             </a>
         </div>
 
-        <div class="card-dark" style="padding: 2rem; border-radius: 8px; margin-bottom: 2rem;">
-            <h2 style="margin-top: 0; font-size: 1.5rem; margin-bottom: 1rem;">О документации</h2>
-            <p style="color: #8b949e; margin: 0;">Полная документация находится в папке <code style="background: #0d1117; padding: 0.25rem 0.5rem; border-radius: 4px;">docs/</code> репозитория. На этом сайте представлены основные разделы для быстрого начала работы.</p>
+        <!-- Security Section -->
+        <div class="section-title">
+            <i class="fas fa-shield-alt" style="color: var(--accent); margin-right: 0.75rem;"></i>
+            Безопасность и приватность
         </div>
 
-        <div style="text-align: center; padding-top: 1rem; color: #8b949e; font-size: 0.875rem;">
-            <p>&copy; 2025 Speech Coach</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 4rem;">
+            <a href="/documentation/security" class="doc-link">
+                <div class="doc-icon"><i class="fas fa-lock"></i></div>
+                <div class="doc-title">Безопасность</div>
+                <div class="doc-description">Лучшие практики безопасности, обработка уязвимостей и защита от атак.</div>
+            </a>
+
+            <a href="/documentation/privacy" class="doc-link">
+                <div class="doc-icon"><i class="fas fa-user-secret"></i></div>
+                <div class="doc-title">Приватность данных</div>
+                <div class="doc-description">Как мы обрабатываем и защищаем ваши данные. Политика конфиденциальности и GDPR.</div>
+            </a>
+
+            <a href="/documentation/deployment" class="doc-link">
+                <div class="doc-icon"><i class="fas fa-cloud"></i></div>
+                <div class="doc-title">Развертывание</div>
+                <div class="doc-description">Инструкции по развертыванию на облачных платформах с соблюдением стандартов безопасности.</div>
+            </a>
+        </div>
+
+        <!-- Advanced Section -->
+        <div class="section-title">
+            <i class="fas fa-star" style="color: var(--accent); margin-right: 0.75rem;"></i>
+            Продвинутые темы
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 4rem;">
+            <a href="/documentation/advanced" class="doc-link">
+                <div class="doc-icon"><i class="fas fa-cogs"></i></div>
+                <div class="doc-title">Кастомизация</div>
+                <div class="doc-description">Расширение функциональности, создание плагинов и кастомных анализаторов.</div>
+            </a>
+
+            <a href="/documentation/performance" class="doc-link">
+                <div class="doc-icon"><i class="fas fa-tachometer-alt"></i></div>
+                <div class="doc-title">Оптимизация производительности</div>
+                <div class="doc-description">Советы по улучшению скорости, кэшированию и масштабированию приложения.</div>
+            </a>
+
+            <a href="/documentation/troubleshooting" class="doc-link">
+                <div class="doc-icon"><i class="fas fa-tools"></i></div>
+                <div class="doc-title">Устранение проблем</div>
+                <div class="doc-description">Решения распространённых проблем, логирование и отладка приложения.</div>
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <div style="margin-top: 5rem; padding-top: 3rem; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-secondary);">
+            <p style="margin-bottom: 1rem;">
+                <strong>Нужна помощь?</strong> Посетите <a href="/faq">FAQ</a> или 
+                создайте issue на <a href="https://github.com" target="_blank">GitHub</a>
+            </p>
+            <p style="margin: 0;">&copy; 2025 Speech Coach. Все права защищены.</p>
         </div>
     </main>
 </body>

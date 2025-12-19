@@ -195,11 +195,13 @@
                     <h1 class="text-xl font-bold">Speech Coach</h1>
                 </a>
                 <div class="flex gap-2 items-center">
-                    <a href="/documentation" class="px-3 py-2 rounded-md text-sm transition hover:bg-white/10" title="Документация">
+                    <a href="/documentation" class="px-3 py-2 rounded-md text-sm transition hover:bg-white/10 flex items-center gap-1" title="Документация">
                         <i class="fas fa-book" style="color: var(--text-secondary);"></i>
+                        <span style="color: var(--text-secondary); display: none; font-size: 0.875rem;" class="sm:inline">Документация</span>
                     </a>
-                    <a href="/faq" class="px-3 py-2 rounded-md text-sm transition hover:bg-white/10" title="FAQ">
+                    <a href="/faq" class="px-3 py-2 rounded-md text-sm transition hover:bg-white/10 flex items-center gap-1" title="FAQ">
                         <i class="fas fa-question-circle" style="color: var(--text-secondary);"></i>
+                        <span style="color: var(--text-secondary); display: none; font-size: 0.875rem;" class="sm:inline">FAQ</span>
                     </a>
                     <a href="/upload" class="btn-primary text-sm">
                         <i class="fas fa-upload"></i>
@@ -230,22 +232,6 @@
                     Узнать подробнее
                 </a>
             </div>
-
-            <!-- Simple CTA section -->
-            <div class="card-dark p-8 rounded-lg max-w-2xl mx-auto text-center">
-                <h3 class="text-2xl font-bold mb-2">Анализ вашего выступления</h3>
-                <p style="color: var(--text-secondary);" class="mb-6 text-sm">Загрузите видео или аудио и получите детальный отчёт с метриками и рекомендациями</p>
-                <div class="flex gap-2 justify-center flex-wrap">
-                    <a href="/upload" class="btn-primary text-sm">
-                        <i class="fas fa-upload"></i>
-                        Загрузить
-                    </a>
-                    <a href="/results" class="btn-secondary text-sm">
-                        <i class="fas fa-eye"></i>
-                        Пример
-                    </a>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -254,40 +240,225 @@
     <!-- Features Section -->
     <section id="features" class="py-16 px-4 sm:px-6 lg:px-8">
         <div class="max-w-7xl mx-auto">
-            <div class="mb-12">
-                <h3 class="text-3xl sm:text-4xl font-bold mb-4">Полный анализ речи</h3>
-                <p style="color: var(--text-secondary);">Система анализирует более 50 параметров вашего выступления</p>
+            <div class="mb-16">
+                <h3 class="text-4xl sm:text-5xl font-bold mb-4">Полный анализ речи</h3>
+                <p style="color: var(--text-secondary);" class="text-lg">Система анализирует более 50 параметров вашего выступления</p>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-4">
-                <div class="feature-card">
-                    <div style="font-size: 2.5rem; line-height: 1; margin-bottom: 1rem;">⏸️</div>
-                    <h4 class="text-base font-semibold mb-2">Паузы</h4>
-                    <p style="color: var(--text-secondary);" class="text-xs">Анализ естественных и заполняющих пауз для оптимизации ритма</p>
+            <!-- Fillers -->
+            <div class="mb-12">
+                <h4 class="text-2xl font-semibold mb-6 flex items-center gap-2">
+                    <i class="fas fa-bug" style="color: var(--warning);"></i>
+                    Слова-паразиты
+                </h4>
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-microphone"></i>
+                        </div>
+                        <h5 class="font-semibold mb-2">Фильтрация паразитов</h5>
+                        <p style="color: var(--text-secondary);" class="text-sm">Автоматическое выявление повторяющихся слов и звуков в речи</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <h5 class="font-semibold mb-2">Статистика</h5>
+                        <p style="color: var(--text-secondary);" class="text-sm">Подробная статистика использования паразитов с временными метками</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h5 class="font-semibold mb-2">Рекомендации</h5>
+                        <p style="color: var(--text-secondary);" class="text-sm">Персональные советы по устранению паразитов из речи</p>
+                    </div>
                 </div>
+            </div>
 
-                <div class="feature-card">
-                    <div style="font-size: 2.5rem; line-height: 1; margin-bottom: 1rem;">🎤</div>
-                    <h4 class="text-base font-semibold mb-2">Слова-паразиты</h4>
-                    <p style="color: var(--text-secondary);" class="text-xs">Выявление повторяющихся слов и звуков</p>
+            <!-- Pauses -->
+            <div class="mb-12">
+                <h4 class="text-2xl font-semibold mb-6 flex items-center gap-2">
+                    <i class="fas fa-pause" style="color: var(--accent);"></i>
+                    Паузы и ритм
+                </h4>
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-hourglass-half"></i>
+                        </div>
+                        <h5 class="font-semibold mb-2">Анализ пауз</h5>
+                        <p style="color: var(--text-secondary);" class="text-sm">Выявление естественных и заполняющих пауз для оптимизации ритма</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-wave-square"></i>
+                        </div>
+                        <h5 class="font-semibold mb-2">Визуализация</h5>
+                        <p style="color: var(--text-secondary);" class="text-sm">Графики распределения пауз по времени выступления</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h5 class="font-semibold mb-2">Оптимизация</h5>
+                        <p style="color: var(--text-secondary);" class="text-sm">Рекомендации по расстановке пауз для более эффективной речи</p>
+                    </div>
                 </div>
+            </div>
 
-                <div class="feature-card">
-                    <div style="font-size: 2.5rem; line-height: 1; margin-bottom: 1rem;">⚡</div>
-                    <h4 class="text-base font-semibold mb-2">Темп</h4>
-                    <p style="color: var(--text-secondary);" class="text-xs">Скорость речи и её вариации</p>
+            <!-- Speech rate -->
+            <div class="mb-12">
+                <h4 class="text-2xl font-semibold mb-6 flex items-center gap-2">
+                    <i class="fas fa-tachometer-alt" style="color: var(--success);"></i>
+                    Темп речи
+                </h4>
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-speedometer"></i>
+                        </div>
+                        <h5 class="font-semibold mb-2">Скорость речи</h5>
+                        <p style="color: var(--text-secondary);" class="text-sm">Измерение темпа речи в словах в минуту с учетом вариаций</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-line-chart"></i>
+                        </div>
+                        <h5 class="font-semibold mb-2">Динамика</h5>
+                        <p style="color: var(--text-secondary);" class="text-sm">Анализ изменения темпа на протяжении выступления</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <h5 class="font-semibold mb-2">Оптимальный темп</h5>
+                        <p style="color: var(--text-secondary);" class="text-sm">Рекомендации для оптимального для аудитории темпа</p>
+                    </div>
                 </div>
+            </div>
 
-                <div class="feature-card">
-                    <div style="font-size: 2.5rem; line-height: 1; margin-bottom: 1rem;">🤖</div>
-                    <h4 class="text-base font-semibold mb-2">AI-рекомендации</h4>
-                    <p style="color: var(--text-secondary);" class="text-xs">Интерактивный чат с персональными советами</p>
+            <!-- Emphasis and problems -->
+            <div class="mb-12">
+                <h4 class="text-2xl font-semibold mb-6 flex items-center gap-2">
+                    <i class="fas fa-exclamation-triangle" style="color: var(--danger);"></i>
+                    Проблемные моменты
+                </h4>
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-volume-mute"></i>
+                        </div>
+                        <h5 class="font-semibold mb-2">Интонация</h5>
+                        <p style="color: var(--text-secondary);" class="text-sm">Анализ вариаций высоты голоса и выразительности</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-flag"></i>
+                        </div>
+                        <h5 class="font-semibold mb-2">Проблемные зоны</h5>
+                        <p style="color: var(--text-secondary);" class="text-sm">Автоматическое выявление и выделение критических моментов</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-edit"></i>
+                        </div>
+                        <h5 class="font-semibold mb-2">Улучшения</h5>
+                        <p style="color: var(--text-secondary);" class="text-sm">Конкретные рекомендации по исправлению каждой проблемы</p>
+                    </div>
                 </div>
+            </div>
 
-                <div class="feature-card" style="opacity: 0.65;">
-                    <div style="font-size: 2.5rem; line-height: 1; margin-bottom: 1rem;">🔬</div>
-                    <h4 class="text-base font-semibold mb-2">Экспериментально</h4>
-                    <p style="color: var(--text-secondary);" class="text-xs">Дополнительные метрики (ограниченная точность)</p>
+            <!-- Additional metrics -->
+            <div class="mb-12">
+                <h4 class="text-2xl font-semibold mb-6 flex items-center gap-2">
+                    <i class="fas fa-chart-pie" style="color: var(--accent);"></i>
+                    Дополнительные метрики
+                </h4>
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-align-left"></i>
+                        </div>
+                        <h5 class="font-semibold mb-2">Текстовая статистика</h5>
+                        <p style="color: var(--text-secondary);" class="text-sm">Количество слов, уникальные слова, разнообразие словаря</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-audio"></i>
+                        </div>
+                        <h5 class="font-semibold mb-2">Акустические свойства</h5>
+                        <p style="color: var(--text-secondary);" class="text-sm">Анализ громкости, частот и качества звука</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h5 class="font-semibold mb-2">Лингвистический анализ</h5>
+                        <p style="color: var(--text-secondary);" class="text-sm">Оценка сложности языка и структуры предложений</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Experimental -->
+            <div class="mb-12" style="opacity: 0.85;">
+                <h4 class="text-2xl font-semibold mb-6 flex items-center gap-2">
+                    <i class="fas fa-flask" style="color: var(--warning);"></i>
+                    Экспериментальные функции
+                </h4>
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h5 class="font-semibold mb-2">Визуальная невербалика</h5>
+                        <p style="color: var(--text-secondary);" class="text-sm">Анализ жестов и движений (требует видео) - в разработке</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-face-smile"></i>
+                        </div>
+                        <h5 class="font-semibold mb-2">Эмоциональный тон</h5>
+                        <p style="color: var(--text-secondary);" class="text-sm">Определение эмоционального наполнения речи - ограниченная точность</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-microscope"></i>
+                        </div>
+                        <h5 class="font-semibold mb-2">Глубокий анализ</h5>
+                        <p style="color: var(--text-secondary);" class="text-sm">Продвинутые метрики речи на основе ML - в стадии тестирования</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Recommendations -->
+            <div class="mb-12">
+                <h4 class="text-2xl font-semibold mb-6 flex items-center gap-2">
+                    <i class="fas fa-robot" style="color: var(--success);"></i>
+                    AI-рекомендации и коучинг
+                </h4>
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h5 class="font-semibold mb-2">Интерактивный чат</h5>
+                        <p style="color: var(--text-secondary);" class="text-sm">Общение с AI-коучем на основе GigaChat для углубленного анализа</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-map"></i>
+                        </div>
+                        <h5 class="font-semibold mb-2">План улучшений</h5>
+                        <p style="color: var(--text-secondary);" class="text-sm">Персональный план развития речевых навыков с пошаговыми шагами</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h5 class="font-semibold mb-2">Предложения в реальном времени</h5>
+                        <p style="color: var(--text-secondary);" class="text-sm">Рекомендации, адаптированные к вашему стилю и целям выступления</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -298,41 +469,41 @@
     <!-- How It Works Section -->
     <section id="how-it-works" class="py-16 px-4 sm:px-6 lg:px-8">
         <div class="max-w-5xl mx-auto">
-            <div class="mb-12">
-                <h3 class="text-3xl sm:text-4xl font-bold mb-4">Простой процесс анализа</h3>
-                <p style="color: var(--text-secondary);">От загрузки до результатов за 4 шага</p>
+            <div class="mb-16">
+                <h3 class="text-4xl sm:text-5xl font-bold mb-4">Простой процесс анализа</h3>
+                <p style="color: var(--text-secondary);" class="text-lg">От загрузки до результатов за 4 шага</p>
             </div>
 
             <div class="space-y-8">
                 <div class="flex gap-6">
                     <div class="step-circle">1</div>
                     <div>
-                        <h4 class="text-lg font-semibold mb-2">Загрузите файл</h4>
-                        <p style="color: var(--text-secondary);">Выберите видео или аудиофайл вашего выступления. Поддерживаются MP4, MOV, WAV, MP3 и другие популярные форматы.</p>
+                        <h4 class="text-xl font-semibold mb-2">Загрузите файл</h4>
+                        <p style="color: var(--text-secondary);" class="text-base leading-relaxed">Выберите видео или аудиофайл вашего выступления. Поддерживаются MP4, MOV, WAV, MP3 и другие популярные форматы.</p>
                     </div>
                 </div>
 
                 <div class="flex gap-6">
                     <div class="step-circle">2</div>
                     <div>
-                        <h4 class="text-lg font-semibold mb-2">Автоматический анализ</h4>
-                        <p style="color: var(--text-secondary);">Система проанализирует вашу речь, распознает текст и выполнит детальный анализ всех параметров выступления.</p>
+                        <h4 class="text-xl font-semibold mb-2">Автоматический анализ</h4>
+                        <p style="color: var(--text-secondary);" class="text-base leading-relaxed">Система проанализирует вашу речь, распознает текст и выполнит детальный анализ всех параметров выступления.</p>
                     </div>
                 </div>
 
                 <div class="flex gap-6">
                     <div class="step-circle">3</div>
                     <div>
-                        <h4 class="text-lg font-semibold mb-2">Получите результаты</h4>
-                        <p style="color: var(--text-secondary);">Просмотрите детальный отчет с графиками, метриками, временными отметками проблем и AI-рекомендациями.</p>
+                        <h4 class="text-xl font-semibold mb-2">Получите результаты</h4>
+                        <p style="color: var(--text-secondary);" class="text-base leading-relaxed">Просмотрите детальный отчет с графиками, метриками, временными отметками проблем и AI-рекомендациями.</p>
                     </div>
                 </div>
 
                 <div class="flex gap-6">
                     <div class="step-circle">4</div>
                     <div>
-                        <h4 class="text-lg font-semibold mb-2">Обсудите с AI</h4>
-                        <p style="color: var(--text-secondary);">Задавайте вопросы об анализе в чате с AI-коучем. Получайте углубленные советы и рекомендации по улучшению.</p>
+                        <h4 class="text-xl font-semibold mb-2">Обсудите с AI</h4>
+                        <p style="color: var(--text-secondary);" class="text-base leading-relaxed">Задавайте вопросы об анализе в чате с AI-коучем. Получайте углубленные советы и рекомендации по улучшению.</p>
                     </div>
                 </div>
             </div>
@@ -344,7 +515,7 @@
     <!-- Stats Section -->
     <section id="stats" class="py-16 px-4 sm:px-6 lg:px-8">
         <div class="max-w-5xl mx-auto">
-            <h3 class="text-3xl font-bold mb-12 text-center">Возможности сервиса</h3>
+            <h3 class="text-4xl sm:text-5xl font-bold mb-16 text-center">Возможности сервиса</h3>
 
             <div class="grid md:grid-cols-4 gap-6">
                 <div class="stat-box">
@@ -369,14 +540,72 @@
 
     <div class="divider max-w-7xl mx-auto"></div>
 
+    <!-- About Section -->
+    <section class="py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-5xl mx-auto">
+            <h3 class="text-4xl sm:text-5xl font-bold mb-8 text-center">О Speech Coach</h3>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="card-dark p-8 rounded-lg">
+                    <h4 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                        <i class="fas fa-lightbulb" style="color: var(--accent);"></i>
+                        Для кого это
+                    </h4>
+                    <p style="color: var(--text-secondary);" class="mb-4 leading-relaxed">
+                        Speech Coach разработан для ораторов, учителей, ведущих трансляций, бизнес-лидеров и всех, 
+                        кто хочет улучшить качество своей речи. Наш сервис помогает развить уверенность в выступлениях 
+                        и избавиться от вредных речевых привычек.
+                    </p>
+                </div>
+                <div class="card-dark p-8 rounded-lg">
+                    <h4 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                        <i class="fas fa-cogs" style="color: var(--success);"></i>
+                        Как это работает
+                    </h4>
+                    <p style="color: var(--text-secondary);" class="mb-4 leading-relaxed">
+                        Загрузите файл с вашим выступлением, и наша система на основе AI моментально проанализирует речь, 
+                        создав детальный отчет. Затем обсудите результаты с интеллектуальным коучем, который даст 
+                        персональные рекомендации для улучшения.
+                    </p>
+                </div>
+                <div class="card-dark p-8 rounded-lg">
+                    <h4 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                        <i class="fas fa-shield-alt" style="color: var(--warning);"></i>
+                        Безопасность и приватность
+                    </h4>
+                    <p style="color: var(--text-secondary);" class="mb-4 leading-relaxed">
+                        Ваши данные — ваша собственность. Мы не сохраняем файлы на наших серверах и не используем 
+                        их для улучшения моделей. Вся обработка выполняется безопасно в соответствии с современными 
+                        стандартами защиты.
+                    </p>
+                </div>
+                <div class="card-dark p-8 rounded-lg">
+                    <h4 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                        <i class="fas fa-rocket" style="color: var(--accent);"></i>
+                        Технология
+                    </h4>
+                    <p style="color: var(--text-secondary);" class="mb-4 leading-relaxed">
+                        Speech Coach использует продвинутые алгоритмы обработки речи и машинного обучения. 
+                        Интеграция с GigaChat позволяет получать умные, контекстуальные рекомендации 
+                        для каждого уникального выступления.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider max-w-7xl mx-auto"></div>
+
     <!-- Final CTA Section -->
-    <section class="py-12 px-4 sm:px-6 lg:px-8">
+    <section class="py-16 px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto text-center">
-            <h3 class="text-2xl font-bold mb-3">Начните улучшать речь</h3>
-            <p style="color: var(--text-secondary);" class="text-sm mb-6">Загрузите файл и получите анализ с рекомендациями от AI</p>
-            <a href="/upload" class="btn-primary px-6 py-2">
+            <h3 class="text-4xl sm:text-5xl font-bold mb-4">Начните улучшать речь уже сегодня</h3>
+            <p style="color: var(--text-secondary);" class="text-lg mb-8 leading-relaxed">
+                Не откладывайте совершенствование своих ораторских навыков. Загрузите файл со своим выступлением прямо сейчас 
+                и получите детальный анализ от AI. Первый шаг к великолепной речи — это понимание того, что нужно улучшить.
+            </p>
+            <a href="/upload" class="btn-primary px-8 py-3 text-base">
                 <i class="fas fa-upload"></i>
-                Загрузить файл
+                Загрузить файл и получить анализ
             </a>
         </div>
     </section>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="REST API документация — Speech Coach">
+    <title>REST API — Speech Coach</title>
+    <link rel="icon" href="/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --border-color: #30363d;
+            --text-primary: #e6edf3;
+            --text-secondary: #8b949e;
+            --accent: #58a6ff;
+            --accent-hover: #79c0ff;
+        }
+
+        * { color-scheme: dark; box-sizing: border-box; }
+        body { background: var(--bg-primary); color: var(--text-primary); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        .nav-bg { background: var(--bg-secondary); border-bottom: 1px solid var(--border-color); }
+        .btn-primary { background: var(--accent); color: var(--bg-primary); padding: 0.75rem 1.5rem; border-radius: 6px; font-weight: 600; transition: all 0.2s; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .btn-primary:hover { background: var(--accent-hover); }
+        .code-block { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; padding: 1.5rem; margin: 1rem 0; overflow-x: auto; }
+        .code-block code { color: #79c0ff; font-family: 'Courier New', monospace; }
+        .section { margin-bottom: 3rem; }
+        .section-title { font-size: 2rem; font-weight: bold; margin-bottom: 1.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 1rem; }
+        .subsection-title { font-size: 1.25rem; font-weight: 600; margin-top: 2rem; margin-bottom: 1rem; }
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { color: var(--accent-hover); text-decoration: underline; }
+        .back-link { color: var(--text-secondary); margin-bottom: 2rem; display: inline-flex; align-items: center; gap: 0.5rem; }
+    </style>
+</head>
+<body>
+    <nav class="nav-bg sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="/" style="display: flex; gap: 0.75rem; align-items: center; text-decoration: none;">
+                    <div style="width: 32px; height: 32px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; color: var(--accent);">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <strong style="color: var(--text-primary);">Speech Coach</strong>
+                </a>
+                <a href="/upload" class="btn-primary text-sm">
+                    <i class="fas fa-upload"></i> Загрузить
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main style="max-width: 900px; margin: 0 auto; padding: 3rem 1rem;">
+        <a href="/documentation" class="back-link">
+            <i class="fas fa-arrow-left"></i>
+            Вернуться к документации
+        </a>
+
+        <h1 style="font-size: 3rem; font-weight: bold; margin-bottom: 1rem;">REST API</h1>
+        <p style="color: var(--text-secondary); font-size: 1.125rem; line-height: 1.6; margin-bottom: 2rem;">
+            Полная документация API Speech Coach для интеграции в ваши приложения.
+        </p>
+
+        <div class="section">
+            <h2 class="section-title">Основные эндпоинты</h2>
+            
+            <h3 class="subsection-title">Загрузка и анализ файла</h3>
+            <div class="code-block">
+                <code>POST /api/analysis/upload</code>
+            </div>
+            <p style="color: var(--text-secondary); line-height: 1.6;">
+                Загрузить аудио или видео файл для анализа. Поддерживаются форматы MP4, MOV, MP3, WAV и другие.
+            </p>
+
+            <h3 class="subsection-title">Получение результатов анализа</h3>
+            <div class="code-block">
+                <code>GET /api/analysis/results/{analysis_id}</code>
+            </div>
+            <p style="color: var(--text-secondary); line-height: 1.6;">
+                Получить результаты анализа по ID. Возвращает все метрики, временные отметки и рекомендации.
+            </p>
+
+            <h3 class="subsection-title">AI-коуч чат</h3>
+            <div class="code-block">
+                <code>POST /chat</code>
+            </div>
+            <p style="color: var(--text-secondary); line-height: 1.6;">
+                Отправить сообщение в AI-коуч. Получить персональные рекомендации на основе анализа.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Примеры использования</h2>
+            
+            <h3 class="subsection-title">Загрузка файла (Python)</h3>
+            <div class="code-block">
+<code>import requests
+
+files = {'file': open('speech.mp4', 'rb')}
+response = requests.post('http://localhost:8000/api/analysis/upload', files=files)
+analysis_id = response.json()['analysis_id']
+print(f"Analysis ID: {analysis_id}")</code>
+            </div>
+
+            <h3 class="subsection-title">Получение результатов (JavaScript)</h3>
+            <div class="code-block">
+<code>const analysisId = 'abc123';
+fetch(`/api/analysis/results/${analysisId}`)
+  .then(r => r.json())
+  .then(data => console.log(data.metrics));</code>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Аутентификация</h2>
+            <p style="color: var(--text-secondary); line-height: 1.6;">
+                В текущей версии API доступен без авторизации. Для использования в production рекомендуется добавить API ключи.
+                Подробнее см. в разделе <a href="/documentation/security">Безопасность</a>.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Обработка ошибок</h2>
+            <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem;">
+                API возвращает стандартные HTTP коды ошибок:
+            </p>
+            <ul style="color: var(--text-secondary); margin-left: 1.5rem;">
+                <li><strong>400</strong> — Bad Request (неверные параметры)</li>
+                <li><strong>404</strong> — Not Found (файл не найден)</li>
+                <li><strong>413</strong> — Payload Too Large (файл слишком большой)</li>
+                <li><strong>500</strong> — Internal Server Error (ошибка сервера)</li>
+            </ul>
+        </div>
+
+        <div style="margin-top: 5rem; padding-top: 3rem; border-top: 1px solid var(--border-color); color: var(--text-secondary);">
+            <p><strong>Интерактивная документация:</strong> Посетите <a href="/docs">/docs</a> при запущенном сервере для интерактивного Swagger UI.</p>
+            <p style="margin-top: 1rem;">&copy; 2025 Speech Coach</p>
+        </div>
+    </main>
+</body>
+</html>
