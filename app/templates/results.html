@@ -7,6 +7,7 @@
     <title>Результаты анализа | Speech Coach</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -267,6 +268,81 @@
         .message-bubble.user {
             background-color: var(--accent);
             color: var(--bg-primary);
+        }
+
+        /* Markdown styling for assistant messages */
+        .message-bubble.assistant h1,
+        .message-bubble.assistant h2,
+        .message-bubble.assistant h3,
+        .message-bubble.assistant h4,
+        .message-bubble.assistant h5,
+        .message-bubble.assistant h6 {
+            margin: 0.5rem 0 0.25rem 0;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .message-bubble.assistant h1 { font-size: 1.25rem; }
+        .message-bubble.assistant h2 { font-size: 1.1rem; }
+        .message-bubble.assistant h3 { font-size: 1rem; }
+
+        .message-bubble.assistant p {
+            margin: 0.5rem 0;
+        }
+
+        .message-bubble.assistant ul,
+        .message-bubble.assistant ol {
+            margin: 0.5rem 0 0.5rem 1.5rem;
+        }
+
+        .message-bubble.assistant li {
+            margin: 0.25rem 0;
+        }
+
+        .message-bubble.assistant code {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 0.125rem 0.375rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .message-bubble.assistant pre {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 0.75rem;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 0.5rem 0;
+        }
+
+        .message-bubble.assistant pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+
+        .message-bubble.assistant blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: 0.75rem;
+            margin: 0.5rem 0;
+            opacity: 0.8;
+        }
+
+        .message-bubble.assistant strong {
+            font-weight: 600;
+        }
+
+        .message-bubble.assistant em {
+            font-style: italic;
+        }
+
+        .message-bubble.assistant a {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+
+        .message-bubble.assistant a:hover {
+            text-decoration: none;
+        }
         }
 
         .chat-input-area {
@@ -701,6 +777,9 @@
                     content: greetingMessage
                 });
 
+                // Initialize chat input
+                initializeChatInput();
+
             } catch (error) {
                 console.error('Error rendering results:', error);
                 showError('Ошибка при отображении результатов', error.message);
@@ -714,24 +793,30 @@
             if (!analysisData) return;
 
             // Duration
-            const durationMinutes = Math.floor((analysisData.duration || 0) / 60);
+            const duration = analysisData.duration || 0;
+            const durationMinutes = Math.floor(duration / 60);
             document.getElementById('durationValue').textContent = durationMinutes + ' мин';
 
             // WPM
-            document.getElementById('wpmValue').textContent = Math.round(analysisData.words_per_minute || 0);
+            const wpm = analysisData.words_per_minute || 
+                       (analysisData.metrics?.wpm) || 
+                       (analysisData.speech_metrics?.words_per_minute) || 0;
+            document.getElementById('wpmValue').textContent = Math.round(wpm);
 
-            // Fillers count
+            // Fillers count - get from items array if available
             let fillersCount = 0;
             if (Array.isArray(analysisData.fillers)) {
                 fillersCount = analysisData.fillers.length;
             } else if (analysisData.fillers?.items && Array.isArray(analysisData.fillers.items)) {
                 fillersCount = analysisData.fillers.items.length;
+            } else if (analysisData.filler_words?.total) {
+                fillersCount = analysisData.filler_words.total;
             } else if (analysisData.fillers?.total) {
                 fillersCount = analysisData.fillers.total;
             }
             document.getElementById('fillersCountValue').textContent = fillersCount;
 
-            // Pauses count
+            // Pauses count - get from items array if available
             let pausesCount = 0;
             if (Array.isArray(analysisData.pauses)) {
                 pausesCount = analysisData.pauses.length;
@@ -755,6 +840,8 @@
                 fillersCount = analysisData.fillers.length;
             } else if (analysisData.fillers?.items && Array.isArray(analysisData.fillers.items)) {
                 fillersCount = analysisData.fillers.items.length;
+            } else if (analysisData.filler_words?.total) {
+                fillersCount = analysisData.filler_words.total;
             } else if (analysisData.fillers?.total) {
                 fillersCount = analysisData.fillers.total;
             }
@@ -815,15 +902,19 @@
         // ============================================================================
         // FILLERS RENDERING
         // ============================================================================
-        function renderFillersList() {
-            // Handle different data structures
-            let fillersList = [];
-            
+        function getFillersList() {
             if (Array.isArray(analysisData.fillers)) {
-                fillersList = analysisData.fillers;
-            } else if (analysisData.fillers && analysisData.fillers.items && Array.isArray(analysisData.fillers.items)) {
-                fillersList = analysisData.fillers.items;
+                return analysisData.fillers;
+            } else if (analysisData.fillers?.items && Array.isArray(analysisData.fillers.items)) {
+                return analysisData.fillers.items;
+            } else if (analysisData.filler_words?.items && Array.isArray(analysisData.filler_words.items)) {
+                return analysisData.filler_words.items;
             }
+            return [];
+        }
+
+        function renderFillersList() {
+            const fillersList = getFillersList();
 
             if (!fillersList || fillersList.length === 0) {
                 document.getElementById('fillersList').innerHTML = `
@@ -840,11 +931,12 @@
                 const severityColor = getSeverityColor(severity);
                 const severityLabel = getSeverityLabel(severity);
                 const context = filler.context || '';
+                const word = filler.word || filler.text || '';
 
                 return `
                     <div class="timeline-item ${severityColor}">
                         <div class="timeline-item-header">
-                            <div class="timeline-item-title">"${escapeHtml(filler.word)}"</div>
+                            <div class="timeline-item-title">"${escapeHtml(word)}"</div>
                             <div class="timeline-item-badge" style="background-color: currentColor; opacity: 0.2; color: inherit;">
                                 ${severityLabel}
                             </div>
@@ -864,15 +956,17 @@
         // ============================================================================
         // PAUSES RENDERING
         // ============================================================================
-        function renderPausesList() {
-            // Handle different data structures
-            let pausesList = [];
-            
+        function getPausesList() {
             if (Array.isArray(analysisData.pauses)) {
-                pausesList = analysisData.pauses;
-            } else if (analysisData.pauses && analysisData.pauses.items && Array.isArray(analysisData.pauses.items)) {
-                pausesList = analysisData.pauses.items;
+                return analysisData.pauses;
+            } else if (analysisData.pauses?.items && Array.isArray(analysisData.pauses.items)) {
+                return analysisData.pauses.items;
             }
+            return [];
+        }
+
+        function renderPausesList() {
+            const pausesList = getPausesList();
 
             if (!pausesList || pausesList.length === 0) {
                 document.getElementById('pausesList').innerHTML = `
@@ -961,6 +1055,8 @@
                 fillersCount = analysisData.fillers.length;
             } else if (analysisData.fillers?.items && Array.isArray(analysisData.fillers.items)) {
                 fillersCount = analysisData.fillers.items.length;
+            } else if (analysisData.filler_words?.total) {
+                fillersCount = analysisData.filler_words.total;
             } else if (analysisData.fillers?.total) {
                 fillersCount = analysisData.fillers.total;
             }
@@ -1226,7 +1322,17 @@
 
             const bubble = document.createElement('div');
             bubble.className = `message-bubble ${role}`;
-            bubble.textContent = text;
+            
+            // Process markdown for assistant messages
+            if (role === 'assistant') {
+                bubble.innerHTML = marked.parse(text);
+                // Sanitize the HTML to prevent XSS
+                const temp = document.createElement('div');
+                temp.innerHTML = bubble.innerHTML;
+                bubble.innerHTML = sanitizeHtml(temp.innerHTML);
+            } else {
+                bubble.textContent = text;
+            }
 
             messageDiv.appendChild(bubble);
             messagesContainer.appendChild(messageDiv);
@@ -1235,6 +1341,20 @@
             setTimeout(() => {
                 messagesContainer.scrollTop = messagesContainer.scrollHeight;
             }, 0);
+        }
+
+        // Initialize chat input Enter handling
+        function initializeChatInput() {
+            const chatInput = document.getElementById('chatInput');
+            if (chatInput) {
+                chatInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        sendMessage();
+                    }
+                    // Shift+Enter will create a new line (default behavior)
+                });
+            }
         }
 
         // ============================================================================
@@ -1269,6 +1389,29 @@
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
+        }
+
+        function sanitizeHtml(html) {
+            // Simple sanitization: remove script tags and event handlers
+            // This is a basic approach - in production use DOMPurify library
+            const temp = document.createElement('div');
+            temp.innerHTML = html;
+            
+            // Remove script tags
+            const scripts = temp.querySelectorAll('script');
+            scripts.forEach(script => script.remove());
+            
+            // Remove event handlers
+            const allElements = temp.querySelectorAll('*');
+            allElements.forEach(el => {
+                Array.from(el.attributes).forEach(attr => {
+                    if (attr.name.startsWith('on')) {
+                        el.removeAttribute(attr.name);
+                    }
+                });
+            });
+            
+            return temp.innerHTML;
         }
     </script>
 </body>
