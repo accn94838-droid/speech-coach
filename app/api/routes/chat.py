@@ -5,8 +5,12 @@ import logging
 from pydantic import BaseModel
 import os
 from pathlib import Path
+import httpx
 
 from app.services.gigachat import GigaChatClient, GigaChatError
+from app.services.cache import AnalysisCache
+from app.core.config import settings
+from pathlib import Path
 from app.api.deps import get_gigachat_client
 
 router = APIRouter()
@@ -155,24 +159,66 @@ async def analyze_followup_chat(
         if not request.messages:
             raise HTTPException(status_code=400, detail="Messages cannot be empty")
         
-        # Если указан analysis_id, можем получить контекст анализа
-        # (в реальной реализации здесь будет логика получения сохраненного анализа)
+        # Если указан analysis_id, попробовать получить контекст анализа из кеша
+        # Ожидается, что frontend передаёт `analysis_id` равным ключу кеша (sha256)
+        if request.analysis_id:
+            try:
+                cache_dir = Path(settings.cache_dir) / "analysis"
+                cache = AnalysisCache(cache_dir, ttl_seconds=settings.cache_ttl)
+                # try raw id and common decorated keys used by cache_analysis
+                candidates = [request.analysis_id, f"{request.analysis_id}_gigachat_True", f"{request.analysis_id}_gigachat_False"]
+                cached = None
+                for key in candidates:
+                    cached = cache.get_by_key(key)
+                    if cached is not None:
+                        break
+                if cached:
+                    # Построим краткое резюме анализа для передачи в систему
+                    summary_lines = []
+                    if getattr(cached, 'gigachat_analysis', None):
+                        summary_lines.append('GigaChat summary: ' + str(getattr(cached, 'gigachat_analysis')))
+                    if getattr(cached, 'transcript', None):
+                        # include short excerpt of transcript
+                        transcript_excerpt = str(getattr(cached, 'transcript'))[:1000]
+                        summary_lines.append('Transcript excerpt: ' + transcript_excerpt)
+                    if getattr(cached, 'advice', None):
+                        adv = getattr(cached, 'advice')
+                        if isinstance(adv, list) and len(adv) > 0:
+                            top_advice = ', '.join([a.title for a in adv[:3] if getattr(a, 'title', None)])
+                            if top_advice:
+                                summary_lines.append('Top advice: ' + top_advice)
+
+                    if summary_lines:
+                        context_msg = 'Context for this follow-up analysis:\n' + '\n'.join(summary_lines)
+                        # prepend as system message so assistant can use it
+                        formatted_messages = [{
+                            "role": "system",
+                            "content": context_msg
+                        }]
+                    else:
+                        formatted_messages = []
+                else:
+                    formatted_messages = []
+            except Exception as e:
+                logger.warning(f"Failed to load analysis context from cache: {e}")
+                formatted_messages = []
+        else:
+            # Подготовим сообщения
+            formatted_messages = []
         
-        # Подготовим сообщения
-        formatted_messages = []
-        
-        # Системное сообщение с контекстом
+        # Системное сообщение, дающее роль и поведение ассистента
         system_content = """Ты - опытный тренер по ораторскому искусству. 
         Пользователь хочет обсудить результаты анализа своего выступления. 
         Отвечай на вопросы пользователя, основываясь на его анализе речи и предоставляя 
         конкретные рекомендации по улучшению. Если пользователь спрашивает о чем-то, 
-        что не отражено в анализе, используй свой опыт в области ораторского искусства 
-        для предоставления полезных советов."""
-        
-        formatted_messages.append({
-            "role": "system",
-            "content": system_content
-        })
+        что не отражено в анализе, используй экспертные знания в области ораторского мастерства."""
+
+        # если formatted_messages уже содержит system message с контекстом, добавим дополнительный
+        if formatted_messages and formatted_messages[0].get("role") == "system":
+            # дополним существующий системный контекст
+            formatted_messages[0]["content"] += "\n\n" + system_content
+        else:
+            formatted_messages.insert(0, {"role": "system", "content": system_content})
         
         # Добавляем сообщения пользователя
         for msg in request.messages:
@@ -196,11 +242,15 @@ async def analyze_followup_chat(
         # Отправляем запрос в GigaChat
         chat_url = f"{gigachat_client.api_url}/chat/completions"
         
+        # Determine max_tokens: prefer request, fall back to client configured limit
+        desired_max = request.max_tokens or gigachat_client.max_tokens
+        max_tokens = int(min(desired_max, gigachat_client.max_tokens))
+
         request_data = {
             "model": gigachat_client.model,
             "messages": formatted_messages,
             "temperature": request.temperature,
-            "max_tokens": min(request.max_tokens, gigachat_client.max_tokens),
+            "max_tokens": max_tokens,
         }
 
         headers = {

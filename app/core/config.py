@@ -5,7 +5,9 @@ import json
 
 
 class Settings(BaseSettings):
-    # Путь к ffmpeg (по умолчанию просто "ffmpeg" из PATH)
+    """Application configuration settings."""
+    
+    # FFmpeg configuration
     ffmpeg_path: str = Field(default="ffmpeg", alias="FFMPEG_PATH")
 
     # Настройки локального Whisper (faster-whisper)
@@ -35,13 +37,13 @@ class Settings(BaseSettings):
         alias="GIGACHAT_API_URL"
     )
     gigachat_model: str = Field(
-        default="GigaChat", alias="GIGACHAT_MODEL"
+        default="gigachat:latest", alias="GIGACHAT_MODEL"
     )
     gigachat_timeout: int = Field(
         default=30, alias="GIGACHAT_TIMEOUT"
     )
     gigachat_max_tokens: int = Field(
-        default=2000, alias="GIGACHAT_MAX_TOKENS"
+        default=131072, alias="GIGACHAT_MAX_TOKENS"
     )
     gigachat_scope: str = Field(
         default="GIGACHAT_API_PERS",

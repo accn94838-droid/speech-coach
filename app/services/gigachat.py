@@ -5,43 +5,41 @@ import logging
 import uuid
 import time
 from typing import Optional, Dict, Any, List
-from app.services.cache import AnalysisCache
+
 import httpx
 from pydantic import ValidationError
 
 from app.core.config import settings
 from app.models.gigachat import GigaChatAnalysis
 from app.models.analysis import AnalysisResult
+from app.services.cache import AnalysisCache
 
 logger = logging.getLogger(__name__)
 
 
 class GigaChatError(Exception):
-    """Кастомная ошибка для GigaChat API"""
+    """GigaChat API error."""
     pass
 
 
 def should_verify_ssl() -> bool:
-    """Определяет, нужно ли проверять SSL сертификаты"""
-    # Проверяем переменную окружения
+    """Determine whether to verify SSL certificates."""
     verify_env = os.environ.get('GIGACHAT_VERIFY_SSL', '').lower()
 
     if verify_env in ['false', '0', 'no']:
-        logger.info("SSL verification disabled by environment variable")
+        logger.warning("SSL verification disabled (not recommended for production)")
         return False
     elif verify_env in ['true', '1', 'yes']:
-        logger.info("SSL verification enabled by environment variable")
+        logger.info("SSL verification enabled")
         return True
 
-    # По умолчанию для тестирования отключаем SSL проверку
-    # В продакшене это нужно включить!
-    logger.warning("SSL verification disabled by default for testing")
-    logger.warning("Set GIGACHAT_VERIFY_SSL=true for production")
-    return False
+    # Default to enabled for security
+    logger.info("SSL verification enabled (default)")
+    return True
 
 
 class GigaChatClient:
-    """Клиент для работы с GigaChat API"""
+    """GigaChat API client."""
 
     def __init__(self, verify_ssl: Optional[bool] = None):
         self.api_key = settings.gigachat_api_key.get_secret_value(
@@ -59,10 +57,8 @@ class GigaChatClient:
             self.verify_ssl = verify_ssl
 
         if not self.verify_ssl:
-            logger.warning("SSL verification is DISABLED! This is insecure!")
-            import warnings
-            warnings.filterwarnings(
-                'ignore', message='Unverified HTTPS request')
+            logger.warning("⚠️  SSL verification is DISABLED (NOT RECOMMENDED for production)")
+            logger.warning("Set GIGACHAT_VERIFY_SSL=true in production")
 
         self._access_token: Optional[str] = None
         self._token_expires_at: Optional[float] = None
@@ -75,13 +71,13 @@ class GigaChatClient:
         )
 
     async def authenticate(self) -> None:
-        """Аутентификация в GigaChat API"""
+        """Authenticate to GigaChat API."""
         if not self.api_key:
             raise GigaChatError("GigaChat API key not configured")
 
-        # Проверяем, не истек ли текущий токен
+        # Check if cached token is still valid
         if self._access_token and self._token_expires_at:
-            if time.time() < self._token_expires_at - 60:  # 60 секунд до истечения
+            if time.time() < self._token_expires_at - 60:  # 60 seconds buffer
                 logger.debug("Using cached access token")
                 return
 
@@ -95,8 +91,7 @@ class GigaChatClient:
 
             data = {"scope": self.scope}
 
-            logger.info(
-                f"Authenticating to GigaChat API (SSL: {self.verify_ssl})")
+            logger.info(f"Authenticating to GigaChat API")
 
             auth_response = await self.client.post(
                 self.auth_url,
@@ -256,13 +251,14 @@ class GigaChatClient:
                 logger.error("Failed to obtain access token for analysis request")
                 return None
 
-            chat_url = f"{self.api_url}/chat/completions"
-            request_data = {
-                "model": self.model,
-                "messages": [
-                    {
-                        "role": "system",
-                        "content": """Ты опытный тренер по ораторскому искусству и публичным выступлениям. Твоя задача - дать глубокий и профессиональный анализ речи на основе предоставленных метрик и транскрипта. 
+                        chat_url = f"{self.api_url}/chat/completions"
+
+                        request_data = {
+                                "model": self.model,
+                                "messages": [
+                                        {
+                                                "role": "system",
+                                                "content": """Ты опытный тренер по ораторскому искусству и публичным выступлениями. Твоя задача - дать глубокий и профессиональный анализ речи на основе предоставленных метрик и транскрипта. 
 
 Ты должен проанализировать:
 1. Структуру и логичность выступления
@@ -278,35 +274,33 @@ class GigaChatClient:
 
 Формат JSON:
 {
-  "overall_assessment": "Общая оценка выступления: сильные и слабые стороны, уровень подготовки, общее впечатление",
-  "strengths": [
-    "Первая сильная сторона с конкретным примером из выступления",
-    "Вторая сильная сторона с конкретным примером из выступления"
-  ],
-  "areas_for_improvement": [
-    "Первая зона роста с конкретным указанием проблемы",
-    "Вторая зона роста с конкретным указанием проблемы"
-  ],
-  "detailed_recommendations": [
-    "Конкретная рекомендация по улучшению с объяснением",
-    "Конкретная рекомендация по улучшению с объяснением"
-  ],
-  "key_insights": [
-    "Ключевой инсайт о стиле речи",
-    "Ключевой инсайт о взаимодействии с аудиторией"
-  ],
-  "confidence_score": "Число от 0 до 1, отражающее уверенность в анализе на основе полноты данных"
+    "overall_assessment": "Общая оценка выступления: сильные и слабые стороны, уровень подготовки, общее впечатление",
+    "strengths": [
+        "Первая сильная сторона с конкретным примером из выступления",
+        "Вторая сильная сторона с конкретным примером из выступления"
+    ],
+    "areas_for_improvement": [
+        "Первая зона роста с конкретным указанием проблемы",
+        "Вторая зона роста с конкретным указанием проблемы"
+    ],
+    "detailed_recommendations": [
+        "Конкретная рекомендация по улучшению с объяснением",
+        "Конкретная рекомендация по улучшению с объяснением"
+    ],
+    "key_insights": [
+        "Ключевой инсайт о стиле речи",
+        "Ключевой инсайт о взаимодействии с аудиторией"
+    ],
+    "confidence_score": "Число от 0 до 1, отражающее уверенность в анализе на основе полноты данных"
 }"""
-                    },
-                    {
-                        "role": "user",
-                        "content": prompt
-                    }
-                ],
-                "temperature": 0.7,
-                "max_tokens": min(self.max_tokens, 2000),  # Увеличиваем для более подробного анализа
-                "response_format": {"type": "json_object"}
-            }
+                                        },
+                                        {"role": "user", "content": prompt}
+                                ],
+                                "temperature": 0.7,
+                                # Use configured max tokens (no artificial 2000 cap)
+                                "max_tokens": int(self.max_tokens),
+                                "response_format": {"type": "json_object"},
+                        }
 
             headers = {
                 "Authorization": f"Bearer {self._access_token}",

@@ -1,63 +1,38 @@
-# Ядро FastAPI
 fastapi
 uvicorn[standard]
 python-multipart
-
-# Pydantic и конфигурация
 pydantic
 pydantic-settings
 python-dotenv
-
-# Распознавание речи
 faster-whisper
 ctranslate2
 onnxruntime
-
-# Аудио обработка
 soundfile
 pydub
-
-# Математические библиотеки
 numpy
 scipy
-
-# HTTP клиенты
 httpx
 aiohttp
-
-# Валидация файлов
 python-magic
 psutil
 aiofiles
-
-# Кеширование
 cachetools
-
-# Логирование
 coloredlogs
-
-# Утилиты
 python-dateutil
 pytz
 typing-extensions
 anyio
-
-# Форматирование и разработка (опционально)
 black
 isort
 flake8
 mypy
-
-# Тестирование (опционально)
 pytest
 pytest-asyncio
 pytest-cov
-
-# Дополнительные инструменты
 tqdm
 click
 pyyaml
 webrtcvad
-# pyannote.audio requires torch and heavier dependencies; optional for improved VAD
 pyannote.audio
+torch
 torch
