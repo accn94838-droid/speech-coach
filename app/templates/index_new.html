@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Speech Coach - анализ вашего выступления с помощью AI">
     <title>Speech Coach - AI анализ речи</title>
-    <link rel="icon" href="/favicon.ico">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%230d1117' width='100' height='100'/><circle cx='50' cy='50' r='35' fill='none' stroke='%2358a6ff' stroke-width='3'/><path d='M50 25 L50 35 M50 65 L50 75 M25 50 L35 50 M65 50 L75 50' stroke='%2358a6ff' stroke-width='2' stroke-linecap='round'/></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
             --bg-primary: #0d1117;
             --bg-secondary: #161b22;
             --bg-tertiary: #21262d;
-            --border-color: #30363d;
             --text: #e6edf3;
             --text-secondary: #8b949e;
+            --border-color: #30363d;
             --accent: #58a6ff;
             --accent-hover: #79c0ff;
             --success: #3fb950;
@@ -36,7 +35,7 @@
         body {
             background-color: var(--bg-primary);
             color: var(--text);
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
             line-height: 1.6;
         }
 
@@ -44,17 +43,14 @@
             background-color: rgba(13, 17, 23, 0.95);
             border-bottom: 1px solid var(--border-color);
             backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 40;
         }
 
         .btn-primary {
             background-color: var(--accent);
             color: var(--bg-primary);
-            padding: 0.75rem 1.5rem;
+            padding: 0.5rem 1rem;
             border-radius: 6px;
-            border: 1px solid var(--accent);
+            border: none;
             font-weight: 600;
             cursor: pointer;
             display: inline-flex;
@@ -66,8 +62,6 @@
 
         .btn-primary:hover {
             background-color: var(--accent-hover);
-            border-color: var(--accent-hover);
-            color: var(--bg-primary);
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(88, 166, 255, 0.3);
         }
@@ -75,8 +69,8 @@
         .btn-secondary {
             background-color: transparent;
             color: var(--accent);
+            padding: 0.5rem 1rem;
             border: 1px solid var(--accent);
-            padding: 0.75rem 1.5rem;
             border-radius: 6px;
             font-weight: 600;
             cursor: pointer;
@@ -154,7 +148,6 @@
             height: 1px;
             background: linear-gradient(90deg, transparent 0%, var(--border-color) 50%, transparent 100%);
             margin: 2rem auto;
-            max-width: 80rem;
         }
 
         .hero-bg {
@@ -285,22 +278,6 @@
                 padding-left: 1.5rem;
                 padding-right: 1.5rem;
             }
-            
-            .sm\:text-6xl {
-                font-size: 3.75rem;
-            }
-            
-            .sm\:text-7xl {
-                font-size: 4.5rem;
-            }
-            
-            .sm\:text-xl {
-                font-size: 1.25rem;
-            }
-            
-            .hidden.sm\:inline {
-                display: inline !important;
-            }
         }
 
         @media (min-width: 1024px) {
@@ -362,57 +339,40 @@
             line-height: 1.2;
         }
 
-        .text-4xl {
-            font-size: 2.25rem;
-            line-height: 1.2;
-        }
+        @media (min-width: 640px) {
+            .sm\:text-6xl {
+                font-size: 3.75rem;
+            }
 
-        .text-2xl {
-            font-size: 1.5rem;
-            line-height: 1.3;
-        }
+            .sm\:text-7xl {
+                font-size: 4.5rem;
+            }
 
-        .text-xl {
-            font-size: 1.25rem;
-            line-height: 1.4;
-        }
+            .sm\:text-xl {
+                font-size: 1.25rem;
+            }
 
-        .text-lg {
-            font-size: 1.125rem;
-            line-height: 1.5;
-        }
-
-        .text-base {
-            font-size: 1rem;
-            line-height: 1.5;
-        }
-
-        .text-sm {
-            font-size: 0.875rem;
-        }
-
-        .leading-tight {
-            line-height: 1.25;
-        }
-
-        .leading-relaxed {
-            line-height: 1.75;
+            .sm\:px-6 {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
         }
 
         @media (min-width: 768px) {
             .md\:grid-cols-2 {
-                display: grid;
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
 
             .md\:grid-cols-3 {
-                display: grid;
                 grid-template-columns: repeat(3, minmax(0, 1fr));
             }
 
             .md\:grid-cols-4 {
-                display: grid;
                 grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+
+            .md\:col-span-2 {
+                grid-column: span 2 / span 2;
             }
         }
 
@@ -472,10 +432,6 @@
             margin-top: 2rem;
         }
 
-        .space-y-2 > * + * {
-            margin-top: 0.5rem;
-        }
-
         .sticky {
             position: sticky;
         }
@@ -490,6 +446,10 @@
 
         .z-10 {
             z-index: 10;
+        }
+
+        .-z-10 {
+            z-index: -10;
         }
 
         .h-16 {
@@ -540,6 +500,42 @@
             font-weight: 600;
         }
 
+        .text-sm {
+            font-size: 0.875rem;
+        }
+
+        .text-base {
+            font-size: 1rem;
+        }
+
+        .text-lg {
+            font-size: 1.125rem;
+        }
+
+        .text-xl {
+            font-size: 1.25rem;
+        }
+
+        .text-2xl {
+            font-size: 1.5rem;
+        }
+
+        .text-4xl {
+            font-size: 2.25rem;
+        }
+
+        .text-5xl {
+            font-size: 3rem;
+        }
+
+        .leading-relaxed {
+            line-height: 1.75;
+        }
+
+        .leading-tight {
+            line-height: 1.25;
+        }
+
         .transition {
             transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
             transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -554,16 +550,16 @@
             background-color: rgba(255, 255, 255, 0.1);
         }
 
-        .hover\:text-accent:hover {
-            color: var(--accent);
-        }
-
         .antialiased {
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
 
         .no-underline {
+            text-decoration: none;
+        }
+
+        .no-underline:hover {
             text-decoration: none;
         }
 
@@ -603,31 +599,12 @@
             padding-bottom: 1rem;
         }
 
-        .py-2 {
-            padding-top: 0.5rem;
-            padding-bottom: 0.5rem;
+        .text-lg {
+            font-size: 1.125rem;
         }
 
-        .px-3 {
-            padding-left: 0.75rem;
-            padding-right: 0.75rem;
-        }
-
-        .min-h-screen {
-            min-height: 100vh;
-        }
-
-        .relative {
-            position: relative;
-        }
-
-        .overflow-hidden {
-            overflow: hidden;
-        }
-
-        .white\/20 {
-            --tw-border-opacity: 0.2;
-            border-color: rgba(255, 255, 255, var(--tw-border-opacity));
+        .text-sm {
+            font-size: 0.875rem;
         }
     </style>
 </head>
