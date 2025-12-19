@@ -31,6 +31,7 @@
 
         html {
             scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
         }
 
         body {
@@ -52,14 +53,15 @@
         .btn-primary {
             background-color: var(--accent);
             color: var(--bg-primary);
-            padding: 0.75rem 1.5rem;
-            border-radius: 6px;
+            padding: 1.25rem 3rem;
+            border-radius: 8px;
             border: 1px solid var(--accent);
-            font-weight: 600;
+            font-weight: 700;
+            font-size: 1.125rem;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
             text-decoration: none;
             transition: all 0.3s ease;
         }
@@ -68,29 +70,32 @@
             background-color: var(--accent-hover);
             border-color: var(--accent-hover);
             color: var(--bg-primary);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(88, 166, 255, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(88, 166, 255, 0.4);
         }
 
         .btn-secondary {
             background-color: transparent;
             color: var(--accent);
-            border: 1px solid var(--accent);
-            padding: 0.75rem 1.5rem;
-            border-radius: 6px;
-            font-weight: 600;
+            border: 2px solid var(--accent);
+            padding: 1.25rem 3rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.125rem;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
             text-decoration: none;
             transition: all 0.3s ease;
         }
 
         .btn-secondary:hover {
-            background-color: rgba(88, 166, 255, 0.1);
+            background-color: rgba(88, 166, 255, 0.15);
             border-color: var(--accent-hover);
             color: var(--accent-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(88, 166, 255, 0.25);
         }
 
         .gradient-text {
@@ -107,6 +112,8 @@
             justify-content: center;
             opacity: 0;
             animation: fadeInUp 0.8s ease-out forwards;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
         }
 
         @keyframes fadeInUp {
@@ -170,18 +177,22 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 20% 50%, rgba(88, 166, 255, 0.05) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(88, 166, 255, 0.03) 0%, transparent 50%);
-            animation: gradientFlow 8s ease-in-out infinite;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(88, 166, 255, 0.2) 0%, transparent 35%),
+                radial-gradient(circle at 80% 70%, rgba(88, 166, 255, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(79, 192, 255, 0.1) 0%, transparent 50%);
+            animation: gradientFlow 14s ease-in-out infinite;
             pointer-events: none;
         }
 
         .bubble {
             position: absolute;
-            border: 1px solid rgba(88, 166, 255, 0.2);
+            border: 2px solid rgba(88, 166, 255, 0.4);
             border-radius: 50%;
             pointer-events: none;
             animation: float 6s ease-in-out infinite;
+            background: radial-gradient(circle at 30% 30%, rgba(88, 166, 255, 0.15) 0%, rgba(88, 166, 255, 0) 70%);
+            box-shadow: inset 0 0 20px rgba(88, 166, 255, 0.2), 0 0 40px rgba(88, 166, 255, 0.15);
         }
 
         @keyframes gradientFlow {
@@ -662,28 +673,28 @@
 
     <!-- Hero Section with animated background -->
     <section class="hero-bg section relative overflow-hidden min-h-screen flex items-center justify-center px-4">
-        <!-- Floating bubbles -->
-        <div class="bubble" style="width: 80px; height: 80px; top: 10%; left: 10%; animation-delay: 0s;"></div>
-        <div class="bubble" style="width: 40px; height: 40px; top: 20%; right: 15%; animation-delay: 1s;"></div>
-        <div class="bubble" style="width: 60px; height: 60px; bottom: 20%; left: 5%; animation-delay: 2s;"></div>
-        <div class="bubble" style="width: 50px; height: 50px; bottom: 15%; right: 10%; animation-delay: 1.5s;"></div>
+        <!-- Floating bubbles - LARGER -->
+        <div class="bubble" style="width: 120px; height: 120px; top: 8%; left: 8%; animation-delay: 0s;"></div>
+        <div class="bubble" style="width: 60px; height: 60px; top: 15%; right: 12%; animation-delay: 1.5s;"></div>
+        <div class="bubble" style="width: 100px; height: 100px; bottom: 15%; left: 8%; animation-delay: 2.5s;"></div>
+        <div class="bubble" style="width: 80px; height: 80px; bottom: 10%; right: 12%; animation-delay: 1s;"></div>
+        <div class="bubble" style="width: 70px; height: 70px; top: 45%; right: 5%; animation-delay: 3s;"></div>
         
         <!-- Content -->
-        <div class="hero-content text-center max-w-2xl">
-            <h2 class="text-5xl sm:text-7xl font-bold mb-6 leading-tight">
+        <div class="hero-content text-center max-w-3xl">
+            <h2 class="text-6xl sm:text-8xl font-bold mb-8 leading-tight">
                 Улучшите вашу<br>
                 <span class="gradient-text">речь с AI</span>
             </h2>
-            <p style="color: var(--text-secondary);" class="text-lg sm:text-xl mb-10 leading-relaxed">
-                Получайте анализ выступления за минуту. Паузы, слова-паразиты, темп, интонация. 
-                Обсуждайте результаты с AI-коучем.
+            <p style="color: var(--text-secondary);" class="text-xl sm:text-2xl mb-12 leading-relaxed">
+                Получайте анализ выступления за минуту
             </p>
-            <div class="flex gap-4 justify-center flex-wrap">
-                <a href="/upload" class="btn-primary px-6 py-3 text-base">
+            <div class="flex gap-6 justify-center flex-wrap">
+                <a href="/upload" class="btn-primary">
                     <i class="fas fa-wand-magic-sparkles"></i>
                     Начать анализ
                 </a>
-                <a href="#capabilities" class="btn-secondary px-6 py-3 text-base">
+                <a href="#about" class="btn-secondary">
                     Узнать больше
                 </a>
             </div>
@@ -693,158 +704,77 @@
     <div class="divider max-w-7xl mx-auto"></div>
 
     <!-- About Section -->
-    <section class="section py-16 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-3xl mx-auto">
-            <h3 class="text-4xl sm:text-5xl font-bold mb-10 text-center">Что вы получите</h3>
-            <div class="space-y-6">
-                <p style="color: var(--text-secondary);" class="text-lg leading-relaxed">
-                    <strong style="color: var(--text);">Speech Coach</strong> — система для анализа речи с помощью AI. 
-                    Загружайте видео или аудио, получайте детальный отчет и обсуждайте результаты с интеллектуальным коучем.
-                </p>
-                <p style="color: var(--text-secondary);" class="text-lg leading-relaxed">
-                    Мы анализируем более 50 параметров вашего выступления: слова-паразиты, паузы, темп, интонацию и многое другое. 
-                    Результаты готовы за минуту, а все данные остаются приватными — мы их не сохраняем и не используем.
-                </p>
-                <p style="color: var(--text-secondary);" class="text-lg leading-relaxed">
-                    Система использует продвинутые алгоритмы обработки речи и интеграцию с GigaChat для получения умных рекомендаций, 
-                    адаптированных под ваш конкретный стиль выступления.
-                </p>
+    <section id="about" class="section py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+            <h3 class="text-5xl sm:text-6xl font-bold mb-16 text-center">О Speech Coach</h3>
+            <div class="space-y-8">
+                <div class="text-lg leading-relaxed" style="color: var(--text-secondary);">
+                    <p class="mb-6">
+                        <strong style="color: var(--text); font-size: 1.25rem;">🎯 Для кого это?</strong><br>
+                        Для ораторов, учителей, лидеров и всех, кто хочет улучшить качество своей речи. 
+                        Неважно, выступляете ли вы на конференции, ведёте трансляцию или подготавливаетесь к важной презентации.
+                    </p>
+                </div>
+                <div class="text-lg leading-relaxed" style="color: var(--text-secondary);">
+                    <p class="mb-6">
+                        <strong style="color: var(--text); font-size: 1.25rem;">⚡ Как это работает?</strong><br>
+                        Загрузите видео или аудио выступления — и система за минуту проанализирует более 50 параметров. 
+                        Вы получите детальный отчёт с графиками, визуализацией проблем и персональными рекомендациями. 
+                        Затем обсудите результаты с AI-коучем для глубокого понимания.
+                    </p>
+                </div>
+                <div class="text-lg leading-relaxed" style="color: var(--text-secondary);">
+                    <p class="mb-6">
+                        <strong style="color: var(--text); font-size: 1.25rem;">🔒 Полная приватность</strong><br>
+                        Ваши данные остаются вашей собственностью. Мы не сохраняем файлы, не используем их для обучения 
+                        и соблюдаем все стандарты безопасности. Каждый анализ — это локальная обработка данных.
+                    </p>
+                </div>
             </div>
         </div>
     </section>
 
     <div class="divider max-w-7xl mx-auto"></div>
 
-    <!-- Capabilities Section -->
+    <!-- Capabilities & Stats Section -->
     <section id="capabilities" class="section py-16 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-4xl mx-auto">
-            <h3 class="text-4xl sm:text-5xl font-bold mb-12 text-center">Возможности</h3>
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="feature-card">
-                    <div style="font-size: 2rem; margin-bottom: 1rem;">⚡</div>
-                    <h4 class="text-xl font-semibold mb-3">Быстрый анализ</h4>
-                    <p style="color: var(--text-secondary);">Обработка выступления занимает менее 1 минуты</p>
-                </div>
-                <div class="feature-card">
-                    <div style="font-size: 2rem; margin-bottom: 1rem;">🔒</div>
-                    <h4 class="text-xl font-semibold mb-3">Полная приватность</h4>
-                    <p style="color: var(--text-secondary);">Файлы не сохраняются и не используются для обучения</p>
-                </div>
-                <div class="feature-card">
-                    <div style="font-size: 2rem; margin-bottom: 1rem;">📊</div>
-                    <h4 class="text-xl font-semibold mb-3">50+ метрик</h4>
-                    <p style="color: var(--text-secondary);">Детальный анализ всех параметров речи</p>
-                </div>
-                <div class="feature-card">
-                    <div style="font-size: 2rem; margin-bottom: 1rem;">🤖</div>
-                    <h4 class="text-xl font-semibold mb-3">AI-коучинг</h4>
-                    <p style="color: var(--text-secondary);">Интерактивный чат с рекомендациями</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div class="divider max-w-7xl mx-auto"></div>
-
-    <!-- Metrics Section - Minimalist -->
-    <section class="section py-16 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-4xl mx-auto">
-            <h3 class="text-4xl sm:text-5xl font-bold mb-12 text-center">Анализируемые параметры</h3>
-            <div class="space-y-8">
-                <div class="feature-card">
-                    <h4 class="text-2xl font-semibold mb-3 flex items-center gap-3">
-                        <i class="fas fa-bug" style="color: var(--warning);"></i>
-                        Слова-паразиты
-                    </h4>
-                    <p style="color: var(--text-secondary);" class="leading-relaxed">
-                        Автоматическое выявление повторяющихся слов и звуков с точными временными метками и статистикой использования.
-                    </p>
-                </div>
-                <div class="feature-card">
-                    <h4 class="text-2xl font-semibold mb-3 flex items-center gap-3">
-                        <i class="fas fa-hourglass-half" style="color: var(--accent);"></i>
-                        Паузы и ритм
-                    </h4>
-                    <p style="color: var(--text-secondary);" class="leading-relaxed">
-                        Анализ естественных и заполняющих пауз, распределение пауз по времени с визуализацией.
-                    </p>
-                </div>
-                <div class="feature-card">
-                    <h4 class="text-2xl font-semibold mb-3 flex items-center gap-3">
-                        <i class="fas fa-tachometer-alt" style="color: var(--success);"></i>
-                        Темп речи
-                    </h4>
-                    <p style="color: var(--text-secondary);" class="leading-relaxed">
-                        Измерение скорости речи в словах в минуту и анализ её вариаций на протяжении выступления.
-                    </p>
-                </div>
-                <div class="feature-card">
-                    <h4 class="text-2xl font-semibold mb-3 flex items-center gap-3">
-                        <i class="fas fa-volume-up" style="color: var(--danger);"></i>
-                        Интонация и выразительность
-                    </h4>
-                    <p style="color: var(--text-secondary);" class="leading-relaxed">
-                        Анализ вариаций высоты голоса, громкости и выразительности речи с выявлением проблемных моментов.
-                    </p>
-                </div>
-                <div class="feature-card">
-                    <h4 class="text-2xl font-semibold mb-3 flex items-center gap-3">
-                        <i class="fas fa-brain" style="color: var(--accent);"></i>
-                        AI-рекомендации
-                    </h4>
-                    <p style="color: var(--text-secondary);" class="leading-relaxed">
-                        Интерактивный чат с AI-коучем для обсуждения результатов и получения персональных советов.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div class="divider max-w-7xl mx-auto"></div>
-
-    <!-- Process Section -->
-    <section class="section py-16 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-3xl mx-auto">
-            <h3 class="text-4xl sm:text-5xl font-bold mb-12 text-center">Как это работает</h3>
-            <div class="space-y-8">
-                <div class="flex gap-6 items-start">
-                    <div class="step-circle">1</div>
-                    <div>
-                        <h4 class="text-xl font-semibold mb-2">Загрузите файл</h4>
-                        <p style="color: var(--text-secondary);">Видео или аудио ваше выступления. Поддерживаются MP4, MOV, WAV, MP3 и другие форматы.</p>
-                    </div>
-                </div>
-                <div class="flex gap-6 items-start">
-                    <div class="step-circle">2</div>
-                    <div>
-                        <h4 class="text-xl font-semibold mb-2">Анализируем речь</h4>
-                        <p style="color: var(--text-secondary);">Система распознаёт текст и выполняет анализ более чем 50 параметров.</p>
-                    </div>
-                </div>
-                <div class="flex gap-6 items-start">
-                    <div class="step-circle">3</div>
-                    <div>
-                        <h4 class="text-xl font-semibold mb-2">Получите результаты</h4>
-                        <p style="color: var(--text-secondary);">Детальный отчёт с графиками, метриками, визуализацией проблем и рекомендациями.</p>
-                    </div>
-                </div>
-                <div class="flex gap-6 items-start">
-                    <div class="step-circle">4</div>
-                    <div>
-                        <h4 class="text-xl font-semibold mb-2">Обсудите с AI</h4>
-                        <p style="color: var(--text-secondary);">Задавайте вопросы в чате и получайте углубленные рекомендации для улучшения.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div class="divider max-w-7xl mx-auto"></div>
-
-    <!-- Stats Section -->
-    <section class="section py-16 px-4 sm:px-6 lg:px-8">
         <div class="max-w-5xl mx-auto">
-            <div class="grid md:grid-cols-4 gap-6">
+            <h3 class="text-5xl sm:text-6xl font-bold mb-16 text-center">Почему Speech Coach?</h3>
+            
+            <!-- Features Grid -->
+            <div class="grid md:grid-cols-2 gap-8 mb-16">
+                <div class="feature-card p-6 sm:p-8">
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">
+                        <i class="fas fa-bolt" style="color: var(--accent);"></i>
+                    </div>
+                    <h4 class="text-2xl font-bold mb-3">Быстрый анализ</h4>
+                    <p style="color: var(--text-secondary);" class="text-base">Результаты менее чем за 1 минуту</p>
+                </div>
+                <div class="feature-card p-6 sm:p-8">
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">
+                        <i class="fas fa-shield-alt" style="color: var(--accent);"></i>
+                    </div>
+                    <h4 class="text-2xl font-bold mb-3">Полная приватность</h4>
+                    <p style="color: var(--text-secondary);" class="text-base">Файлы не сохраняются и не используются</p>
+                </div>
+                <div class="feature-card p-6 sm:p-8">
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">
+                        <i class="fas fa-chart-line" style="color: var(--accent);"></i>
+                    </div>
+                    <h4 class="text-2xl font-bold mb-3">50+ параметров</h4>
+                    <p style="color: var(--text-secondary);" class="text-base">Детальный анализ всех аспектов речи</p>
+                </div>
+                <div class="feature-card p-6 sm:p-8">
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">
+                        <i class="fas fa-robot" style="color: var(--accent);"></i>
+                    </div>
+                    <h4 class="text-2xl font-bold mb-3">AI-коучинг</h4>
+                    <p style="color: var(--text-secondary);" class="text-base">Интерактивный чат с умными рекомендациями</p>
+                </div>
+            </div>
+
+            <!-- Stats Row -->
+            <div class="grid md:grid-cols-4 gap-4 mt-16">
                 <div class="stat-box">
                     <div class="stat-number">50+</div>
                     <div class="stat-label">параметров</div>
@@ -867,15 +797,134 @@
 
     <div class="divider max-w-7xl mx-auto"></div>
 
+    <!-- Analyzed Parameters Section -->
+    <section class="section py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-5xl mx-auto">
+            <h3 class="text-5xl sm:text-6xl font-bold mb-16 text-center">Что анализируется</h3>
+            <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
+                <!-- Left column -->
+                <div class="space-y-6">
+                    <div class="feature-card p-6">
+                        <h4 class="text-xl font-bold mb-3 flex items-center gap-3">
+                            <i class="fas fa-comment-dots" style="color: var(--accent); font-size: 1.5rem;"></i>
+                            Слова-паразиты
+                        </h4>
+                        <p style="color: var(--text-secondary);" class="leading-relaxed">
+                            Автоматическое выявление повторяющихся слов и звуков с временными метками.
+                        </p>
+                    </div>
+                    <div class="feature-card p-6">
+                        <h4 class="text-xl font-bold mb-3 flex items-center gap-3">
+                            <i class="fas fa-pause-circle" style="color: var(--accent); font-size: 1.5rem;"></i>
+                            Паузы и ритм
+                        </h4>
+                        <p style="color: var(--text-secondary);" class="leading-relaxed">
+                            Анализ естественных и заполняющих пауз с графиками распределения.
+                        </p>
+                    </div>
+                    <div class="feature-card p-6">
+                        <h4 class="text-xl font-bold mb-3 flex items-center gap-3">
+                            <i class="fas fa-gauge" style="color: var(--accent); font-size: 1.5rem;"></i>
+                            Темп речи
+                        </h4>
+                        <p style="color: var(--text-secondary);" class="leading-relaxed">
+                            Измерение скорости в словах/минуту с анализом вариаций.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right column -->
+                <div class="space-y-6">
+                    <div class="feature-card p-6">
+                        <h4 class="text-xl font-bold mb-3 flex items-center gap-3">
+                            <i class="fas fa-wave-sine" style="color: var(--accent); font-size: 1.5rem;"></i>
+                            Интонация
+                        </h4>
+                        <p style="color: var(--text-secondary);" class="leading-relaxed">
+                            Анализ вариаций высоты голоса, громкости и выразительности.
+                        </p>
+                    </div>
+                    <div class="feature-card p-6">
+                        <h4 class="text-xl font-bold mb-3 flex items-center gap-3">
+                            <i class="fas fa-lightbulb" style="color: var(--accent); font-size: 1.5rem;"></i>
+                            Лингвистика
+                        </h4>
+                        <p style="color: var(--text-secondary);" class="leading-relaxed">
+                            Оценка сложности языка, структуры предложений и словарного разнообразия.
+                        </p>
+                    </div>
+                    <div class="feature-card p-6">
+                        <h4 class="text-xl font-bold mb-3 flex items-center gap-3">
+                            <i class="fas fa-brain" style="color: var(--accent); font-size: 1.5rem;"></i>
+                            AI Рекомендации
+                        </h4>
+                        <p style="color: var(--text-secondary);" class="leading-relaxed">
+                            Персональные советы от AI-коуча для улучшения вашей речи.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider max-w-7xl mx-auto"></div>
+
+    <!-- Process Section -->
+    <section class="section py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-5xl mx-auto">
+            <h3 class="text-5xl sm:text-6xl font-bold mb-16 text-center">Как это работает</h3>
+            <div class="space-y-10">
+                <div class="flex gap-8 items-start">
+                    <div class="step-circle min-w-fit">1</div>
+                    <div>
+                        <h4 class="text-2xl sm:text-3xl font-bold mb-3">Загрузите файл</h4>
+                        <p style="color: var(--text-secondary);" class="text-lg leading-relaxed">
+                            Видео или аудио ваше выступления. Поддерживаются MP4, MOV, WAV, MP3 и другие форматы.
+                        </p>
+                    </div>
+                </div>
+                <div class="flex gap-8 items-start">
+                    <div class="step-circle min-w-fit">2</div>
+                    <div>
+                        <h4 class="text-2xl sm:text-3xl font-bold mb-3">Анализируем речь</h4>
+                        <p style="color: var(--text-secondary);" class="text-lg leading-relaxed">
+                            Система распознаёт текст и выполняет анализ более чем 50 параметров с высокой точностью.
+                        </p>
+                    </div>
+                </div>
+                <div class="flex gap-8 items-start">
+                    <div class="step-circle min-w-fit">3</div>
+                    <div>
+                        <h4 class="text-2xl sm:text-3xl font-bold mb-3">Получите результаты</h4>
+                        <p style="color: var(--text-secondary);" class="text-lg leading-relaxed">
+                            Детальный отчёт с графиками, метриками, визуализацией проблем и персональными рекомендациями.
+                        </p>
+                    </div>
+                </div>
+                <div class="flex gap-8 items-start">
+                    <div class="step-circle min-w-fit">4</div>
+                    <div>
+                        <h4 class="text-2xl sm:text-3xl font-bold mb-3">Обсудите с AI</h4>
+                        <p style="color: var(--text-secondary);" class="text-lg leading-relaxed">
+                            Задавайте вопросы в чате и получайте углубленные рекомендации для улучшения вашей речи.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
     <!-- Final CTA Section -->
     <section class="section py-20 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-2xl mx-auto text-center">
-            <h3 class="text-4xl sm:text-5xl font-bold mb-6">Готовы начать?</h3>
-            <p style="color: var(--text-secondary);" class="text-lg mb-10 leading-relaxed">
+        <div class="max-w-3xl mx-auto text-center">
+            <h3 class="text-5xl sm:text-6xl font-bold mb-8">Готовы начать?</h3>
+            <p style="color: var(--text-secondary);" class="text-xl sm:text-2xl mb-12 leading-relaxed max-w-2xl mx-auto">
                 Загрузите файл со своим выступлением и получите детальный анализ в течение минуты.
             </p>
-            <a href="/upload" class="btn-primary px-8 py-4 text-lg inline-flex items-center gap-2">
-                <i class="fas fa-wand-magic-sparkles"></i>
+            <a href="/upload" class="btn-primary px-8 py-4 text-xl sm:text-2xl inline-flex items-center gap-3">
+                <i class="fas fa-wand-magic-sparkles" style="font-size: 1.5rem;"></i>
                 Начать анализ
             </a>
         </div>
