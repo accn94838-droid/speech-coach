@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Быстрый старт — Speech Coach</title>
+  <link rel="icon" href="/favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body { background:#0d1117; color:#e6edf3; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial }
+    a { color: #58a6ff; text-decoration: none; }
+    a:hover { color: #79c0ff; text-decoration: underline; }
+    .nav-bg { background: #161b22; border-bottom: 1px solid #30363d; }
+    .card-dark { background: #161b22; border: 1px solid #30363d; }
+    .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: #58a6ff; margin-bottom: 1.5rem; }
+    .back-link:hover { color: #79c0ff; }
+    .btn-primary { background:#58a6ff; color:#0d1117; padding:0.5rem 1rem; border-radius:6px; display:inline-flex; align-items:center; gap:0.5rem; font-weight:600; }
+    .btn-primary:hover { background:#79c0ff; }
+    code { background: #0d1117; padding: 0.25rem 0.5rem; border-radius: 4px; font-family: 'Courier New', monospace; }
+    pre { background: #0b0f14; padding: 1rem; border-radius: 6px; color: #cbd5e1; overflow: auto; }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav-bg sticky top-0 z-40">
+    <div style="max-width:1200px; margin:0 auto; padding:1rem 1.5rem; display:flex; justify-content:space-between; align-items:center;">
+      <a href="/" style="display:flex; gap:0.75rem; align-items:center; text-decoration:none; color:inherit;">
+        <div style="width:32px; height:32px; border-radius:6px; border:1px solid rgba(255,255,255,0.12); display:flex; align-items:center; justify-content:center; color:#58a6ff;">
+          <i class="fas fa-microphone"></i>
+        </div>
+        <strong>Speech Coach</strong>
+      </a>
+      <a href="/upload" class="btn-primary text-sm">
+        <i class="fas fa-upload"></i> Загрузить
+      </a>
+    </div>
+  </nav>
+
+  <main style="max-width:900px; margin:0 auto; padding:2rem 1rem;">
+    <a href="/documentation" class="back-link">
+      <i class="fas fa-arrow-left"></i> Назад к документации
+    </a>
+
+    <h1 style="font-size:1.75rem; margin-bottom:0.5rem;">Быстрый старт</h1>
+    <p style="color:#8b949e; margin-bottom:2rem;">Установите и запустите Speech Coach за несколько минут</p>
+
+    <div class="card-dark" style="padding:2rem; border-radius:8px; margin-bottom:2rem;">
+      <h2 style="margin-top:0; margin-bottom:1rem;">Требования</h2>
+      <ul style="color:#8b949e; margin:0; padding-left:1.5rem;">
+        <li>Python 3.8+</li>
+        <li>FFmpeg</li>
+        <li>Git</li>
+      </ul>
+
+      <h2 style="margin-top:1.5rem; margin-bottom:1rem;">Установка</h2>
+      <pre>git clone &lt;repository&gt;
+cd speech-coach
+python -m venv .venv
+source .venv/bin/activate  # или .venv\Scripts\activate на Windows
+pip install -r requirements.txt
+cp .env.example .env
+mkdir -p logs cache</pre>
+
+      <h2 style="margin-top:1.5rem; margin-bottom:1rem;">Запуск</h2>
+      <pre>uvicorn app.main:app --reload</pre>
+      <p style="color:#8b949e;">Сервис доступен на <a href="http://localhost:8000">http://localhost:8000</a></p>
+    </div>
+
+    <div style="text-align:center; padding-top:1rem; color:#8b949e; font-size:0.875rem;">
+      <p>&copy; 2025 Speech Coach</p>
+    </div>
+  </main>
+</body>
+</html>

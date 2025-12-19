@@ -194,10 +194,18 @@
                     </div>
                     <h1 class="text-xl font-bold">Speech Coach</h1>
                 </a>
-                <a href="/upload" class="btn-primary text-sm">
-                    <i class="fas fa-arrow-right"></i>
-                    Начать анализ
-                </a>
+                <div class="flex gap-2 items-center">
+                    <a href="/documentation" class="px-3 py-2 rounded-md text-sm transition hover:bg-white/10" title="Документация">
+                        <i class="fas fa-book" style="color: var(--text-secondary);"></i>
+                    </a>
+                    <a href="/faq" class="px-3 py-2 rounded-md text-sm transition hover:bg-white/10" title="FAQ">
+                        <i class="fas fa-question-circle" style="color: var(--text-secondary);"></i>
+                    </a>
+                    <a href="/upload" class="btn-primary text-sm">
+                        <i class="fas fa-upload"></i>
+                        Начать
+                    </a>
+                </div>
             </div>
         </div>
     </nav>
@@ -223,28 +231,19 @@
                 </a>
             </div>
 
-            <!-- Professional sample / placeholder -->
-            <div class="card-dark p-8 rounded-lg max-w-3xl mx-auto">
-                <div class="grid md:grid-cols-2 gap-6 items-center">
-                    <div>
-                        <h4 class="text-xl font-semibold mb-3">Образец отчёта — профессиональная структура</h4>
-                        <p style="color: var(--text-secondary);" class="mb-4">Загрузите своё выступление, чтобы получить персонализированный отчёт. Пока что — краткое описание того, что вы получите:</p>
-                        <ul class="text-sm" style="color: var(--text-secondary); list-style: none; padding: 0;">
-                            <li>• Структура выступления с временными метками</li>
-                            <li>• Ключевые наблюдения: паузы, слова-паразиты, темп</li>
-                            <li>• Практические рекомендации и контрольные точки</li>
-                        </ul>
-                        <div class="mt-6">
-                            <a href="/upload" class="btn-primary"><i class="fas fa-upload"></i> Загрузить и получить отчёт</a>
-                            <a href="/results" class="btn-secondary ml-4">Просмотреть пример отчёта</a>
-                        </div>
-                    </div>
-                    <div class="hidden sm:block">
-                        <div class="card-dark p-6 rounded-lg" style="height: 180px; display:flex;flex-direction:column;justify-content:center;">
-                            <div style="height:6px;background:linear-gradient(90deg,#58a6ff,#79c0ff); border-radius:3px;margin-bottom:12px"></div>
-                            <div style="color:var(--text-secondary);">Интерактивные графики и временные метки отображаются в отчёте после выполнения анализа.</div>
-                        </div>
-                    </div>
+            <!-- Simple CTA section -->
+            <div class="card-dark p-8 rounded-lg max-w-2xl mx-auto text-center">
+                <h3 class="text-2xl font-bold mb-2">Анализ вашего выступления</h3>
+                <p style="color: var(--text-secondary);" class="mb-6 text-sm">Загрузите видео или аудио и получите детальный отчёт с метриками и рекомендациями</p>
+                <div class="flex gap-2 justify-center flex-wrap">
+                    <a href="/upload" class="btn-primary text-sm">
+                        <i class="fas fa-upload"></i>
+                        Загрузить
+                    </a>
+                    <a href="/results" class="btn-secondary text-sm">
+                        <i class="fas fa-eye"></i>
+                        Пример
+                    </a>
                 </div>
             </div>
         </div>
@@ -260,45 +259,35 @@
                 <p style="color: var(--text-secondary);">Система анализирует более 50 параметров вашего выступления</p>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-6">
+            <div class="grid md:grid-cols-3 gap-4">
                 <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-hourglass-end"></i>
-                    </div>
-                    <h4 class="text-lg font-semibold mb-2">Анализ пауз</h4>
-                    <p style="color: var(--text-secondary);" class="text-sm">Определяет структурные и длительные паузы, заполняющие паузы и подсказки к улучшению ритма выступления.</p>
+                    <div style="font-size: 2.5rem; line-height: 1; margin-bottom: 1rem;">⏸️</div>
+                    <h4 class="text-base font-semibold mb-2">Паузы</h4>
+                    <p style="color: var(--text-secondary);" class="text-xs">Анализ естественных и заполняющих пауз для оптимизации ритма</p>
                 </div>
 
                 <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-language"></i>
-                    </div>
-                    <h4 class="text-lg font-semibold mb-2">Слова-паразиты</h4>
-                    <p style="color: var(--text-secondary);" class="text-sm">Выявляет повторяющиеся междометия и слова-паразиты с контекстной фильтрацией для минимизации ложных срабатываний.</p>
+                    <div style="font-size: 2.5rem; line-height: 1; margin-bottom: 1rem;">🎤</div>
+                    <h4 class="text-base font-semibold mb-2">Слова-паразиты</h4>
+                    <p style="color: var(--text-secondary);" class="text-xs">Выявление повторяющихся слов и звуков</p>
                 </div>
 
                 <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-tachometer-alt"></i>
-                    </div>
-                    <h4 class="text-lg font-semibold mb-2">Темп речи</h4>
-                    <p style="color: var(--text-secondary);" class="text-sm">Измеряет слова в минуту, обнаруживает значительные ускорения и замедления и даёт рекомендации по темпу.</p>
+                    <div style="font-size: 2.5rem; line-height: 1; margin-bottom: 1rem;">⚡</div>
+                    <h4 class="text-base font-semibold mb-2">Темп</h4>
+                    <p style="color: var(--text-secondary);" class="text-xs">Скорость речи и её вариации</p>
                 </div>
 
                 <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-brain"></i>
-                    </div>
-                    <h4 class="text-lg font-semibold mb-2">AI-рекомендации</h4>
-                    <p style="color: var(--text-secondary);" class="text-sm">Персонализированные советы и чек-листы, основанные на анализе, обсуждаемые с AI-коучем.</p>
+                    <div style="font-size: 2.5rem; line-height: 1; margin-bottom: 1rem;">🤖</div>
+                    <h4 class="text-base font-semibold mb-2">AI-рекомендации</h4>
+                    <p style="color: var(--text-secondary);" class="text-xs">Интерактивный чат с персональными советами</p>
                 </div>
 
-                <div class="feature-card">
-                    <div class="feature-icon" style="background: linear-gradient(135deg, #3b3f46 0%, #52565d 100%); color: #9aa4b2;">
-                        <i class="fas fa-flask"></i>
-                    </div>
-                    <h4 class="text-lg font-semibold mb-2">Доп. метрики (экспериментально)</h4>
-                    <p style="color: var(--text-secondary);" class="text-sm">Метрики вроде автоматического распознавания интонации и риторических вопросов помечены как экспериментальные и не используются в официальных выводах отчёта.</p>
+                <div class="feature-card" style="opacity: 0.65;">
+                    <div style="font-size: 2.5rem; line-height: 1; margin-bottom: 1rem;">🔬</div>
+                    <h4 class="text-base font-semibold mb-2">Экспериментально</h4>
+                    <p style="color: var(--text-secondary);" class="text-xs">Дополнительные метрики (ограниченная точность)</p>
                 </div>
             </div>
         </div>
@@ -381,15 +370,13 @@
     <div class="divider max-w-7xl mx-auto"></div>
 
     <!-- Final CTA Section -->
-    <section class="py-16 px-4 sm:px-6 lg:px-8">
+    <section class="py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto text-center">
-            <h3 class="text-4xl font-bold mb-6">Готовы улучшить вашу речь?</h3>
-            <p style="color: var(--text-secondary);" class="text-lg mb-8">
-                Начните анализ прямо сейчас и получите персонализированные рекомендации от AI-коуча
-            </p>
-            <a href="/upload" class="btn-primary text-lg px-8 py-3">
-                <i class="fas fa-arrow-right"></i>
-                Загрузить файл сейчас
+            <h3 class="text-2xl font-bold mb-3">Начните улучшать речь</h3>
+            <p style="color: var(--text-secondary);" class="text-sm mb-6">Загрузите файл и получите анализ с рекомендациями от AI</p>
+            <a href="/upload" class="btn-primary px-6 py-2">
+                <i class="fas fa-upload"></i>
+                Загрузить файл
             </a>
         </div>
     </section>

@@ -169,6 +169,19 @@ app.include_router(chat_router)
 
 # Обслуживание HTML-страниц
 template_dir = Path(__file__).parent / "templates"
+static_dir = Path(__file__).parent / "static"
+
+# Mount static files (favicon, assets)
+if static_dir.exists():
+    app.mount("/static", StaticFiles(directory=static_dir), name="static")
+else:
+    # create directory at runtime if missing to avoid mount errors in some environments
+    try:
+        static_dir.mkdir(exist_ok=True)
+        app.mount("/static", StaticFiles(directory=static_dir), name="static")
+    except Exception:
+        # best-effort mount; if it fails, favicon route has a fallback
+        pass
 
 @app.get("/")
 async def root():
@@ -202,7 +215,14 @@ async def results_page():
 
 @app.get("/favicon.ico")
 async def favicon():
-        """Serve a minimal SVG favicon at /favicon.ico (keeps browser requests happy)."""
+        """Serve favicon.ico from static if present; otherwise return a small inline SVG."""
+        ico_path = static_dir / "favicon.ico"
+        svg_path = static_dir / "favicon.svg"
+        if ico_path.exists():
+                return FileResponse(ico_path, media_type="image/x-icon")
+        if svg_path.exists():
+                return FileResponse(svg_path, media_type="image/svg+xml")
+
         svg = """
         <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'>
             <rect width='100%' height='100%' fill='#0d1117'/>

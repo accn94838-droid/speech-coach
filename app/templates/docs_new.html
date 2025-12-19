@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Документация Speech Coach">
+    <title>Документация — Speech Coach</title>
+    <link rel="icon" href="/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background: #0d1117; color: #e6edf3; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        a { color: #58a6ff; text-decoration: none; }
+        a:hover { color: #79c0ff; text-decoration: underline; }
+        .nav-bg { background-color: #161b22; border-bottom: 1px solid #30363d; }
+        .card-dark { background-color: #21262d; border: 1px solid #30363d; }
+        .doc-link { display: block; padding: 1rem 1.25rem; background: #161b22; border-left: 3px solid #30363d; margin: 0.5rem 0; border-radius: 8px; transition: all 0.2s ease; }
+        .doc-link:hover { background: rgba(88, 166, 255, 0.1); border-left-color: #58a6ff; color: #79c0ff; }
+        .btn-primary { background-color: #58a6ff; color: #0d1117; border: 1px solid #58a6ff; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600; transition: all 0.2s ease; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+        .btn-primary:hover { background-color: #79c0ff; border-color: #79c0ff; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-bg sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="/" style="display: flex; gap: 0.75rem; align-items: center;">
+                    <div style="width: 32px; height: 32px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; color: #58a6ff;">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <strong>Speech Coach</strong>
+                </a>
+                <a href="/upload" class="btn-primary text-sm">
+                    <i class="fas fa-upload"></i> Загрузить
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main style="max-width: 900px; margin: 0 auto; padding: 2rem 1rem;">
+        <h1 style="font-size: 2rem; margin-bottom: 1rem;">Документация</h1>
+        <p style="color: #8b949e; margin-bottom: 2rem;">Справочная информация по использованию, установке и разработке</p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+            <a href="/documentation/quickstart" class="doc-link">
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                    <i class="fas fa-rocket" style="font-size: 1.25rem; color: #58a6ff;"></i>
+                    <strong>Быстрый старт</strong>
+                </div>
+                <p style="font-size: 0.875rem; color: #8b949e; margin: 0;">Установка и первый запуск</p>
+            </a>
+
+            <a href="/documentation/development" class="doc-link">
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                    <i class="fas fa-code" style="font-size: 1.25rem; color: #58a6ff;"></i>
+                    <strong>Разработка</strong>
+                </div>
+                <p style="font-size: 0.875rem; color: #8b949e; margin: 0;">Тесты, линтинг, требования</p>
+            </a>
+
+            <a href="/documentation/structure" class="doc-link">
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                    <i class="fas fa-sitemap" style="font-size: 1.25rem; color: #58a6ff;"></i>
+                    <strong>Структура</strong>
+                </div>
+                <p style="font-size: 0.875rem; color: #8b949e; margin: 0;">Архитектура проекта</p>
+            </a>
+        </div>
+
+        <div class="card-dark" style="padding: 2rem; border-radius: 8px; margin-bottom: 2rem;">
+            <h2 style="margin-top: 0; font-size: 1.5rem; margin-bottom: 1rem;">О документации</h2>
+            <p style="color: #8b949e; margin: 0;">Полная документация находится в папке <code style="background: #0d1117; padding: 0.25rem 0.5rem; border-radius: 4px;">docs/</code> репозитория. На этом сайте представлены основные разделы для быстрого начала работы.</p>
+        </div>
+
+        <div style="text-align: center; padding-top: 1rem; color: #8b949e; font-size: 0.875rem;">
+            <p>&copy; 2025 Speech Coach</p>
+        </div>
+    </main>
+</body>
+</html>
