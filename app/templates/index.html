@@ -7,6 +7,7 @@
     <title>Speech Coach - AI анализ речи</title>
     <link rel="icon" href="/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --bg-primary: #0d1117;
@@ -166,7 +167,7 @@
         .hero-bg {
             position: relative;
             overflow: hidden;
-            background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+            background: linear-gradient(180deg, #0d1117 0%, #0f1419 50%, #161b22 100%);
         }
 
         .hero-bg::before {
@@ -177,18 +178,9 @@
             right: 0;
             bottom: 0;
             background: 
-                radial-gradient(ellipse 600px 600px at 10% 20%, rgba(88, 166, 255, 0.25) 0%, transparent 50%),
-                radial-gradient(ellipse 500px 500px at 90% 80%, rgba(88, 166, 255, 0.2) 0%, transparent 50%),
-                radial-gradient(ellipse 400px 400px at 50% 60%, rgba(79, 192, 255, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 30% 70%, rgba(88, 166, 255, 0.1) 0%, transparent 60%);
-            animation: gradientFlow 15s ease-in-out infinite;
+                radial-gradient(circle at 15% 25%, rgba(88, 166, 255, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(88, 166, 255, 0.08) 0%, transparent 40%);
             pointer-events: none;
-        }
-
-        @keyframes gradientFlow {
-            0%, 100% { opacity: 0.7; transform: translate(0, 0); }
-            33% { opacity: 1; transform: translate(-20px, 20px); }
-            66% { opacity: 0.85; transform: translate(20px, -20px); }
         }
 
         @keyframes float {
@@ -640,7 +632,7 @@
             <div class="flex justify-between items-center h-16">
                 <a href="/" class="flex items-center gap-3 no-underline">
                     <div class="w-8 h-8 rounded-lg border border-white/20 flex items-center justify-center">
-                        🎤
+                        <i class="fas fa-microphone text-sm" style="color: var(--accent);"></i>
                     </div>
                     <h1 class="text-xl font-bold">Speech Coach</h1>
                 </a>
@@ -652,6 +644,7 @@
                         <span style="color: var(--text-secondary); font-size: 0.875rem;" class="hidden sm:inline">FAQ</span>
                     </a>
                     <a href="/upload" class="px-4 py-2 text-sm rounded-md transition" style="background-color: var(--accent); color: var(--bg-primary); font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none;">
+                        <i class="fas fa-wand-magic-sparkles" style="font-size: 0.875rem;"></i>
                         <span class="hidden sm:inline">Анализ</span>
                     </a>
                 </div>
@@ -673,6 +666,7 @@
             </p>
             <div class="flex gap-6 justify-center flex-wrap">
                 <a href="/upload" class="btn-primary">
+                    <i class="fas fa-wand-magic-sparkles"></i>
                     Начать анализ
                 </a>
                 <a href="#about" class="btn-secondary">
@@ -688,23 +682,23 @@
     <section id="about" class="section py-16 px-4 sm:px-6 lg:px-8">
         <div class="max-w-4xl mx-auto">
             <h3 class="text-4xl sm:text-5xl font-bold mb-12 text-center">О платформе</h3>
-            <div class="space-y-8">
-                <div class="text-base leading-relaxed" style="color: var(--text-secondary);">
+            <div class="grid md:grid-cols-1 gap-8">
+                <div class="text-base leading-relaxed" style="color: var(--text-secondary); text-align: left;">
                     <p class="mb-4">
-                        <strong style="color: var(--text); font-size: 1.125rem;">Для ораторов и лидеров</strong><br>
-                        Улучшайте качество речи для выступлений, презентаций и коммуникации.
+                        <strong style="color: var(--text); font-size: 1.125rem;">🎯 Для ораторов и лидеров</strong><br>
+                        Улучшайте качество речи для выступлений, презентаций, деловых встреч и публичных выступлений. Наша платформа помогает развивать навыки публичного говорения, увеличивать влияние и уверенность при общении перед аудиторией любого размера.
                     </p>
                 </div>
-                <div class="text-base leading-relaxed" style="color: var(--text-secondary);">
+                <div class="text-base leading-relaxed" style="color: var(--text-secondary); text-align: left;">
                     <p class="mb-4">
-                        <strong style="color: var(--text); font-size: 1.125rem;">Анализ за минуту</strong><br>
-                        50+ параметров речи с детальным отчётом и рекомендациями.
+                        <strong style="color: var(--text); font-size: 1.125rem;">⚡ Анализ за минуту</strong><br>
+                        50+ параметров речи с детальным отчётом, графиками и практическими рекомендациями. Получайте мгновенную обратную связь по всем аспектам вашего выступления — от темпа речи до грамматики — и сразу узнавайте, как улучшить результаты.
                     </p>
                 </div>
-                <div class="text-base leading-relaxed" style="color: var(--text-secondary);">
+                <div class="text-base leading-relaxed" style="color: var(--text-secondary); text-align: left;">
                     <p class="mb-4">
-                        <strong style="color: var(--text); font-size: 1.125rem;">Ваша приватность</strong><br>
-                        Данные не сохраняются и не используются для обучения.
+                        <strong style="color: var(--text); font-size: 1.125rem;">🔒 Ваша приватность</strong><br>
+                        Данные не сохраняются и не используются для обучения. Все файлы удаляются после анализа, передача защищена HTTPS шифрованием, и только вы видите свои результаты. Полное соответствие стандартам GDPR и защиты персональных данных.
                     </p>
                 </div>
             </div>
@@ -754,7 +748,7 @@
                             Паразиты
                         </h4>
                         <p style="color: var(--text-secondary);" class="text-sm">
-                            Выявление повторений.
+                            Выявление слов-паразитов (ээ, ну, типа) с графиком распределения по выступлению и рекомендациями по снижению.
                         </p>
                     </div>
                     <div class="feature-card p-6">
@@ -762,7 +756,7 @@
                             Паузы
                         </h4>
                         <p style="color: var(--text-secondary);" class="text-sm">
-                            Анализ пауз и ритма.
+                            Анализ естественных пауз и заполняющих пауз. Оценка ритма речи с визуализацией на временной шкале.
                         </p>
                     </div>
                     <div class="feature-card p-6">
@@ -770,7 +764,7 @@
                             Темп
                         </h4>
                         <p style="color: var(--text-secondary);" class="text-sm">
-                            Скорость речи (слов/мин).
+                            Скорость речи в словах за минуту с анализом вариаций и рекомендациями по оптимизации темпа.
                         </p>
                     </div>
                 </div>
@@ -782,23 +776,23 @@
                             Интонация
                         </h4>
                         <p style="color: var(--text-secondary);" class="text-sm">
-                            Выразительность и мелодика.
+                            Анализ выразительности, мелодики и эмоциональности речи. Оценка модуляции голоса и энергии.
                         </p>
                     </div>
                     <div class="feature-card p-6">
                         <h4 class="text-lg font-bold mb-2">
-                            Лингвистика
+                            Грамматика
                         </h4>
                         <p style="color: var(--text-secondary);" class="text-sm">
-                            Грамматика и структура.
+                            Проверка ошибок, синтаксической корректности и структурирования предложений с конкретными подсказками.
                         </p>
                     </div>
                     <div class="feature-card p-6">
                         <h4 class="text-lg font-bold mb-2">
-                            Анализ
+                            Рекомендации
                         </h4>
                         <p style="color: var(--text-secondary);" class="text-sm">
-                            Умные рекомендации.
+                            Умные рекомендации AI-коуча по улучшению каждого параметра с практическими советами.
                         </p>
                     </div>
                 </div>
@@ -818,7 +812,7 @@
                     <div>
                         <h4 class="text-lg font-bold mb-2">Загрузка</h4>
                         <p style="color: var(--text-secondary);" class="text-sm">
-                            Видео или аудио выступления.
+                            Загрузите видео или аудиозапись вашего выступления. Поддерживаются все популярные форматы (MP4, MOV, MP3, WAV и др.). Максимальный размер файла — 500 МБ.
                         </p>
                     </div>
                 </div>
@@ -827,7 +821,7 @@
                     <div>
                         <h4 class="text-lg font-bold mb-2">Анализ</h4>
                         <p style="color: var(--text-secondary);" class="text-sm">
-                            50+ параметров речи.
+                            Наша AI-система анализирует 50+ параметров речи за 30-120 секунд. Система проверяет темп, интонацию, паузы, слова-паразиты, грамматику, словарный запас и многое другое.
                         </p>
                     </div>
                 </div>
@@ -836,16 +830,16 @@
                     <div>
                         <h4 class="text-lg font-bold mb-2">Результаты</h4>
                         <p style="color: var(--text-secondary);" class="text-sm">
-                            Отчёт с рекомендациями.
+                            Получите подробный отчёт с графиками, метриками и конкретными рекомендациями по каждому параметру. Визуализация данных помогает быстро понять сильные стороны и области для улучшения.
                         </p>
                     </div>
                 </div>
                 <div class="flex gap-6 items-start">
                     <div class="step-circle min-w-fit">4</div>
                     <div>
-                        <h4 class="text-lg font-bold mb-2">Коучинг</h4>
+                        <h4 class="text-lg font-bold mb-2">AI-коучинг</h4>
                         <p style="color: var(--text-secondary);" class="text-sm">
-                            AI обсуждает результаты.
+                            Обсудите результаты с AI-коучем в интерактивном чате. Получайте ответы на вопросы, запрашивайте упражнения для тренировки и развивайте навыки выступления с персональными советами.
                         </p>
                     </div>
                 </div>
@@ -863,6 +857,7 @@
                 Загрузите выступление и получите анализ за минуту.
             </p>
             <a href="/upload" class="btn-primary px-6 py-3 inline-flex items-center gap-2">
+                <i class="fas fa-wand-magic-sparkles" style="font-size: 1rem;"></i>
                 Анализ
             </a>
         </div>
