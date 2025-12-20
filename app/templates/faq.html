@@ -3,8 +3,309 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="FAQ — Speech Coach">
-    <title>FAQ — Speech Coach</title>
+    <meta name="description" content="Speech Coach - FAQ">
+    <title>FAQ - Speech Coach</title>
+    <link rel="icon" href="/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --bg-primary: #0d1117; --bg-secondary: #161b22; --bg-tertiary: #21262d; --border-color: #30363d; --text: #e6edf3; --text-secondary: #8b949e; --accent: #58a6ff; --accent-hover: #79c0ff; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-primary); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif; line-height: 1.6; }
+        .nav-bg { background-color: rgba(13, 17, 23, 0.95); border-bottom: 1px solid var(--border-color); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 40; }
+        .max-w-5xl { max-width: 64rem; }
+        .mx-auto { margin-left: auto; margin-right: auto; }
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { color: var(--accent-hover); text-decoration: underline; }
+        h1 { font-size: 2.25rem; font-weight: bold; margin-bottom: 1rem; }
+        h3 { font-size: 1.125rem; font-weight: bold; color: var(--accent); margin-top: 0; }
+        p { margin-bottom: 0.75rem; color: var(--text-secondary); line-height: 1.75; }
+        .hero-bg::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(-45deg, rgba(88, 166, 255, 0.15) 0%, rgba(88, 166, 255, 0.05) 25%, rgba(88, 166, 255, 0.08) 50%, rgba(88, 166, 255, 0.05) 75%, rgba(88, 166, 255, 0.15) 100%); background-size: 400% 400%; animation: gradientShift 12s ease infinite; z-index: 0; pointer-events: none; }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .hero-bg { position: relative; background: linear-gradient(135deg, #0d1117 0%, #161b22 100%); }
+        .hero-content { position: relative; z-index: 10; }
+        .faq-item { background-color: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 8px; padding: 1.5rem; transition: all 0.3s ease; margin-bottom: 1rem; }
+        .faq-item:hover { border-color: var(--accent); background-color: rgba(88, 166, 255, 0.05); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(88, 166, 255, 0.1); }
+    </style>
+</head>
+<body>
+    <nav class="nav-bg">
+        <div class="max-w-5xl mx-auto px-4 py-4 sm:px-6 lg:px-8" style="display: flex; justify-content: space-between; align-items: center;">
+            <a href="/" style="display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: inherit;">
+                <div style="width: 32px; height: 32px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; color: var(--accent);">
+                    <i class="fas fa-microphone text-sm"></i>
+                </div>
+                <h1 style="font-size: 1.25rem; margin: 0;">Speech Coach</h1>
+            </a>
+            <a href="/" style="color: var(--text-secondary); text-decoration: none;">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+        </div>
+    </nav>
+    <main>
+        <div class="hero-bg">
+            <div class="max-w-5xl mx-auto px-4 py-20 sm:px-6 lg:px-8 hero-content">
+                <h1>Часто задаваемые вопросы</h1>
+                <div class="faq-item">
+                    <h3>❓ Как начать использовать Speech Coach?</h3>
+                    <p>Перейдите на <a href="/upload">страницу загрузки</a>, выберите видео или аудио выступления и нажмите кнопку загрузить. Анализ займет около 60 секунд.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>⏱️ Сколько времени занимает анализ?</h3>
+                    <p>Большинство файлов анализируются менее чем за 1 минуту. Время зависит от длины файла.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>📁 Какие форматы поддерживаются?</h3>
+                    <p>Видео: MP4, MOV, AVI, WebM. Аудио: MP3, WAV, M4A, OGG. Максимальный размер: 500 МБ.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>🔒 Сохраняются ли мои файлы?</h3>
+                    <p>Нет. Файлы обрабатываются локально и не сохраняются. Ваша приватность 100%.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>📊 Что анализирует система?</h3>
+                    <p>Более 50 параметров: паузы, темп, интонация, слова-паразиты, грамматика, лингвистика и другое.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>🤖 Что такое AI-коучинг?</h3>
+                    <p>После анализа вы можете обсудить результаты с AI-ассистентом и получить персональные рекомендации.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>💰 Есть ли стоимость?</h3>
+                    <p>Speech Coach доступен бесплатно для всех пользователей без ограничений.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>👤 Нужна ли регистрация?</h3>
+                    <p>Нет, вы можете использовать сервис без создания аккаунта.</p>
+                </div>
+                <div style="text-align: center; margin-top: 3rem;">
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Не нашли ответ? <a href="/documentation">Посетите документацию</a></p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="nav-bg" style="margin-top: 4rem;">
+        <div class="max-w-5xl mx-auto px-4 py-8 sm:px-6 lg:px-8" style="text-align: center; color: var(--text-secondary);">
+            <p>&copy; 2024 Speech Coach. Все права защищены.</p>
+            <p style="font-size: 0.875rem; margin-top: 0.5rem;">
+                <a href="/">Главная</a> • 
+                <a href="/upload">Анализ</a> • 
+                <a href="/documentation">Документация</a> • 
+                <a href="/faq">FAQ</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
+    <style>
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --border-color: #30363d;
+            --text: #e6edf3;
+            --text-secondary: #8b949e;
+            --accent: #58a6ff;
+            --accent-hover: #79c0ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            line-height: 1.6;
+        }
+
+        .nav-bg {
+            background-color: rgba(13, 17, 23, 0.95);
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 40;
+        }
+
+        .max-w-5xl {
+            max-width: 64rem;
+        }
+
+        .mx-auto {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        h3 {
+            font-size: 1.125rem;
+            font-weight: bold;
+            color: var(--accent);
+            margin-top: 0;
+        }
+
+        p {
+            margin-bottom: 0.75rem;
+            color: var(--text-secondary);
+            line-height: 1.75;
+        }
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(-45deg, rgba(88, 166, 255, 0.15) 0%, rgba(88, 166, 255, 0.05) 25%, rgba(88, 166, 255, 0.08) 50%, rgba(88, 166, 255, 0.05) 75%, rgba(88, 166, 255, 0.15) 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 12s ease infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero-bg {
+            position: relative;
+            background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .faq-item {
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .faq-item:hover {
+            border-color: var(--accent);
+            background-color: rgba(88, 166, 255, 0.05);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(88, 166, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-bg">
+        <div class="max-w-5xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <a href="/" style="display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: inherit;">
+                    <div style="width: 32px; height: 32px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; color: var(--accent);">
+                        <i class="fas fa-microphone text-sm"></i>
+                    </div>
+                    <h1 style="font-size: 1.25rem; margin: 0;">Speech Coach</h1>
+                </a>
+                <a href="/" style="color: var(--text-secondary); text-decoration: none;">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main -->
+    <main>
+        <div class="hero-bg">
+            <div class="max-w-5xl mx-auto px-4 py-20 sm:px-6 lg:px-8 hero-content">
+                <h1>Часто задаваемые вопросы</h1>
+
+                <div class="faq-item">
+                    <h3>❓ Как начать использовать Speech Coach?</h3>
+                    <p>Перейдите на <a href="/upload">страницу загрузки</a>, выберите видео или аудио выступления и нажмите кнопку загрузить. Анализ займет около 60 секунд.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>⏱️ Сколько времени занимает анализ?</h3>
+                    <p>Большинство файлов анализируются менее чем за 1 минуту. Время зависит от длины файла.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>📁 Какие форматы поддерживаются?</h3>
+                    <p>Видео: MP4, MOV, AVI, WebM. Аудио: MP3, WAV, M4A, OGG. Максимальный размер: 500 МБ.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>🔒 Сохраняются ли мои файлы?</h3>
+                    <p>Нет. Файлы обрабатываются локально и не сохраняются. Ваша приватность 100%.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>📊 Что анализирует система?</h3>
+                    <p>Более 50 параметров: паузы, темп, интонация, слова-паразиты, грамматика, лингвистика и другое.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>🤖 Что такое AI-коучинг?</h3>
+                    <p>После анализа вы можете обсудить результаты с AI-ассистентом и получить персональные рекомендации.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>💰 Есть ли стоимость?</h3>
+                    <p>Speech Coach доступен бесплатно для всех пользователей без ограничений.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>👤 Нужна ли регистрация?</h3>
+                    <p>Нет, вы можете использовать сервис без создания аккаунта.</p>
+                </div>
+
+                <div style="text-align: center; margin-top: 3rem;">
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Не нашли ответ? <a href="/documentation">Посетите документацию</a></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="nav-bg" style="margin-top: 4rem;">
+        <div class="max-w-5xl mx-auto px-4 py-8 sm:px-6 lg:px-8" style="text-align: center; color: var(--text-secondary);">
+            <p>&copy; 2024 Speech Coach. Все права защищены.</p>
+            <p style="font-size: 0.875rem; margin-top: 0.5rem;">
+                <a href="/">Главная</a> • 
+                <a href="/upload">Анализ</a> • 
+                <a href="/documentation">Документация</a> • 
+                <a href="/faq">FAQ</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
     <link rel="icon" href="/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
