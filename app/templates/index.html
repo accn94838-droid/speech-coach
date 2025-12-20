@@ -10,13 +10,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-primary: #0f172a;
-            --bg-secondary: #1a202c;
-            --bg-tertiary: #2d3748;
-            --text: #e2e8f0;
-            --text-secondary: #a0aec0;
-            --accent: #60a5fa;
-            --accent-hover: #93c5fd;
+            --bg-primary: #0a0e27;
+            --bg-secondary: #15152d;
+            --bg-tertiary: #1f1f3a;
+            --text: #d4d4d8;
+            --text-secondary: #8b8b96;
+            --accent: #5b8dd9;
+            --accent-hover: #7a9fe6;
         }
 
         * {
@@ -43,8 +43,8 @@
 
         /* Header */
         .header {
-            background-color: rgba(15, 23, 42, 0.8);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: rgba(10, 14, 39, 0.85);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(10px);
             position: sticky;
             top: 0;
@@ -66,18 +66,21 @@
             gap: 0.75rem;
             text-decoration: none;
             color: var(--text);
-            transition: opacity 0.3s;
+            transition: all 0.3s;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
         }
 
         .logo:hover {
-            opacity: 0.8;
+            background-color: rgba(91, 141, 217, 0.15);
+            color: var(--accent-hover);
         }
 
         .logo-icon {
             width: 36px;
             height: 36px;
             border-radius: 6px;
-            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+            background: linear-gradient(135deg, #5b8dd9 0%, #3d5a8c 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -91,6 +94,12 @@
             letter-spacing: -0.5px;
         }
 
+        .logo-year {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            margin-left: 0.25rem;
+        }
+
         .nav-links {
             display: flex;
             gap: 2rem;
@@ -100,16 +109,22 @@
         .nav-link {
             color: var(--text-secondary);
             text-decoration: none;
-            transition: color 0.3s;
+            transition: all 0.3s;
             font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
         }
 
         .nav-link:hover {
-            color: var(--accent);
+            color: var(--accent-hover);
+            background-color: rgba(91, 141, 217, 0.15);
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+            background: linear-gradient(135deg, #5b8dd9 0%, #3d5a8c 100%);
             color: white;
             padding: 0.625rem 1.5rem;
             border-radius: 6px;
@@ -126,7 +141,7 @@
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(96, 165, 250, 0.3);
+            box-shadow: 0 8px 24px rgba(91, 141, 217, 0.25);
         }
 
         .btn-secondary {
@@ -169,8 +184,8 @@
             right: 0;
             bottom: 0;
             background: 
-                radial-gradient(circle at 20% 50%, rgba(96, 165, 250, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+                radial-gradient(circle at 20% 50%, rgba(91, 141, 217, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(61, 90, 140, 0.05) 0%, transparent 50%);
             pointer-events: none;
         }
 
@@ -186,7 +201,7 @@
             font-weight: 800;
             margin-bottom: 1.5rem;
             line-height: 1.1;
-            background: linear-gradient(135deg, #60a5fa 0%, #93c5fd 100%);
+            background: linear-gradient(135deg, #5b8dd9 0%, #7a9fe6 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -208,8 +223,8 @@
 
         /* Footer */
         .footer {
-            background-color: rgba(15, 23, 42, 0.8);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: rgba(10, 14, 39, 0.85);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
             padding: 2rem;
             margin-top: auto;
         }
@@ -272,11 +287,17 @@
                 <div class="logo-icon">
                     <i class="fas fa-microphone"></i>
                 </div>
-                <span class="logo-text">Speech Coach</span>
+                <span class="logo-text">Speech Coach<span class="logo-year">2025</span></span>
             </a>
             <nav class="nav-links">
-                <a href="#" class="nav-link">Документация</a>
-                <a href="#" class="nav-link">FAQ</a>
+                <a href="#" class="nav-link">
+                    <i class="fas fa-book"></i>
+                    Документация
+                </a>
+                <a href="#" class="nav-link">
+                    <i class="fas fa-question-circle"></i>
+                    FAQ
+                </a>
                 <a href="/upload" class="btn-primary">
                     <i class="fas fa-wand-magic-sparkles"></i>
                     Анализ
@@ -312,7 +333,7 @@
                 <a href="#">Документация</a>
                 <a href="#">FAQ</a>
             </div>
-            <p>&copy; 2024 Speech Coach. Все права защищены.</p>
+            <p>&copy; 2025 Speech Coach. Все права защищены.</p>
         </div>
     </footer>
 </body>
