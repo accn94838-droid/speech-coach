@@ -10,14 +10,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-primary: #0d1117;
-            --bg-secondary: #161b22;
-            --bg-tertiary: #21262d;
-            --border-color: #30363d;
-            --text: #e6edf3;
-            --text-secondary: #8b949e;
-            --accent: #58a6ff;
-            --accent-hover: #79c0ff;
+            --bg-primary: #0f172a;
+            --bg-secondary: #1a202c;
+            --bg-tertiary: #2d3748;
+            --text: #e2e8f0;
+            --text-secondary: #a0aec0;
+            --accent: #60a5fa;
+            --accent-hover: #93c5fd;
         }
 
         * {
@@ -26,300 +25,181 @@
             box-sizing: border-box;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
+        html, body {
             background-color: var(--bg-primary);
             color: var(--text);
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-            line-height: 1.7;
         }
 
-        .nav-bg {
-            background-color: rgba(13, 17, 23, 0.95);
-            border-bottom: 1px solid var(--border-color);
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        /* Header */
+        .header {
+            background-color: rgba(15, 23, 42, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             position: sticky;
             top: 0;
-            z-index: 40;
+            z-index: 50;
         }
 
-        .max-w-5xl {
-            max-width: 64rem;
-        }
-
-        .mx-auto {
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        a {
-            color: var(--accent);
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-
-        a:hover {
-            color: var(--accent-hover);
-            text-decoration: underline;
-        }
-
-        .back-btn {
-            display: inline-flex;
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            background-color: rgba(88, 166, 255, 0.1);
-            border: 1px solid var(--accent);
-            border-radius: 6px;
-            color: var(--accent);
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin-bottom: 2rem;
         }
 
-        .back-btn:hover {
-            background-color: rgba(88, 166, 255, 0.2);
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
             text-decoration: none;
+            color: var(--text);
+            transition: opacity 0.3s;
         }
 
-        h1 {
+        .logo:hover {
+            opacity: 0.8;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+        }
+
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Coming Soon */
+        .coming-soon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 160px);
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .coming-soon-icon {
+            font-size: 4rem;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            opacity: 0.8;
+        }
+
+        .coming-soon h1 {
             font-size: 2.5rem;
             font-weight: 800;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #58a6ff 0%, #79c0ff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            margin-bottom: 1rem;
         }
 
-        .subtitle {
-            color: var(--text-secondary);
+        .coming-soon p {
             font-size: 1.125rem;
+            color: var(--text-secondary);
             margin-bottom: 2rem;
+            max-width: 500px;
+            line-height: 1.6;
         }
 
-        h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-top: 2.5rem;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--accent);
-            color: var(--text);
-        }
-
-        h3 {
-            font-size: 1.125rem;
-            font-weight: 700;
-            margin-top: 1.5rem;
-            margin-bottom: 0.75rem;
-            color: var(--text);
-        }
-
-        p {
-            margin-bottom: 1rem;
-            color: var(--text-secondary);
-            line-height: 1.8;
-        }
-
-        ul, ol {
-            margin-left: 1.75rem;
-            margin-bottom: 1rem;
-            color: var(--text-secondary);
-        }
-
-        li {
-            margin-bottom: 0.75rem;
-            line-height: 1.7;
-        }
-
-        strong {
-            color: var(--text);
-            font-weight: 600;
-        }
-
-        .feature-box {
-            background-color: var(--bg-tertiary);
-            border-left: 4px solid var(--accent);
-            padding: 1.5rem;
-            margin: 1.5rem 0;
+        .btn-back {
+            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+            color: white;
+            padding: 0.75rem 2rem;
             border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
         }
 
-        .section {
-            padding: 3rem 1rem;
+        .btn-back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(96, 165, 250, 0.3);
         }
 
-        .hero-bg {
-            position: relative;
-            background: linear-gradient(180deg, #0d1117 0%, #0f1419 50%, #161b22 100%);
+        /* Footer */
+        .footer {
+            background-color: rgba(15, 23, 42, 0.8);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            margin-top: auto;
         }
 
-        .hero-bg::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 15% 25%, rgba(88, 166, 255, 0.12) 0%, transparent 40%),
-                radial-gradient(circle at 85% 75%, rgba(88, 166, 255, 0.08) 0%, transparent 40%);
-            pointer-events: none;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 10;
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="nav-bg">
-        <div class="max-w-5xl mx-auto px-4 py-4 sm:px-6 lg:px-8" style="display: flex; justify-content: space-between; align-items: center;">
-            <a href="/" style="display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: inherit;">
-                <div style="width: 32px; height: 32px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 0.875rem;"><i class="fas fa-microphone"></i></div>
-                <h1 style="font-size: 1.25rem; margin: 0;">Speech Coach</h1>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="/" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-microphone"></i>
+                </div>
+                <span class="logo-text">Speech Coach</span>
             </a>
         </div>
-    </nav>
+    </header>
 
-    <!-- Main -->
+    <!-- Main Content -->
     <main>
-        <div class="hero-bg">
-            <div class="max-w-5xl mx-auto px-4 py-16 sm:px-6 lg:px-8 hero-content">
-                <a href="/" class="back-btn">
-                    <i class="fas fa-arrow-left"></i>
-                    Вернуться
-                </a>
-
-                <h1>Документация</h1>
-                <p class="subtitle">Полное руководство по использованию Speech Coach</p>
-                
-                <div style="background-color: var(--bg-secondary); padding: 2rem; border-radius: 8px; border: 1px solid var(--border-color);">
-                    <h2 style="margin-top: 0; border: none; padding: 0; margin-bottom: 1.5rem;">Что такое Speech Coach?</h2>
-                    <p>
-                        Speech Coach — это AI-платформа для анализа качества публичной речи. Система проверяет более 50 параметров выступления, включая темп речи, интонацию, паузы, слова-паразиты, грамматику и стилистику. 
-                        Получайте детальный отчёт за минуту и обсуждайте результаты с AI-коучем для улучшения навыков презентации.
-                    </p>
-                    
-                    <h2>Начало работы</h2>
-                    <h3>Пошаговое руководство</h3>
-                    <ol>
-                        <li><strong>Переходим на страницу загрузки</strong> — нажмите кнопку "Анализ" или перейдите на /upload</li>
-                        <li><strong>Загружаем файл</strong> — видео или аудио вашего выступления (максимум 500 МБ)</li>
-                        <li><strong>Ожидаем результаты</strong> — анализ занимает обычно 30-120 секунд в зависимости от длины файла</li>
-                        <li><strong>Изучаем отчёт</strong> — подробный анализ с метриками, графиками и рекомендациями</li>
-                        <li><strong>Обсуждаем с AI-коучем</strong> — интерактивный чат для уточнения результатов и получения советов</li>
-                    </ol>
-
-                    <h2>Поддерживаемые форматы</h2>
-                    <div class="feature-box">
-                        <h3 style="margin-top: 0;">Видео форматы</h3>
-                        <p>MP4, MOV, AVI, WebM, MKV, FLV и другие популярные видеоформаты. Все файлы автоматически преобразуются в формат, совместимый с анализатором.</p>
-                    </div>
-                    
-                    <div class="feature-box">
-                        <h3 style="margin-top: 0;">Аудио форматы</h3>
-                        <p>MP3, WAV, AAC, OGG, FLAC, M4A и другие стандартные аудиоформаты. Система автоматически распознает и обрабатывает любой формат.</p>
-                    </div>
-
-                    <h3>Ограничения и требования</h3>
-                    <ul>
-                        <li><strong>Размер файла:</strong> Максимум 500 МБ (достаточно для большинства выступлений)</li>
-                        <li><strong>Длительность:</strong> Минимум 10 секунд, нет максимума</li>
-                        <li><strong>Качество:</strong> Рекомендуется четкая, разборчивая речь для точного анализа</li>
-                        <li><strong>Язык:</strong> В настоящее время поддерживается русский язык</li>
-                    </ul>
-
-                    <h2>Анализируемые параметры</h2>
-                    <p>Speech Coach анализирует свыше 50 параметров вашей речи. Вот основные категории:</p>
-                    
-                    <div class="feature-box">
-                        <h3 style="margin-top: 0;"><i class="fas fa-ban" style="color: var(--accent); margin-right: 0.5rem;"></i>Слова-паразиты</h3>
-                        <p>Выявление повторяющихся звуков и слов (ээ, ну, типа, в общем, как бы). Анализ частоты и распределения паразитов по всему выступлению с графиком интенсивности.</p>
-                    </div>
-
-                    <div class="feature-box">
-                        <h3 style="margin-top: 0;"><i class="fas fa-pause-circle" style="color: var(--accent); margin-right: 0.5rem;"></i>Паузы</h3>
-                        <p>Анализ естественных пауз и заполняющих пауз. Графики показывают длину и частоту пауз, помогая улучшить ритм выступления.</p>
-                    </div>
-
-                    <div class="feature-box">
-                        <h3 style="margin-top: 0;"><i class="fas fa-tachometer-alt" style="color: var(--accent); margin-right: 0.5rem;"></i>Темп речи</h3>
-                        <p>Измерение скорости в словах за минуту. Анализ вариаций темпа в разных частях выступления с рекомендациями по оптимизации.</p>
-                    </div>
-
-                    <div class="feature-box">
-                        <h3 style="margin-top: 0;"><i class="fas fa-wave-sine" style="color: var(--accent); margin-right: 0.5rem;"></i>Интонация</h3>
-                        <p>Анализ выразительности, мелодики и эмоциональности речи. Оценка колебаний высоты голоса и энергии в разных фрагментах.</p>
-                    </div>
-
-                    <div class="feature-box">
-                        <h3 style="margin-top: 0;"><i class="fas fa-spell-check" style="color: var(--accent); margin-right: 0.5rem;"></i>Грамматика</h3>
-                        <p>Проверка грамматических ошибок и оценка синтаксической корректности. Рекомендации по улучшению структуры предложений.</p>
-                    </div>
-
-                    <div class="feature-box">
-                        <h3 style="margin-top: 0;"><i class="fas fa-book" style="color: var(--accent); margin-right: 0.5rem;"></i>Словарный запас</h3>
-                        <p>Анализ разнообразия и сложности используемых слов. Оценка уникальности лексики и рекомендации по расширению словарного запаса.</p>
-                    </div>
-
-                    <h2>Безопасность и приватность</h2>
-                    <div class="feature-box">
-                        <h3 style="margin-top: 0;"><i class="fas fa-lock" style="color: var(--accent); margin-right: 0.5rem;"></i>Защита данных</h3>
-                        <p>Все передачи происходят по защищённому протоколу HTTPS с шифрованием. Файлы обрабатываются безопасно и не хранятся после анализа.</p>
-                    </div>
-
-                    <ul>
-                        <li><strong>Отсутствие сохранения:</strong> Файлы автоматически удаляются после обработки</li>
-                        <li><strong>Не используется для обучения:</strong> Ваши данные не используются для обучения моделей без явного согласия</li>
-                        <li><strong>GDPR соответствие:</strong> Полное соответствие стандартам защиты персональных данных</li>
-                        <li><strong>Конфиденциальность:</strong> Только вы можете видеть свои результаты анализа</li>
-                    </ul>
-
-                    <h2>AI-коучинг</h2>
-                    <p>После получения результатов анализа вы получаете доступ к интерактивному чату с AI-коучем. Это инструмент для глубокого понимания результатов и получения персональных рекомендаций:</p>
-                    
-                    <ul>
-                        <li>Задавайте уточняющие вопросы по любому параметру анализа</li>
-                        <li>Получайте конкретные рекомендации по улучшению слабых мест</li>
-                        <li>Обсуждайте стратегии работы с выявленными проблемами</li>
-                        <li>Запрашивайте упражнения и практические советы для тренировки</li>
-                        <li>Узнавайте лучшие практики публичных выступлений</li>
-                    </ul>
-
-                    <h2>Часто задаваемые вопросы</h2>
-                    <p>Если у вас остались вопросы, посетите страницу <a href="/faq">часто задаваемых вопросов (FAQ)</a>.</p>
-
-                    <h2>Помощь и поддержка</h2>
-                    <p>Если у вас возникли технические проблемы или вопросы, обратитесь через форму обратной связи на главной странице. Мы стараемся ответить на все вопросы в течение 24 часов.</p>
-
-                    <div style="text-align: center; margin-top: 3rem;">
-                        <a href="/upload" style="background-color: var(--accent); color: var(--bg-primary); padding: 1rem 2rem; border-radius: 8px; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 1rem; text-decoration: none;">
-                            <i class="fas fa-wand-magic-sparkles"></i>
-                            Начать анализ
-                        </a>
-                    </div>
-                </div>
+        <div class="coming-soon">
+            <div class="coming-soon-icon">
+                <i class="fas fa-wrench"></i>
             </div>
+            <h1>В разработке</h1>
+            <p>Эта страница находится в разработке. Мы работаем над тем, чтобы предоставить вам лучший контент как можно скорее.</p>
+            <a href="/" class="btn-back">
+                <i class="fas fa-arrow-left"></i>
+                Вернуться на главную
+            </a>
         </div>
     </main>
 
     <!-- Footer -->
-    <footer class="nav-bg" style="margin-top: 4rem;">
-        <div class="max-w-5xl mx-auto px-4 py-8 sm:px-6 lg:px-8" style="text-align: center; color: var(--text-secondary);">
+    <footer class="footer">
+        <div class="footer-content">
             <p>&copy; 2024 Speech Coach. Все права защищены.</p>
-            <p style="font-size: 0.875rem; margin-top: 0.5rem;">
-                <a href="/">Главная</a> • 
-                <a href="/upload">Анализ</a> • 
-                <a href="/documentation">Документация</a> • 
-                <a href="/faq">FAQ</a>
-            </p>
         </div>
     </footer>
 </body>
