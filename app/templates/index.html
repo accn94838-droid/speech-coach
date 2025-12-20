@@ -7,7 +7,6 @@
     <title>Speech Coach - AI анализ речи</title>
     <link rel="icon" href="/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --bg-primary: #0d1117;
@@ -177,27 +176,19 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(-45deg, rgba(88, 166, 255, 0.15) 0%, rgba(88, 166, 255, 0.05) 25%, rgba(88, 166, 255, 0.08) 50%, rgba(88, 166, 255, 0.05) 75%, rgba(88, 166, 255, 0.15) 100%);
-            background-size: 400% 400%;
-            animation: gradientShift 12s ease infinite;
+            background: 
+                radial-gradient(ellipse 600px 600px at 10% 20%, rgba(88, 166, 255, 0.25) 0%, transparent 50%),
+                radial-gradient(ellipse 500px 500px at 90% 80%, rgba(88, 166, 255, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse 400px 400px at 50% 60%, rgba(79, 192, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 30% 70%, rgba(88, 166, 255, 0.1) 0%, transparent 60%);
+            animation: gradientFlow 15s ease-in-out infinite;
             pointer-events: none;
         }
 
-        @keyframes gradientShift {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
         @keyframes gradientFlow {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
+            0%, 100% { opacity: 0.7; transform: translate(0, 0); }
+            33% { opacity: 1; transform: translate(-20px, 20px); }
+            66% { opacity: 0.85; transform: translate(20px, -20px); }
         }
 
         @keyframes float {
@@ -649,21 +640,18 @@
             <div class="flex justify-between items-center h-16">
                 <a href="/" class="flex items-center gap-3 no-underline">
                     <div class="w-8 h-8 rounded-lg border border-white/20 flex items-center justify-center">
-                        <i class="fas fa-microphone text-sm" style="color: var(--accent);"></i>
+                        🎤
                     </div>
                     <h1 class="text-xl font-bold">Speech Coach</h1>
                 </a>
                 <div class="flex gap-2 items-center">
-                    <a href="/documentation" class="px-3 py-2 rounded-md text-sm transition hover:bg-white/10 flex items-center gap-2" title="Документация">
-                        <i class="fas fa-book" style="color: var(--text-secondary);"></i>
+                    <a href="/documentation" class="px-3 py-2 rounded-md text-sm transition hover:bg-white/10" title="Документация">
                         <span style="color: var(--text-secondary); font-size: 0.875rem;" class="hidden sm:inline">Документация</span>
                     </a>
-                    <a href="/faq" class="px-3 py-2 rounded-md text-sm transition hover:bg-white/10 flex items-center gap-2" title="FAQ">
-                        <i class="fas fa-question-circle" style="color: var(--text-secondary);"></i>
+                    <a href="/faq" class="px-3 py-2 rounded-md text-sm transition hover:bg-white/10" title="FAQ">
                         <span style="color: var(--text-secondary); font-size: 0.875rem;" class="hidden sm:inline">FAQ</span>
                     </a>
                     <a href="/upload" class="px-4 py-2 text-sm rounded-md transition" style="background-color: var(--accent); color: var(--bg-primary); font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none;">
-                        <i class="fas fa-wand-magic-sparkles" style="font-size: 0.875rem;"></i>
                         <span class="hidden sm:inline">Анализ</span>
                     </a>
                 </div>
@@ -685,7 +673,6 @@
             </p>
             <div class="flex gap-6 justify-center flex-wrap">
                 <a href="/upload" class="btn-primary">
-                    <i class="fas fa-wand-magic-sparkles"></i>
                     Начать анализ
                 </a>
                 <a href="#about" class="btn-secondary">
@@ -704,19 +691,19 @@
             <div class="space-y-8">
                 <div class="text-base leading-relaxed" style="color: var(--text-secondary);">
                     <p class="mb-4">
-                        <strong style="color: var(--text); font-size: 1.125rem;"><i class="fas fa-bullseye" style="color: var(--accent); margin-right: 0.5rem;"></i>Для ораторов и лидеров</strong><br>
+                        <strong style="color: var(--text); font-size: 1.125rem;">Для ораторов и лидеров</strong><br>
                         Улучшайте качество речи для выступлений, презентаций и коммуникации.
                     </p>
                 </div>
                 <div class="text-base leading-relaxed" style="color: var(--text-secondary);">
                     <p class="mb-4">
-                        <strong style="color: var(--text); font-size: 1.125rem;"><i class="fas fa-bolt" style="color: var(--accent); margin-right: 0.5rem;"></i>Анализ за минуту</strong><br>
+                        <strong style="color: var(--text); font-size: 1.125rem;">Анализ за минуту</strong><br>
                         50+ параметров речи с детальным отчётом и рекомендациями.
                     </p>
                 </div>
                 <div class="text-base leading-relaxed" style="color: var(--text-secondary);">
                     <p class="mb-4">
-                        <strong style="color: var(--text); font-size: 1.125rem;"><i class="fas fa-lock" style="color: var(--accent); margin-right: 0.5rem;"></i>Ваша приватность</strong><br>
+                        <strong style="color: var(--text); font-size: 1.125rem;">Ваша приватность</strong><br>
                         Данные не сохраняются и не используются для обучения.
                     </p>
                 </div>
@@ -734,30 +721,18 @@
             <!-- Features Grid -->
             <div class="grid md:grid-cols-2 gap-8">
                 <div class="feature-card p-6 sm:p-8">
-                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">
-                        <i class="fas fa-bolt" style="color: var(--accent);"></i>
-                    </div>
                     <h4 class="text-xl font-bold mb-2">Быстро</h4>
                     <p style="color: var(--text-secondary);" class="text-sm">Анализ за 60 секунд</p>
                 </div>
                 <div class="feature-card p-6 sm:p-8">
-                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">
-                        <i class="fas fa-shield-alt" style="color: var(--accent);"></i>
-                    </div>
                     <h4 class="text-xl font-bold mb-2">Приватно</h4>
                     <p style="color: var(--text-secondary);" class="text-sm">Данные не хранятся</p>
                 </div>
                 <div class="feature-card p-6 sm:p-8">
-                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">
-                        <i class="fas fa-chart-line" style="color: var(--accent);"></i>
-                    </div>
                     <h4 class="text-xl font-bold mb-2">Подробно</h4>
                     <p style="color: var(--text-secondary);" class="text-sm">50+ параметров</p>
                 </div>
                 <div class="feature-card p-6 sm:p-8">
-                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">
-                        <i class="fas fa-robot" style="color: var(--accent);"></i>
-                    </div>
                     <h4 class="text-xl font-bold mb-2">Умно</h4>
                     <p style="color: var(--text-secondary);" class="text-sm">AI-рекомендации</p>
                 </div>
@@ -775,8 +750,7 @@
                 <!-- Left column -->
                 <div class="space-y-6">
                     <div class="feature-card p-6">
-                        <h4 class="text-lg font-bold mb-2 flex items-center gap-2">
-                            <i class="fas fa-comment-dots" style="color: var(--accent); font-size: 1.25rem;"></i>
+                        <h4 class="text-lg font-bold mb-2">
                             Паразиты
                         </h4>
                         <p style="color: var(--text-secondary);" class="text-sm">
@@ -784,8 +758,7 @@
                         </p>
                     </div>
                     <div class="feature-card p-6">
-                        <h4 class="text-lg font-bold mb-2 flex items-center gap-2">
-                            <i class="fas fa-pause-circle" style="color: var(--accent); font-size: 1.25rem;"></i>
+                        <h4 class="text-lg font-bold mb-2">
                             Паузы
                         </h4>
                         <p style="color: var(--text-secondary);" class="text-sm">
@@ -793,8 +766,7 @@
                         </p>
                     </div>
                     <div class="feature-card p-6">
-                        <h4 class="text-lg font-bold mb-2 flex items-center gap-2">
-                            <i class="fas fa-gauge" style="color: var(--accent); font-size: 1.25rem;"></i>
+                        <h4 class="text-lg font-bold mb-2">
                             Темп
                         </h4>
                         <p style="color: var(--text-secondary);" class="text-sm">
@@ -806,8 +778,7 @@
                 <!-- Right column -->
                 <div class="space-y-6">
                     <div class="feature-card p-6">
-                        <h4 class="text-lg font-bold mb-2 flex items-center gap-2">
-                            <i class="fas fa-wave-sine" style="color: var(--accent); font-size: 1.25rem;"></i>
+                        <h4 class="text-lg font-bold mb-2">
                             Интонация
                         </h4>
                         <p style="color: var(--text-secondary);" class="text-sm">
@@ -815,8 +786,7 @@
                         </p>
                     </div>
                     <div class="feature-card p-6">
-                        <h4 class="text-lg font-bold mb-2 flex items-center gap-2">
-                            <i class="fas fa-lightbulb" style="color: var(--accent); font-size: 1.25rem;"></i>
+                        <h4 class="text-lg font-bold mb-2">
                             Лингвистика
                         </h4>
                         <p style="color: var(--text-secondary);" class="text-sm">
@@ -824,8 +794,7 @@
                         </p>
                     </div>
                     <div class="feature-card p-6">
-                        <h4 class="text-lg font-bold mb-2 flex items-center gap-2">
-                            <i class="fas fa-brain" style="color: var(--accent); font-size: 1.25rem;"></i>
+                        <h4 class="text-lg font-bold mb-2">
                             Анализ
                         </h4>
                         <p style="color: var(--text-secondary);" class="text-sm">
@@ -894,7 +863,6 @@
                 Загрузите выступление и получите анализ за минуту.
             </p>
             <a href="/upload" class="btn-primary px-6 py-3 inline-flex items-center gap-2">
-                <i class="fas fa-wand-magic-sparkles" style="font-size: 1rem;"></i>
                 Анализ
             </a>
         </div>
@@ -907,7 +875,7 @@
                 <div>
                     <div class="flex items-center gap-2 mb-4">
                         <div class="w-6 h-6 rounded border border-white/20 flex items-center justify-center">
-                            <i class="fas fa-microphone text-xs" style="color: var(--accent);"></i>
+                            🎤
                         </div>
                         <span class="font-bold">Speech Coach</span>
                     </div>

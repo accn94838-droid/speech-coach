@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Speech Coach - Документация">
+    <title>Документация - Speech Coach</title>
+    <link rel="icon" href="/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --border-color: #30363d;
+            --text: #e6edf3;
+            --text-secondary: #8b949e;
+            --accent: #58a6ff;
+            --accent-hover: #79c0ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            line-height: 1.6;
+        }
+
+        .nav-bg {
+            background-color: rgba(13, 17, 23, 0.95);
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 40;
+        }
+
+        .max-w-5xl {
+            max-width: 64rem;
+        }
+
+        .mx-auto {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        h3 {
+            font-size: 1.125rem;
+            font-weight: bold;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.75;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .section {
+            padding: 4rem 1rem;
+            min-height: auto;
+        }
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 30%, rgba(88, 166, 255, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 70%, rgba(88, 166, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 40% 60%, rgba(79, 192, 255, 0.1) 0%, transparent 50%);
+            animation: gradientFlow 12s ease-in-out infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes gradientFlow {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        .hero-bg {
+            position: relative;
+            background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .feature-card {
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card:hover {
+            border-color: var(--accent);
+            background-color: rgba(88, 166, 255, 0.05);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(88, 166, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-bg">
+        <div class="max-w-5xl mx-auto px-4 py-4 sm:px-6 lg:px-8" style="display: flex; justify-content: space-between; align-items: center;">
+            <a href="/" style="display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: inherit;">
+                <div style="width: 32px; height: 32px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 0.875rem;">🎤</div>
+                <h1 style="font-size: 1.25rem; margin: 0;">Speech Coach</h1>
+            </a>
+            <a href="/" style="color: var(--text-secondary); text-decoration: none;">←</a>
+        </div>
+    </nav>
+
+    <!-- Main -->
+    <main>
+        <div class="hero-bg">
+            <div class="max-w-5xl mx-auto px-4 py-20 sm:px-6 lg:px-8 hero-content">
+                <h1>Документация</h1>
+                
+                <div class="feature-card">
+                    <h2>Что такое Speech Coach?</h2>
+                    <p>Speech Coach — это AI-платформа для анализа качества публичной речи. Система проверяет более 50 параметров выступления, включая темп речи, интонацию, паузы, слова-паразиты, грамматику и стилистику.</p>
+                    
+                    <h2>Начало работы</h2>
+                    <h3>Как использовать</h3>
+                    <ol style="margin-left: 1.5rem;">
+                        <li>Перейдите на <a href="/upload">страницу загрузки</a></li>
+                        <li>Загрузите видео или аудиофайл вашего выступления</li>
+                        <li>Дождитесь завершения анализа (обычно 30-60 секунд)</li>
+                        <li>Изучите детальный отчёт с метриками и рекомендациями</li>
+                        <li>Обсудите результаты с AI-коучем в интерактивном чате</li>
+                    </ol>
+
+                    <h2>Поддерживаемые форматы</h2>
+                    <h3>Видео</h3>
+                    <p>MP4, MOV, AVI, WebM, MKV, FLV — все популярные видеоформаты</p>
+                    
+                    <h3>Аудио</h3>
+                    <p>MP3, WAV, AAC, OGG, FLAC, M4A — полная поддержка аудиоформатов</p>
+
+                    <h3>Ограничения</h3>
+                    <ul>
+                        <li>Максимальный размер файла: 500 МБ</li>
+                        <li>Минимальная длительность: 10 секунд</li>
+                        <li>Рекомендуется четкая, разборчивая речь</li>
+                    </ul>
+
+                    <h2>Анализируемые параметры</h2>
+                    <p>Speech Coach анализирует следующие аспекты речи:</p>
+                    <ul>
+                        <li><strong>Слова-паразиты</strong> — выявление повторяющихся звуков и слов (ээ, ну, типа, в общем)</li>
+                        <li><strong>Паузы</strong> — анализ естественных пауз и заполняющих пауз с графиками</li>
+                        <li><strong>Темп речи</strong> — измерение скорости в словах/минуту и анализ вариаций</li>
+                        <li><strong>Интонация</strong> — анализ выразительности, мелодики и эмоциональности</li>
+                        <li><strong>Грамматика</strong> — проверка ошибок и оценка синтаксической корректности</li>
+                        <li><strong>Словарный запас</strong> — анализ разнообразия и сложности используемых слов</li>
+                        <li><strong>Дополнительно</strong> — громкость, дыхание, энергия и множество других параметров</li>
+                    </ul>
+
+                    <h2>Безопасность и приватность</h2>
+                    <ul>
+                        <li>Все файлы обрабатываются безопасно по защищённому HTTPS</li>
+                        <li>Файлы не сохраняются на серверах после обработки</li>
+                        <li>Данные не используются для обучения моделей без вашего согласия</li>
+                        <li>Полное соответствие стандартам GDPR и защиты персональных данных</li>
+                    </ul>
+
+                    <h2>AI-коучинг</h2>
+                    <p>После анализа вы получаете доступ к интерактивному чату с AI-коучем. Здесь вы можете:</p>
+                    <ul>
+                        <li>Задавать уточняющие вопросы по результатам анализа</li>
+                        <li>Получать персональные рекомендации по улучшению</li>
+                        <li>Обсуждать конкретные проблемы из отчёта</li>
+                        <li>Запрашивать упражнения для тренировки</li>
+                    </ul>
+
+                    <h2>Помощь и поддержка</h2>
+                    <p>Если у вас возникли вопросы, посетите страницу <a href="/faq">часто задаваемых вопросов</a> или свяжитесь с нами через форму обратной связи на главной странице.</p>
+                </div>
+
+                <div style="text-align: center; margin-top: 3rem;">
+                    <a href="/upload" style="background-color: var(--accent); color: var(--bg-primary); padding: 1rem 2rem; border-radius: 8px; font-weight: 600; display: inline-block; font-size: 1rem;">Начать анализ</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="nav-bg" style="margin-top: 4rem;">
+        <div class="max-w-5xl mx-auto px-4 py-8 sm:px-6 lg:px-8" style="text-align: center; color: var(--text-secondary);">
+            <p>&copy; 2024 Speech Coach. Все права защищены.</p>
+            <p style="font-size: 0.875rem; margin-top: 0.5rem;">
+                <a href="/">Главная</a> • 
+                <a href="/upload">Анализ</a> • 
+                <a href="/documentation">Документация</a> • 
+                <a href="/faq">FAQ</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
